@@ -1,4 +1,4 @@
-# Run Enterprise Manager witout Tanuki
+# Run Enterprise Manager without Tanuki
 
 ## Purpose
 
@@ -6,9 +6,10 @@ This is provided for situations where the executable is not available or not wor
 
 ## Use
 
+- Universal Messaging Enterprise Manager must be installed on the machine
 - Clone or copy this folder
-- Change set-env.ps1 providing your local values 
-- start with the bat or ps1 according to your shell (double click on .bat in explorer)
+- Change set-env.ps1 providing your local values
+- Start with the run-direct.bat or run-direct.ps1 according to your shell (double click on run-direct.bat in explorer)
 
 ## TODO (future)
 
