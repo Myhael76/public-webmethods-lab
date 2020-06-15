@@ -1,0 +1,18 @@
+version: "3.5"
+
+networks:
+    project_internal_network:
+      external: false
+services:
+  dbcc:
+    build: ./extra/dbcc/build
+    image: mydbcc:10.5
+    container_name: mydbcc
+    hostname: mydbcc
+    networks:
+      - project_internal_network
+    volumes:
+      - ./extra/lib/mysql-connector-java-8.0.15.jar:/opt/softwareag/common/lib/ext/mysql-connector-java-8.0.15.jar
+      - ./extra/dbcc/script/:/opt/softwareag/script/
+    entrypoint: ${ENTRY_POINT}
+

@@ -1,0 +1,14 @@
+version: "3.5"
+
+networks:
+    project_internal_network:
+      external: false
+services:
+  adminer:
+    image: adminer
+    container_name: adminer
+    hostname: adminer
+    networks:
+      - project_internal_network
+    ports:
+      - "8080:8080"
