@@ -12,9 +12,9 @@ Steps to follow for a quick start:
 
 - execute pullImages.bat to ensure you access the needed images
   - Note: the wm-dcc:10.5 image is not public for the moment
-- execute mysql_start
-- execute adminer_start (db client, keep it up only when needed)
-- execute alpine_dbcc_create-all_start
+- execute mysql_up
+- execute adminer_up (db client, keep it up only when needed)
+- execute alpine_dbcc_create-all
 
 You should now have a working mysql database server intialized with all webmethods components.
 

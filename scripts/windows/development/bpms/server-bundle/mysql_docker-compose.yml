@@ -11,7 +11,7 @@ services:
     container_name: mysql
     hostname: mysql
     volumes:
-      - mysql_data:/ver/lib/mysql
+      - mysql_data:/var/lib/mysql
     networks:
       - project_internal_network
     environment:
