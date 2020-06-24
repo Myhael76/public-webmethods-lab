@@ -1,0 +1,57 @@
+Installer command line options:
+
+-installDir installDir - Set installation dir to installDir
+-maxLogSize numberK|M Limit log files to a maximum kilobytes (K) or megabytes (M) in size. For example, -maxLogSize 5M limits log files to 5 Mb in size
+-debugLvl level - One of none, fatal, error, warning, info, or verbose
+-debugFile debugFile - Debugging output goes to file debugFile
+-debugOut - Debugging output goes to standard out
+-debugErr - Debugging output goes to standard error
+-writeScript scriptFile - Create a script of user input for use with -readScript
+-writeUninstallScript scriptFile - Create a script of user input for use with -readUninstallScript
+-readScript scriptFile - Run installer in silent mode, user input from scriptFile
+-readUninstallScript scriptFile - Run uninstaller in silent mode, user input from scriptFile
+-editScript scriptFile - Edit scriptFile, shortcut for -readScript scriptFile -writeScript scriptFile
+-editUninstallScript scriptFile - Edit scriptFile, shortcut for -readUninstallScript scriptFile -writeUninstallScript scriptFile
+-readImageScript imageScriptFile imageFile - Reads image script imageScriptFile and writes a new installable image imageFile
+-writeImageScript|-editImageScript imageScriptFile - Writes new or edits existing image script imageScriptFile
+-writeImage imageFile - Create an installable image, write out to imageFile
+-readImage imageFile - Run the installer with installable image imageFile
+-validateImage imageFile - Validate the contents of installable image imageFile
+-imageContents imageFile - Display the contents of installable image imageFile
+-imagePlatform plat - Use with -writeImage or -readImageScript, allows the creation of installable
+  images for different platforms, possible values (example: -imagePlatform SOL):
+        WNT - Microsoft Windows x86
+        SOL - Sun Solaris SPARC
+        SOLAMD64 - Sun Solaris x86-64
+        AIX - IBM AIX
+        HP11 - HP HP-UX PA-RISC
+        HP11IT - HP HP-UX Intel Itanium
+        OSX - Apple Mac OSX
+        AS400 - IBM AS/400
+        LNX - Linux RHEL and SLES x86
+        LNXAMD64 - Linux RHEL and SLES x86-64
+        W64 - Microsoft Windows x86-64
+        LNXS390X - Linux RHEL and SLES IBM System z
+-console - Run the installer in console mode
+-server host:cgi - Connect installer to installer server host:cgi
+-URLBase url - Connect installer to installer server url
+-forceExport - Install 40bit (Export) files instead of 128bit (Domestic)
+-proxyHost host - The name or IP of your HTTP proxy server
+-proxyPort port - The port number of your HTTP proxy server
+-proxyUser username - The optional username for your HTTP proxy server
+-proxyPass password - The optional password for your HTTP proxy server
+-socksProxyHost host - The name or IP of your Socks proxy server
+-socksProxyPort port - The port number of your Socks proxy server
+-h -help --help - Display this usage text
+-v -version - Print out version of installer and exit
+-about - Print out 'about' information of installer and exit
+-existingImages image1|dir1|textfile1,... - Comma separated list
+  that tells the installer to use previously downloaded install image
+  to speed up downloads. Include any combination of the following:
+  install image, directory containing install image(s), or text file
+  listing install images.
+-scriptErrorInteract [yes|no|seconds] - Without an argument or with argument [yes], do not exit on an error or popup. With argument [no], exit on an error or popup. With optional [seconds] argument, pause this many seconds before exiting.
+-scriptNoExit: Do not exit when a script ends
+deprecated: -debug level (equivalent to -debugLvl level -debugErr)
+deprecated: -scriptErrorExit [seconds] - replaced by -scriptErrorInteract
+deprecated: -32BitInstall

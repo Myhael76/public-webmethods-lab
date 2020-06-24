@@ -7,6 +7,7 @@ RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docke
     yum install -y docker-ce && \
     yum install -y net-tools && \
     yum install -y less && \
+    yum install -y telnet && \
     yum -y update && \
     yum clean all && \
     rm -rf /var/cache/yum
