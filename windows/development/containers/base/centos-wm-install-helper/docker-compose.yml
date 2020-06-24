@@ -1,0 +1,17 @@
+version: "3.5"
+
+networks:
+    project_internal_network:
+      external: false
+services:
+  centos-wm-install-helper-base:
+    build: ./build
+    image: centos-wm-install-helper
+    container_name: wm-install-helper-base
+    hostname: wm-install-helper-base
+    volumes:
+      - ${SAG_WM_INSTALL_BASE_DIR}/mount/:/mnt/wm-install-base-mount/
+      #- ${SAG_PRODUCT_IMAGE}:/mnt/wm-install-files/products.zip
+      #- ${SAG_INSTALLER_BIN}:/mnt/wm-install-files/installer.bin
+      #- ${SAG_UPD_MGR_BIN}:/mnt/wm-install-files/sum-bootstrap.bin
+    entrypoint: ${ENTRY_POINT}
