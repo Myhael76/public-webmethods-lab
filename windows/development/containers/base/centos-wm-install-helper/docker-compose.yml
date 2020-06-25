@@ -14,4 +14,5 @@ services:
       - ${SAG_PRODUCT_IMAGE}:/mnt/wm-install-files/products.zip
       - ${SAG_INSTALLER_BIN}:/mnt/wm-install-files/installer.bin
       - ${SAG_UPD_MGR_BIN}:/mnt/wm-install-files/sum-bootstrap.bin
+      - /var/run/docker.sock:/var/run/docker.sock
     entrypoint: ${ENTRY_POINT}
