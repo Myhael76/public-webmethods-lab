@@ -1,0 +1,110 @@
+[sagadmin@60113ee7c1cd bin]$ ./mws.sh
+ My webMethods Server
+ Usage:
+     mws [options] command [params]
+          options:
+              -p platformdir   path to the platform install directory, default is
+              -s servername    server instance name, default is
+              -n nodename      cluster node name, default is
+                               only applicable if NODE_NAME is not defined
+                               in server.properties.sh
+              -d               start debug listener on port
+              -w timeout       wait timeout seconds for command completion
+          commands:
+              new              create new server instance
+                  options: n/a
+                  params:
+                      [-Dserver.name=*default*]
+                    * [-Ddb.type=ms oracle db2 mysqlee mysqlce postgresql]
+                    * [-Ddb.url=jdbc url]
+                    * [-Ddb.username=username]
+                    * [-Ddb.password=password]
+                      [-Ddb.driver=jdbc driver class name]
+                      [-Dnode.name=name, *master*]
+                      [-Dhttp.port=number, *8585*]
+                      [-Dhttps.port=number, *0*]
+                      [-Ddebug.port=number, *5000*]
+                      [-Djmx.port=number, *5002*]
+                      [-Dserver.features=core fabric *default* all]
+                      [-Dcomponents.include=fileset includes pattern]
+                      [-Dcomponents.exclude=fileset executes pattern]
+                      [-Dcomponents.overwrite=true]
+                      [-Dinstall.service=true]
+                      [-DjndiProviderUrl=jndiProviderUrl url]
+              init             initialize after 'new' or 'update' and shut down
+                  options: -p -s -n -d
+                  params: -Dany.java.system.property=value
+              run              start server instance in the same console
+                  options: -p -s -n -d
+                  params: -Dany.java.system.property=value
+              start            start server instance in a new console
+                  options: -p -s -n -d -w
+                  params: -Dany.java.system.property=value
+              stop             stop server instance
+                  options: -p -s -n -w
+                  params: -Dany.java.system.property=value
+              restart          restart server instance
+                  options: -p -s -n -d -w
+                  params: -Dany.java.system.property=value
+              ping             ping if server instance is running
+                  options: -s -n -w
+                  params:
+                      mws_username
+                      mws_password
+              updatesinfo      print updates and fixes information
+                  options: -s -n
+                  params: n/a
+              installservice   install server instance as service
+                  options: -p -s
+                  params:
+                      user_name_for_runnung_the_service
+              uninstallservice uninstall previously installed service
+                  options: -p -s
+                  params: n/a
+              update           update server instance classpath and deploy
+                               fixed or updated components
+                  options: -p -s -w
+                  params:
+                      [-Dnode.name=new_node_name]
+                      [-Dcomponents.overwrite=*false*]
+                      [-Ddont.update.classpath=*false*]
+              delete           delete server instance. ALL DATA IS GONE!
+                  options: -p -s -w
+                  params: n/a
+              getconfig        download configuration file
+                  options: -s
+                  params: configuration_file_name
+              putconfig        upload configuration file
+                  options: -s
+                  params: configuration_file_name
+              export           Export MWS runtime data for migration
+                  options: -s
+                  params:
+                      descriptor_file_full_path
+                      target_folder
+                      mws_username
+                      mws_password
+              import           Imports MWS runtime data from an existing MWS
+                  options: -s
+                  params:
+                      info_properties_file_full_path
+                      mws_username
+                      mws_password
+              help             print this help
+                  options: n/a
+                  params: n/a
+              ant              run embedded ant tool
+                  options: n/a
+                  params: -help for help
+              create-osgi-profile   create an OSGi profile for server instance
+                  options: -p -s
+                  params: n/a
+              delete-osgi-profile   delete the OSGi profile for server instance
+                  options: -p -s
+                  params: n/a
+              deprecate-osgi-profile   deprecate the OSGi profile for server instance
+                  options: -p -s
+                  params: n/a
+              update-osgi-profile   update the OSGi profile for server instance
+                  options: -p -s
+                  params: n/a

@@ -6,6 +6,13 @@ This folder is provided as a helper for local development environments for BPMS.
 
 All docker-compese files must remain in the same directory, otherwise the containers will not communicate.
 
+## Prerequisites
+
+- Windows development machine having enough RAM with Docker Desktop
+- Docker Desktop settings to allow mounting of:
+  - ./extra folder and subfolders
+  - all necessary folders containing Software AG assets: installer, update manager boostrap, images, licenses etc
+
 ## Database server preparation
 
 Steps to follow for a quick start:

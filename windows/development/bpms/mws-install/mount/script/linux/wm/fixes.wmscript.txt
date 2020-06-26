@@ -1,0 +1,4 @@
+installSP=N
+action=Install fixes from Empower
+installDir=/opt/softwareag
+selectedFixes=spro:all
