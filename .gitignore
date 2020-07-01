@@ -1,3 +1,4 @@
 *.jar
-empower-cred-fixes.txt
-br.xml
+empower-cred-fixes.*
+br.xm*
+windows/development/bpms/mws-install/mount/runs 
