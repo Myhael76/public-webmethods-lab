@@ -1,1 +1,0 @@
-These creadentials are obtained if you run at least once the update manager with online installation of at least one fix with script creation

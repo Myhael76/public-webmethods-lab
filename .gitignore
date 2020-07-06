@@ -1,4 +1,6 @@
 *.jar
-empower-cred-fixes.*
-br.xm*
-windows/development/bpms/mws-install/mount/runs 
+*credentials*
+common/mount/runs
+common/mount/temp
+set-env.*
+windows/common/mount/runs

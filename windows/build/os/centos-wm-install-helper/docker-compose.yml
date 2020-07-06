@@ -1,0 +1,24 @@
+version: "3.5"
+
+networks:
+    project_internal_network:
+      external: false
+services:
+  centos-wm-install-helper-base:
+    build: ./build
+    image: centos-wm-install-helper
+    container_name: wm-install-helper-base
+    hostname: wm-install-helper-base
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${SAG_PRODUCT_IMAGE}:/mnt/wm-install-files/products.zip
+      - ${SAG_INSTALLER_BIN}:/mnt/wm-install-files/installer.bin
+      - ${SAG_UPD_MGR_BIN}:/mnt/wm-install-files/sum-bootstrap.bin
+      - ./../../../common/mount/runs/:/mnt/runs/
+      - ./../../product/scripts/linux/:/mnt/scripts/
+      - ./../../../common/config/secret/:/mnt/secret/
+      - ${SAG_LIC_BR}:/mnt/licenses/br.xml
+      - ${SAG_LIC_MSR}:/mnt/licenses/msr.xml
+      - ${SAG_LIC_IS}:/mnt/licenses/is.xml
+      - ${SAG_LIC_UM}:/mnt/licenses/um.xml
+    entrypoint: ${ENTRY_POINT}

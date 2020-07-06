@@ -1,0 +1,1 @@
+Powershell.exe -executionpolicy Bypass -File .\05-stop.ps1

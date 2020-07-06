@@ -1,0 +1,1 @@
+Powershell.exe -executionpolicy Bypass -File .\04-start.ps1

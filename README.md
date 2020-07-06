@@ -1,6 +1,6 @@
 # public-webmethods-lab
 
-This project group a series of scripted tools and code examples useful in some typical webMethods development and operation scenarios.
+This project groups a series of scripted tools and code examples useful in some typical webMethods development and operation scenarios.
 
 These are personal assets, offered to the public as starting points in case of need and are not related in any way to Software AG official support.
 

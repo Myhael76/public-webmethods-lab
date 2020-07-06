@@ -22,5 +22,5 @@ find /opt/softwareag -type f -iname "*.pdf" -delete
 unalias cp #it is aliased to cp -i
 cp -r /mnt/wm-install-mws-mount/wms_extra_files/* /opt/softwareag/
 cp /mnt/wm-install-base-libs/mysql-connector-java-8.0.15.jar /opt/softwareag/MWS/lib/
-
+    
 # TODO: Continue
