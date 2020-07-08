@@ -3,7 +3,7 @@
 call .\pullJars.bat
 
 SET ENTRY_POINT=/opt/softwareag/script/create-all.sh
-docker-compose -f .\alpine_dbcc_docker-compose.yml up
+docker-compose -f .\S02-alpine_dbcc_docker-compose.yml up
 
 IF ERRORLEVEL 0 GOTO end
 
@@ -13,4 +13,4 @@ pause
 
 :end
 REM we do not need the stopped container
-docker-compose -f .\alpine_dbcc_docker-compose.yml down
+docker-compose -f .\S02-alpine_dbcc_docker-compose.yml down

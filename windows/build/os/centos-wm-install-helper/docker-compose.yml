@@ -12,6 +12,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${SAG_PRODUCT_IMAGE}:/mnt/wm-install-files/products.zip
+      - ${SAG_FIXES_IMAGE}:/mnt/wm-install-files/fixes.zip
       - ${SAG_INSTALLER_BIN}:/mnt/wm-install-files/installer.bin
       - ${SAG_UPD_MGR_BIN}:/mnt/wm-install-files/sum-bootstrap.bin
       - ./../../../common/mount/runs/:/mnt/runs/
@@ -21,4 +22,6 @@ services:
       - ${SAG_LIC_MSR}:/mnt/licenses/msr.xml
       - ${SAG_LIC_IS}:/mnt/licenses/is.xml
       - ${SAG_LIC_UM}:/mnt/licenses/um.xml
+    environment:
+      - SAG_FIXES_ONLINE=${SAG_FIXES_ONLINE}
     entrypoint: ${ENTRY_POINT}

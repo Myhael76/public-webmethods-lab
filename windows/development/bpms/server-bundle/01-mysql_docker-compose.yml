@@ -26,7 +26,7 @@ services:
       --sql-mode="PIPES_AS_CONCAT,IGNORE_SPACE,NO_KEY_OPTIONS,NO_TABLE_OPTIONS,NO_FIELD_OPTIONS"
       --character-set-server=utf8
       --collation-server=utf8_general_ci
-      --max_allowed_packet=24M
+      --max_allowed_packet=128M
       --default-storage-engine=innodb
       --lower_case_table_names=1
       --innodb_buffer_pool_size=5G

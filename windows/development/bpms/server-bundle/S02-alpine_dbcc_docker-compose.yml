@@ -12,7 +12,7 @@ services:
     networks:
       - project_internal_network
     volumes:
-      - ./extra/lib/mysql-connector-java-8.0.15.jar:/opt/softwareag/common/lib/ext/mysql-connector-java-8.0.15.jar
+      - ./../../../common/lib/ext/mysql-connector-java-8.0.15.jar:/opt/softwareag/common/lib/ext/mysql-connector-java-8.0.15.jar
       - ./extra/dbcc/script/:/opt/softwareag/script/
     entrypoint: ${ENTRY_POINT}
 

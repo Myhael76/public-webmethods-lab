@@ -37,6 +37,17 @@ All important scripts will produce output in the run folder, defined in ${RUN_FO
 # mount folders home
 /mnt
 
+# mysqlce driver
+# todo: variabilize this
+mysql-connector-java-8.0.15.jar
+
+#downloaded from maven repo
+
+# database server name
+mysql
+
+# database server port
+3306
 ```
 
 ## Project Conventions and Decisions
@@ -44,3 +55,4 @@ All important scripts will produce output in the run folder, defined in ${RUN_FO
 - Credentials are always put in files *credentials*. The file ".gitignore" contains this expression.
 - All scripting for linux will be done in bash. Powershell may be used, but it is more combersome to use and requires further installations
 - Powershell is used for windows scripting by default, bat files are used when the script is very simple or needs "double click" launching
+- (2020-07-08): All installations relying on the common osgi framework with 10.5 will have to consider the full /opt/softwareag folder as data, thus mount it. It just mutates too much to track all differences one by one

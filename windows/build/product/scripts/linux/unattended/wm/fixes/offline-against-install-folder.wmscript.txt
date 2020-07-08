@@ -1,0 +1,5 @@
+installSP=N
+action=Install fixes from image
+installDir=/opt/softwareag
+selectedFixes=spro:all
+imageFile=/mnt/wm-install-files/fixes.zip

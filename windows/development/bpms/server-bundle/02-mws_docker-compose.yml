@@ -1,0 +1,32 @@
+version: "3.5"
+
+volumes:
+  mws_instance: {}
+  mws_profiles: {}
+networks:
+    project_internal_network:
+      external: false
+services:
+  mws:
+    image: wm-mws-for-bpm
+    container_name: mws
+    hostname: mws
+    networks:
+      - project_internal_network
+    volumes:
+      - mws_instance:/opt/softwareag/MWS/server/default/
+      - mws_profiles:/opt/softwareag/profiles/
+      - ./extra/mws/bnd/mysql-connector-java-8.0.15.bnd:/opt/softwareag/MWS/lib/mysql-connector-java-8.0.15.bnd
+      - ./../../../common/lib/ext/mysql-connector-java-8.0.15.jar:/opt/softwareag/MWS/lib/mysql-connector-java-8.0.15.jar
+      - ./../../../common/lib/ext/mysql-connector-java-8.0.15.jar:/opt/softwareag/common/lib/ext/mysql-connector-java-8.0.15.jar
+      - ./../../../common/mount/runs/:/mnt/runs/
+      - ./../../../build/product/scripts/linux/unattended/wm/product/mws/entrypoint.bash:/opt/softwareag/entrypoint.bash
+    environment:
+      - MWS_DB_TYPE=mysqlce
+      - MWS_DB_URL=jdbc:mysql://mysql:3306/webmethods?useSSL=false
+      - MWS_DB_USERNAME=webmethods
+      - MWS_DB_PASSWORD=webmethods
+      - MWS_NODE_NAME=mws
+    ports:
+      - "${MWS_MAIN_PORT}:8585"
+    entrypoint: /opt/softwareag/entrypoint.bash

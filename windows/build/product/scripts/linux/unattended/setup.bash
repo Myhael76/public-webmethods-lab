@@ -46,14 +46,20 @@ echo `date +%y-%m-%dT%H.%M.%S_%3N`" - 03 - Applying latest fixes ..."
 echo `date +%y-%m-%dT%H.%M.%S_%3N`" - 03 - Applying latest fixes ..." >> ${RUN_FOLDER}/script-trace.txt
 cd /opt/sagsum/bin/
 
-cat ${SCRIPT_MSR_START_PATH}/wm/fixes/online-against-install-folder.wmscript.txt > /dev/shm/fixes.wmscript.txt
-cat /mnt/secret/empower-credentials-fixes.txt >> /dev/shm/fixes.wmscript.txt
+if [[ ${NEW_RET_VAL} -eq 1 ]] ; then
+    cat ${SCRIPT_MSR_START_PATH}/wm/fixes/online-against-install-folder.wmscript.txt > /dev/shm/fixes.wmscript.txt
+    cat /mnt/secret/empower-credentials-fixes.txt >> /dev/shm/fixes.wmscript.txt
 
-./UpdateManagerCMD.sh -readScript /dev/shm/fixes.wmscript.txt \
- > ${RUN_FOLDER}/03-patching.out \
- 2> ${RUN_FOLDER}/03-patching.err 
+    ./UpdateManagerCMD.sh -readScript /dev/shm/fixes.wmscript.txt \
+    > ${RUN_FOLDER}/03-patching.out \
+    2> ${RUN_FOLDER}/03-patching.err 
 
-rm /dev/shm/fixes.wmscript.txt
+    rm /dev/shm/fixes.wmscript.txt
+else
+    ./UpdateManagerCMD.sh -readScript ${SCRIPT_MSR_START_PATH}/wm/fixes/offline-against-install-folder.wmscript.txt \
+    > ${RUN_FOLDER}/03-patching.out \
+    2> ${RUN_FOLDER}/03-patching.err
+fi
 
 echo `date +%y-%m-%dT%H.%M.%S_%3N`" - Finished!"
 echo `date +%y-%m-%dT%H.%M.%S_%3N`" - Finished!" >> ${RUN_FOLDER}/script-trace.txt
