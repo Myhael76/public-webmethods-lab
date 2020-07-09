@@ -1,0 +1,1 @@
+Powershell.exe -executionpolicy Bypass -File .\02-down.ps1

@@ -5,6 +5,9 @@
 
 # ATTN: all paths below have to be mountable by Docker Desktop, set permissions accrodingly
 
+# This project Home
+$env:WM_LAB_HOME = (Split-Path -Parent -Path $MyInvocation.MyCommand.Definition) -replace "\\windows\\common\\config", ""
+
 # ?
 $env:SAG_WM_INSTALL_BASE_DIR="."
 

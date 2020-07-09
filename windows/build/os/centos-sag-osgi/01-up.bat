@@ -1,0 +1,1 @@
+Powershell.exe -executionpolicy Bypass -File .\01-up.ps1

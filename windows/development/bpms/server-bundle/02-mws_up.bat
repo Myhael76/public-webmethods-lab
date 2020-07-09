@@ -1,7 +1,3 @@
 @echo off
 
-call .\set-env.bat
-
-docker-compose -f .\02-mws_docker-compose.yml up
-
-pause
+Powershell.exe -executionpolicy Bypass -File .\02-mws_up.ps1

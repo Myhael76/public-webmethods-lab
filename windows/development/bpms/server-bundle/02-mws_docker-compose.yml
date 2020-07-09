@@ -1,26 +1,39 @@
 version: "3.5"
 
 volumes:
-  mws_instance: {}
-  mws_profiles: {}
+  mws-install-home: {}
+  mws-sum-home:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  mws-temp:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+
 networks:
     project_internal_network:
       external: false
 services:
   mws:
-    image: wm-mws-for-bpm
+    image: centos-sag-osgi-helper
     container_name: mws
     hostname: mws
     networks:
       - project_internal_network
     volumes:
-      - mws_instance:/opt/softwareag/MWS/server/default/
-      - mws_profiles:/opt/softwareag/profiles/
-      - ./extra/mws/bnd/mysql-connector-java-8.0.15.bnd:/opt/softwareag/MWS/lib/mysql-connector-java-8.0.15.bnd
-      - ./../../../common/lib/ext/mysql-connector-java-8.0.15.jar:/opt/softwareag/MWS/lib/mysql-connector-java-8.0.15.jar
-      - ./../../../common/lib/ext/mysql-connector-java-8.0.15.jar:/opt/softwareag/common/lib/ext/mysql-connector-java-8.0.15.jar
-      - ./../../../common/mount/runs/:/mnt/runs/
-      - ./../../../build/product/scripts/linux/unattended/wm/product/mws/entrypoint.bash:/opt/softwareag/entrypoint.bash
+      - mws-temp:/tmp/
+      - mws-install-home:/opt/sag/products/
+      - mws-sum-home:/opt/sag/sum/
+      - ${WM_LAB_HOME}/common/mount/extra:/opt/sag/mnt/extra/
+      - ${WM_LAB_HOME}/common/mount/runs/:/opt/sag/mnt/runs/
+      - ${WM_LAB_HOME}/common/config/secret/:/opt/sag/mnt/secret/
+      - ${WM_LAB_HOME}/linux/scripts/:/opt/sag/mnt/scripts/
+      - ${SAG_PRODUCT_IMAGE}:/opt/sag/mnt/wm-install-files/products.zip
+      - ${SAG_FIXES_IMAGE}:/opt/sag/mnt/wm-install-files/fixes.zip
+      - ${SAG_INSTALLER_BIN}:/opt/sag/mnt/wm-install-files/installer.bin
+      - ${SAG_UPD_MGR_BIN}:/opt/sag/mnt/wm-install-files/sum-bootstrap.bin
+      - ${SAG_LIC_BR}:/opt/sag/mnt/wm-install-files/licenses/br.xml
     environment:
       - MWS_DB_TYPE=mysqlce
       - MWS_DB_URL=jdbc:mysql://mysql:3306/webmethods?useSSL=false
@@ -29,4 +42,4 @@ services:
       - MWS_NODE_NAME=mws
     ports:
       - "${MWS_MAIN_PORT}:8585"
-    entrypoint: /opt/softwareag/entrypoint.bash
+    entrypoint: /opt/sag/mnt/scripts/entrypoints/mws.bash

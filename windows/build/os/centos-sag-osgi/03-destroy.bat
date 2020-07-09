@@ -1,0 +1,1 @@
+Powershell.exe -executionpolicy Bypass -File .\03-destroy.ps1
