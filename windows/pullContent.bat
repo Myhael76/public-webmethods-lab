@@ -1,4 +1,5 @@
-.\..\common\mount\extra\lib\ext\ goto download
+@echo off
+if exist .\..\common\mount\extra\lib\ext\ goto download
 mkdir .\..\common\mount\extra\lib\ext\
 :download
 if exist .\..\common\mount\extra\lib\ext\mysql-connector-java-8.0.15.jar  goto end
