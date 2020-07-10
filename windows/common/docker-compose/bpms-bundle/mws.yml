@@ -17,7 +17,7 @@ networks:
 services:
   mws:
     image: centos-sag-osgi-helper
-    container_name: mws
+    container_name: ${SAG_W_PJ_NAME}-mws
     hostname: mws
     networks:
       - n1

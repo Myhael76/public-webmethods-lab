@@ -7,7 +7,7 @@ services:
   dbcc:
     build: ./extra/dbcc/build
     image: mydbcc-1005
-    container_name: mydbcc
+    container_name: ${SAG_W_PJ_NAME}-mydbcc
     hostname: mydbcc
     networks:
       - n1

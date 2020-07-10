@@ -379,3 +379,75 @@ function buildDbcContainer(){
         logE "Docker is not aailable!"
     fi
 }
+
+function assureDbcParameters(){
+
+    if [[ ""${DBC_DB_TYPE} == "" ]]; then
+        export DBC_DB_TYPE="mysqlce"
+    fi
+    echo -e "${Green}DBC_DB_TYPE=${NC}"${DBC_DB_TYPE}
+
+    if [[ ""${DBC_DB_HOST} == "" ]]; then
+        export DBC_DB_HOST="mysql"
+    fi
+    echo -e "${Green}DBC_DB_HOST=${NC}"${DBC_DB_HOST}
+
+    if [[ ""${DBC_DB_PORT} == "" ]]; then
+        export DBC_DB_PORT="3306"
+    fi
+    echo -e "${Green}DBC_DB_PORT=${NC}"${DBC_DB_PORT}
+
+    if [[ ""${DBC_DB_NAME} == "" ]]; then
+        export DBC_DB_NAME="webmethods"
+    fi
+    echo -e "${Green}DBC_DB_NAME=${NC}"${DBC_DB_NAME}
+
+    if [[ ""${DBC_DB_URL} == "" ]]; then
+        if [[ ""${DBC_DB_TYPE} == "mysqlce" ]]; then
+            export DBC_DB_URL="jdbc:mysql://${DBC_DB_HOST}:${DBC_DB_PORT}/${DBC_DB_NAME}?useSSL=false"
+            export DBC_DB_TYPE2="mysql"
+        else
+            export DBC_DB_URL="NOT IMPLEMENTED YET"
+            export DBC_DB_TYPE2="NOT IMPLEMENTED YET"
+        fi
+    fi
+    echo -e "${Green}DBC_DB_URL=${NC}"${DBC_DB_URL}
+
+    if [[ ""${DBC_DB_USERNAME} == "" ]]; then
+        export DBC_DB_USERNAME="webmethods"
+    fi
+    echo -e "${Green}DBC_DB_USERNAME=${NC}"${DBC_DB_USERNAME}
+
+    if [[ ""${DBC_DB_PASSWORD} == "" ]]; then
+        export DBC_DB_PASSWORD="webmethods"
+    fi
+    #echo -e "${Green}DBC_DB_PASSWORD=${NC}"${DBC_DB_PASSWORD}
+}
+function initializeDatabase(){
+
+    assureRunFolder
+    assureDbcParameters
+
+    temp=`(echo > /dev/tcp/${MWS_DB_HOST}/${MWS_DB_PORT}) >/dev/null 2>&1`
+    CHK_DB_UP=$?
+    
+    logI "CHK_DB_UP: ${CHK_DB_UP}"
+
+    if [[ ${CHK_DB_UP} -eq 0 ]] ; then
+        cd ${SAG_INSTALL_HOME}/common/db/bin/
+        ./dbConfigurator.sh \
+            --action create \
+            --dbms ${DBC_DB_TYPE2} \
+            --url "${DBC_DB_URL}" \
+            --component All \
+            --user "${DBC_DB_USERNAME}" \
+            --password "${DBC_DB_PASSWORD}" \
+            --version latest \
+            --printActions \
+            > ${SAG_RUN_FOLDER}/db-initialize.out \
+            2> ${SAG_RUN_FOLDER}/db-initialize.err
+        # TODO: Error check
+    else
+        logE "Database is not reachable!"
+    fi
+}

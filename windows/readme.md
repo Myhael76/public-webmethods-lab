@@ -58,3 +58,4 @@ mysql
 - (2020-07-08): All installations relying on the common osgi framework with 10.5 will have to consider the full /opt/softwareag folder as data, thus mount it. It just mutates too much to track all differences one by one
 - All project environment variables are prefixed by SAG_
 - All project environment variables valid in Windows (host) shells are prefixed with SAG_W_
+- container names will always be prefixed by the project name, same way docker-compose does with networks or volumes. Example: bpms1-mysql

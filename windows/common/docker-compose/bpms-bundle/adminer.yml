@@ -6,7 +6,7 @@ networks:
 services:
   adminer:
     image: adminer
-    container_name: adminer
+    container_name: ${SAG_W_PJ_NAME}-adminer
     hostname: adminer
     networks:
       - n1
