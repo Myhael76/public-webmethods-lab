@@ -15,9 +15,9 @@ $env:SAG_W_WM_LAB_HOME = (Split-Path -Parent -Path $MyInvocation.MyCommand.Defin
 Write-Host "SAG_W_ENTRY_POINT: " -NoNewline
 if (-not (Test-Path env:SAG_W_ENTRY_POINT)) { 
 	$env:SAG_W_ENTRY_POINT="tail -f /dev/null"
-	Write-Host "Using default SAG_W_ENTRY_POINT: " -ForegroundColor Yellow -NoNewline
+	Write-Host "Using default: " -ForegroundColor Yellow -NoNewline
 } else {
-	Write-Host "Using provided SAG_W_ENTRY_POINT: " -ForegroundColor Green -NoNewline
+	Write-Host "Using provided: " -ForegroundColor Green -NoNewline
 }
 Write-Host  $env:SAG_W_ENTRY_POINT
 
@@ -56,6 +56,15 @@ $env:SAG_W_LIC_IS="c:\your-path\IS.xml"
 
 # Universal Messaging Realm Server
 $env:SAG_W_LIC_UM="c:\your-path\UM.xml"
+# MashZone NG  Server
+$env:SAG_W_LIC_MZNG="c:\your-path\MashZoneNextGen.xml"
+# Terracotta BigMemory Server
+$env:SAG_W_LIC_TC="c:\your-path\terracotta-license.key"
+# API MicroGateway
+$env:SAG_W_LIC_API_MICROGW="c:\your-path\Microgateway.xml"
+# Digital Event Services
+$env:SAG_W_LIC_DES="c:\your-path\Digital_Event_Services.xml"
+
 
 # ######### Proxy
 # uncomment if used and set the correct value
@@ -68,60 +77,31 @@ $env:SAG_W_LIC_UM="c:\your-path\UM.xml"
 
 # $env:HTTP_PROXY_URL=http://proxy-server-here:12345
 
-# ######### Ports
+########## Ports
 # Convention:
-# all ports are defined as 5XXYY, where
-#  XX is the number of the project 
+# all ports are defined as XXXYY, where
+#  XXX is the prefix of the project 
 #  YY is one of the following
-#  - 85 -> MWS
-#  - 50 -> Main IS, contining TE client
-#  - 6? -> more IS / MSR ports
+#  - 02 -> MWS
+#  - 03 -> Main IS, contining TE client
+#  - 2? -> more IS / MSR ports
 # Give acronyms to ISes (e.g. below TE)
 # These ports are set on the docker-compose project, the below ones are examples
 # Set default values if not provided here
 
-Write-Host "SAG_W_ADMINER_PORT: " -NoNewline
-if (-not (Test-Path env:SAG_W_ADMINER_PORT)) { 
-	$env:SAG_W_ADMINER_PORT="50580"
-	Write-Host "Using default SAG_W_ADMINER_PORT: " -ForegroundColor Yellow -NoNewline
+Write-Host "SAG_W_PROJECT_PORT_PREFIX: " -NoNewline
+if (-not (Test-Path env:SAG_W_PROJECT_PORT_PREFIX)) { 
+	$env:SAG_W_PROJECT_PORT_PREFIX="505"
+	Write-Host "Using default: " -ForegroundColor Yellow -NoNewline
 } else {
-	Write-Host "Using provided SAG_W_ADMINER_PORT: " -ForegroundColor Green -NoNewline
+	Write-Host "Using provided: " -ForegroundColor Green -NoNewline
 }
-Write-Host  $env:SAG_W_ADMINER_PORT
+Write-Host  $env:SAG_W_PROJECT_PORT_PREFIX
 
-Write-Host "SAG_W_MWS_PORT: " -NoNewline
-if (-not (Test-Path env:SAG_W_MWS_PORT)) { 
-	$env:SAG_W_MWS_PORT="50585"
-	Write-Host "Using default SAG_W_MWS_PORT: " -ForegroundColor Yellow -NoNewline
-} else {
-	Write-Host "Using provided SAG_W_MWS_PORT: " -ForegroundColor Green -NoNewline
-}
-Write-Host  $env:SAG_W_MWS_PORT
+$env:SAG_W_MYSQL_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"00"
+$env:SAG_W_ADMINER_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"01"
+$env:SAG_W_MWS_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"02"
+$env:SAG_W_IS_TE_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"03"
+$env:SAG_W_UM_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"04"
+$env:SAG_W_AE_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"05"
 
-Write-Host "SAG_W_IS_TE_PORT: " -NoNewline
-if (-not (Test-Path env:SAG_W_IS_TE_PORT)) { 
-	$env:SAG_W_IS_TE_PORT="50555"
-	Write-Host "Using default SAG_W_IS_TE_PORT: " -ForegroundColor Yellow -NoNewline
-} else {
-	Write-Host "Using provided SAG_W_IS_TE_PORT: " -ForegroundColor Green -NoNewline
-}
-Write-Host  $env:SAG_W_IS_TE_PORT
-
-Write-Host "SAG_W_UM_PORT: " -NoNewline
-if (-not (Test-Path env:SAG_W_UM_PORT)) { 
-	$env:SAG_W_UM_PORT="50590"
-	Write-Host "Using default SAG_W_UM_PORT: " -ForegroundColor Yellow -NoNewline
-} else {
-	Write-Host "Using provided SAG_W_UM_PORT: " -ForegroundColor Green -NoNewline
-}
-Write-Host  $env:SAG_W_UM_PORT
-
-#Analytic Engine port
-Write-Host "SAG_W_AE_PORT: " -NoNewline
-if (-not (Test-Path env:SAG_W_AE_PORT)) { 
-	$env:SAG_W_AE_PORT="50515"
-	Write-Host "Using default SAG_W_AE_PORT: " -ForegroundColor Yellow -NoNewline
-} else {
-	Write-Host "Using provided SAG_W_AE_PORT: " -ForegroundColor Green -NoNewline
-}
-Write-Host  $env:SAG_W_AE_PORT
