@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd /opt/softwareag/common/db/bin/
+cd ${SAG_INSTALL_HOME}/common/db/bin/
 
 ./dbConfigurator.sh \
     --action create \
@@ -12,3 +12,5 @@ cd /opt/softwareag/common/db/bin/
     --version latest \
     --printActions
 
+# Params hardwired for the moment
+# TODO: parametrize this

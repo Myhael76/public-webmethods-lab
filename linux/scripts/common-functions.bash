@@ -11,7 +11,7 @@ export NC='\033[0m' 				  	# No Color
 export Green="\033[0;32m"        		# Green
 export Cyan="\033[0;36m"         		# Cyan
 
-LOG_TOKEN_NC="COMMMON"
+LOG_TOKEN_NC="PUBLIC_WM_LAB Common"
 LOG_TOKEN="${Green}COMMON${NC}"
 
 function logI(){
@@ -22,6 +22,15 @@ function logI(){
 function logE(){
     echo -e `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN} - ${RED}${1}${NC}"
     echo `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN_NC} -ERROR- ${1}" >> ${SAG_RUN_FOLDER}/script.trace.log
+}
+
+function takeInstallationSnapshot(){
+    # $1 is the "tag" of the snapshot
+    if [[ ${SAG_TAKE_SNAPHOTS} -eq 1 ]]; then
+        logI "Taking snapshot ${1} ..."
+        mkdir -p /${SAG_RUN_FOLDER}/snapshots/$1/
+        cp -r /opt/sag/products /${SAG_RUN_FOLDER}/snapshots/$1/
+    fi
 }
 
 function assureRunFolder(){
@@ -162,9 +171,7 @@ function createMwsInstance(){
 
     if [[ ${CHK_DB_UP} -eq 0 ]] ; then
 
-        logI "Taking snapshot before creation..."
-        mkdir -p /${SAG_RUN_FOLDER}/snapshots/IC-01-before-instance-creation/
-        cp -r /opt/sag/products /${SAG_RUN_FOLDER}/snapshots/IC-01-before-instance-creation/
+        takeInstallationSnapshot IC-01-before-instance-creation
 
         # TODO: parametrize eventually
         if [[ ""${MWS_DB_TYPE} == "mysqlce" ]]; then
@@ -201,9 +208,7 @@ function createMwsInstance(){
         NEW_RET_VAL=$?
         popd
 
-        logI "Taking snapshot after creation..."
-        mkdir -p /${SAG_RUN_FOLDER}/snapshots/IC-02-after-creation/
-        cp -r /opt/sag/products /${SAG_RUN_FOLDER}/snapshots/IC-02-after-creation/
+        takeInstallationSnapshot IC-02-after-creation
 
         if [[ ${NEW_RET_VAL} -eq 0 ]] ; then
             logI "Instance default created, initializing ..."
@@ -213,9 +218,7 @@ function createMwsInstance(){
             MWS_INIT_RESULT=$?
             popd
 
-            logI "Taking snapshot after init..."
-            mkdir -p /${SAG_RUN_FOLDER}/snapshots/IC-03-after-init/
-            cp -r /opt/sag/products /${SAG_RUN_FOLDER}/snapshots/IC-03-after-init/
+            takeInstallationSnapshot IC-03-after-init
 
             if [[ ${MWS_INIT_RESULT} -eq 0 ]] ; then
                 logI "Instance default initialized "
@@ -239,18 +242,15 @@ function setupMwsForBpm(){
     logI "Setting up MWS for BPM"
     installProducts ${SAG_SCRIPTS_HOME}/unattended/wm/products/mws/bpm-set-1.wmscript.txt
     if [[ ${RESULT_installProducts} -eq 0 ]] ; then
-        logI "Taking Snapshot after install"
-        mkdir -p ${SAG_RUN_FOLDER}/snapshots/after-install/
-        cp -r /opt/sag/products ${SAG_RUN_FOLDER}/snapshots/after-install/
+        takeInstallationSnapshot S-01-after-install
         logI "Bootstrapping Update Manager"
         bootstrapSum
         if [[ ${RESULT_bootstrapSum} -eq 0 ]] ; then
             logI "Applying fixes"
             patchInstallation
             if [[ ${RESULT_patchInstallation} -eq 0 ]] ; then
-                logI "Taking Snapshot after patching"
-                mkdir -p ${SAG_RUN_FOLDER}/snapshots/after-patch/
-                cp -r /opt/sag/products ${SAG_RUN_FOLDER}/snapshots/after-patch/
+                takeInstallationSnapshot S-02-after-patch
+
                 logI "Creating default instance"
                 createMwsInstance
 
@@ -275,28 +275,107 @@ function setupMwsForBpm(){
 }
 
 function startupMwsContainerEntrypoint(){
-    unset SAG_RUN_FOLDER # force new run folder
+    unset SAG_RUN_FOLDER # force new run folder, useful only for running manually
     assureRunFolder
-    HEALTHY=1
-    if [ ! -d "/opt/sag/products/MWS/server/default/bin" ] ; then
-        HEALTHY=0
-        logI "Container has not been set up, installing and creating the instance"
-        setupMwsForBpm
-        if [[ ${RESULT_setupMwsForBpm} -eq 0 ]] ; then
-            logI "Setup Successful"
-            HEALTHY=1
-        else
-            logE "Setup failed"
+
+    assureMwsInstanceParameters
+    temp=`(echo > /dev/tcp/${MWS_DB_HOST}/${MWS_DB_PORT}) >/dev/null 2>&1`
+    CHK_DB_UP=$?
+    
+    logI "CHK_DB_UP: ${CHK_DB_UP}"
+
+    if [[ ${CHK_DB_UP} -eq 0 ]] ; then
+
+        HEALTHY=1
+        if [ ! -d "/opt/sag/products/MWS/server/default/bin" ] ; then
+            HEALTHY=0
+            logI "Container has not been set up, installing and creating the instance"
+            setupMwsForBpm
+            if [[ ${RESULT_setupMwsForBpm} -eq 0 ]] ; then
+                logI "Setup Successful"
+                HEALTHY=1
+            else
+                logE "Setup failed"
+            fi
         fi
-    fi
-    if [[ ${HEALTHY} -eq 1 ]] ; then
-        cd /opt/sag/products/MWS/bin/
-        ./mws.sh run
+        if [[ ${HEALTHY} -eq 1 ]] ; then
+            takeInstallationSnapshot Start-01-before-start
+            logI "Starting MWS, look at ${SAG_RUN_FOLDER}/run.out"
+            cd /opt/sag/products/MWS/bin/
+            ./mws.sh run 1>>${SAG_RUN_FOLDER}/run.out 2>>run.err
+            logI "MWS run exited: $? Taking snapshot"
+            takeInstallationSnapshot Start-02-after-stop
+        else
+            logE "Cannot start, instance is not healthy"
+        fi
     else
-        logE "Cannot start, instance is not healthy"
+        logE "Cannot start: database must be up!"
     fi
 
     # TODO: Remove when ready
     logI "Stopping for debug, CTRL-C to finish"
     tail -f /dev/null
+}
+
+function startInstallerInAttendedMode(){
+    unset SAG_RUN_FOLDER # force new run folder, useful only for running manually
+    assureRunFolder
+    /opt/sag/mnt/wm-install-files/installer.bin -console \
+        -installDir /opt/sag/products \
+        -readImage /opt/sag/mnt/wm-install-files/products.zip \
+        -writeScript ${SAG_RUN_FOLDER}/install.wmscript.txt
+}
+
+function setupDbc(){
+    assureRunFolder
+    logI "Setting up Database Configurator"
+    installProducts ${SAG_SCRIPTS_HOME}/unattended/wm/products/dbc/install.dbc.wmscript.txt
+    if [[ ${RESULT_installProducts} -eq 0 ]] ; then
+        takeInstallationSnapshot Setup-01-after-install
+        logI "Bootstrapping Update Manager"
+        bootstrapSum
+        if [[ ${RESULT_bootstrapSum} -eq 0 ]] ; then
+            logI "Applying fixes"
+            patchInstallation
+            if [[ ${RESULT_patchInstallation} -eq 0 ]] ; then
+                takeInstallationSnapshot Setup-02-after-patch
+                RESULT_setupDbc=0
+            else
+                logE "Patching failed: ${PATCH_RESULT}"
+                RESULT_setupDbc=3 # 3 - patching failed
+            fi
+        else
+            logE "SUM Bootstrap failed: ${SUM_BOOT_RESULT}"
+            RESULT_setupDbc=2 # 2 - bootstrap failed
+        fi
+    else
+        logE "Installation failed: ${INSTALL_RESULT}"
+        RESULT_setupDbc=1 # 1 - installation failed
+    fi
+}
+
+function buildDbcContainer(){
+    assureRunFolder
+    docker info >/dev/null 2>&1
+    
+    if [[ $? -eq 0 ]]; then
+        if [ ! -d "/opt/sag/products/common" ] ; then
+            setupDbc
+            if [[ ${RESULT_setupDbc} -eq 0 ]] ; then
+                logI "Building container mydbcc-1005"
+                cp ${SAG_SCRIPTS_HOME}/unattended/wm/products/dbc/Dockerfile /opt/sag/products
+                pushd .
+                cd /opt/sag/products
+                docker build -t mydbcc-1005 .
+                docker image prune -f # remove intermediary alpine + jvm image or older untagged mydbcc
+                popd
+            else
+                logE "Setup failed"
+            fi
+        else
+            logE "Cannot install product: destination folder is not empty"
+        fi
+    else
+        logE "Docker is not aailable!"
+    fi
 }

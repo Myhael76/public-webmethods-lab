@@ -13,6 +13,6 @@ Docker must allow for the declared mounts in docker-compose.yml, configure it to
 Execute in order:
 
 - Create the image by calling the 01-up.bat command
-- Test it by calling 08-test-02.bat
+- Test it by calling 08-test-2-bash-in-existing-container.bat
 - Close the existing container by calling 02-down.bat
-- Call 08-test-01.bat to run an ad-hoc container linked to the host docker daemon
+- Call 08-test-1-bash-in-new-container.bat to run an ad-hoc container linked to the host docker daemon

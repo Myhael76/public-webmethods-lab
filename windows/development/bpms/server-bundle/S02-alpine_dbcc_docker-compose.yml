@@ -6,7 +6,7 @@ networks:
 services:
   dbcc:
     build: ./extra/dbcc/build
-    image: mydbcc:10.5
+    image: mydbcc-1005
     container_name: mydbcc
     hostname: mydbcc
     networks:

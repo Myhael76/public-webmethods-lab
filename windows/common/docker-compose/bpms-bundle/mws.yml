@@ -1,0 +1,45 @@
+version: "3.5"
+
+volumes:
+  mws-install-home: {}
+  mws-sum-home:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  mws-temp:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+
+networks:
+    n1:
+      external: false
+services:
+  mws:
+    image: centos-sag-osgi-helper
+    container_name: mws
+    hostname: mws
+    networks:
+      - n1
+    volumes:
+      - mws-temp:/tmp/
+      - mws-install-home:/opt/sag/products/
+      - mws-sum-home:/opt/sag/sum/
+      - ${SAG_W_RUNS_FOLDER}/:/opt/sag/mnt/runs/
+      - ${SAG_W_WM_LAB_HOME}/common/mount/extra:/opt/sag/mnt/extra/
+      - ${SAG_W_WM_LAB_HOME}/common/config/secret/:/opt/sag/mnt/secret/
+      - ${SAG_W_WM_LAB_HOME}/linux/scripts/:/opt/sag/mnt/scripts/
+      - ${SAG_W_PRODUCT_IMAGE}:/opt/sag/mnt/wm-install-files/products.zip
+      - ${SAG_W_FIXES_IMAGE}:/opt/sag/mnt/wm-install-files/fixes.zip
+      - ${SAG_W_INSTALLER_BIN}:/opt/sag/mnt/wm-install-files/installer.bin
+      - ${SAG_W_UPD_MGR_BIN}:/opt/sag/mnt/wm-install-files/sum-bootstrap.bin
+      - ${SAG_W_LIC_BR}:/opt/sag/mnt/wm-install-files/licenses/br.xml
+    environment:
+      - MWS_DB_TYPE=mysqlce
+      - MWS_DB_URL=jdbc:mysql://mysql:3306/webmethods?useSSL=false
+      - MWS_DB_USERNAME=webmethods
+      - MWS_DB_PASSWORD=webmethods
+      - MWS_NODE_NAME=mws
+    ports:
+      - "${SAG_W_MWS_PORT}:8585"
+    entrypoint: /opt/sag/mnt/scripts/entrypoints/mws.bash

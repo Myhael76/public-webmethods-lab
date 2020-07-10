@@ -56,3 +56,5 @@ mysql
 - All scripting for linux will be done in bash. Powershell may be used, but it is more combersome to use and requires further installations
 - Powershell is used for windows scripting by default, bat files are used when the script is very simple or needs "double click" launching
 - (2020-07-08): All installations relying on the common osgi framework with 10.5 will have to consider the full /opt/softwareag folder as data, thus mount it. It just mutates too much to track all differences one by one
+- All project environment variables are prefixed by SAG_
+- All project environment variables valid in Windows (host) shells are prefixed with SAG_W_

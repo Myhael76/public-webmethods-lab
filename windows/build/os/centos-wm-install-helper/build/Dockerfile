@@ -16,3 +16,12 @@ RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docke
     yum -y update && \
     yum clean all && \
     rm -rf /var/cache/yum
+
+ENV SAG_HOME=/opt/sag \
+    SAG_INSTALL_HOME=/opt/sag/products \
+    SAG_SUM_HOME=/opt/sag/sum \
+    SAG_OSGI_ORCHESTRATOR_HOME=/opt/sag/mnt/wm-install-files \
+    SAG_RUN_HOME=/opt/sag/mnt/runs \
+    SAG_SCRIPTS_HOME=/opt/sag/mnt/scripts \
+    SAG_SECRETS_HOME=/opt/sag/mnt/secret \
+    SAG_LICENSE_FOLDER=/opt/sag/mnt/wm-install-files/licenses

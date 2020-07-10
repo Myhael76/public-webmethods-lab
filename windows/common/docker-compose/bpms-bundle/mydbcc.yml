@@ -1,0 +1,22 @@
+version: "3.5"
+
+networks:
+    n1:
+      external: false
+services:
+  dbcc:
+    build: ./extra/dbcc/build
+    image: mydbcc-1005
+    container_name: mydbcc
+    hostname: mydbcc
+    networks:
+      - n1
+    volumes:
+      - ${SAG_W_RUNS_FOLDER}/:/opt/sag/mnt/runs/
+      - ${SAG_W_WM_LAB_HOME}/common/mount/extra:/opt/sag/mnt/extra/
+      - ${SAG_W_WM_LAB_HOME}/common/config/secret/:/opt/sag/mnt/secret/
+      - ${SAG_W_WM_LAB_HOME}/linux/scripts/:/opt/sag/mnt/scripts/
+#      - ./../../../../common/mount/extra/lib/ext/mysql-connector-java-8.0.15.jar:/opt/softwareag/common/lib/ext/mysql-connector-java-8.0.15.jar
+#      - ./extra/dbcc/script/:/opt/softwareag/script/
+    entrypoint: ${ENTRY_POINT}
+
