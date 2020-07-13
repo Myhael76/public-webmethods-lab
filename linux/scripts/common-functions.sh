@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # convention: f() sets global var RESULT_f numeric variable as result, 0 means success. Transform - in _ to avoid syntax errors
 # do not use "echo" mode function returns
@@ -22,6 +22,16 @@ function logI(){
 function logE(){
     echo -e `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN} - ${RED}${1}${NC}"
     echo `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN_NC} -ERROR- ${1}" >> ${SAG_RUN_FOLDER}/script.trace.log
+}
+
+function portIsReachable(){
+    # Params: $1 -> host $2 -> port
+    if [ -f /usr/bin/nc ]; then 
+        nc -z ${1} ${2}                                         # alpine image
+    else
+        temp=`(echo > /dev/tcp/${1}/${2}) >/dev/null 2>&1`      # centos image
+    fi
+    if [ $? -eq 0 ] ; then echo 1; fi
 }
 
 function takeInstallationSnapshot(){
@@ -363,10 +373,14 @@ function buildDbcContainer(){
             setupDbc
             if [[ ${RESULT_setupDbc} -eq 0 ]] ; then
                 logI "Building container mydbcc-1005"
+                logI "taking a snapshot of current images"
+                docker images > ${SAG_RUN_FOLDER}/docker-images-before-build.out
                 cp ${SAG_SCRIPTS_HOME}/unattended/wm/products/dbc/Dockerfile /opt/sag/products
                 pushd .
                 cd /opt/sag/products
-                docker build -t mydbcc-1005 .
+                docker build -t mydbcc-1005 . >${SAG_RUN_FOLDER}/container-image-build.out 2>/${SAG_RUN_FOLDER}/container-image-build.err
+                logI "Image build, taking a snapshot of current images"
+                docker images > ${SAG_RUN_FOLDER}/docker-images-after-build.out
                 docker image prune -f # remove intermediary alpine + jvm image or older untagged mydbcc
                 popd
             else
@@ -423,31 +437,73 @@ function assureDbcParameters(){
     fi
     #echo -e "${Green}DBC_DB_PASSWORD=${NC}"${DBC_DB_PASSWORD}
 }
+
 function initializeDatabase(){
 
     assureRunFolder
     assureDbcParameters
 
-    temp=`(echo > /dev/tcp/${MWS_DB_HOST}/${MWS_DB_PORT}) >/dev/null 2>&1`
-    CHK_DB_UP=$?
-    
-    logI "CHK_DB_UP: ${CHK_DB_UP}"
+    if [ `portIsReachable ${DBC_DB_HOST} ${DBC_DB_PORT}` ]; then
+        B_IMPLEMENTED=0
+        #copy the necessary files
 
-    if [[ ${CHK_DB_UP} -eq 0 ]] ; then
-        cd ${SAG_INSTALL_HOME}/common/db/bin/
-        ./dbConfigurator.sh \
-            --action create \
-            --dbms ${DBC_DB_TYPE2} \
-            --url "${DBC_DB_URL}" \
-            --component All \
-            --user "${DBC_DB_USERNAME}" \
-            --password "${DBC_DB_PASSWORD}" \
-            --version latest \
-            --printActions \
-            > ${SAG_RUN_FOLDER}/db-initialize.out \
-            2> ${SAG_RUN_FOLDER}/db-initialize.err
-        # TODO: Error check
+        # TODO: parametrize eventually
+        if [[ ""${DBC_DB_TYPE} == "mysqlce" ]]; then
+            cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-8.0.15.jar /opt/sag/products/common/lib/ext/
+            B_IMPLEMENTED=1
+        else
+            logE "DB Type ${DBC_DB_TYPE} not implemented yet.."
+        fi        
+
+        if [[ ${B_IMPLEMENTED} -eq 1 ]]; then
+            cd ${SAG_INSTALL_HOME}/common/db/bin/
+            ./dbConfigurator.sh \
+                --action create \
+                --dbms ${DBC_DB_TYPE2} \
+                --url "${DBC_DB_URL}" \
+                --component All \
+                --user "${DBC_DB_USERNAME}" \
+                --password "${DBC_DB_PASSWORD}" \
+                --version latest \
+                --printActions \
+                > ${SAG_RUN_FOLDER}/db-initialize.out \
+                2> ${SAG_RUN_FOLDER}/db-initialize.err
+            # TODO: Error check
+            DBC_RESULT=$?
+            if [ ${DBC_RESULT} -ne 0 ] ; then
+                logE "Database initialization failed: ${DBC_RESULT}"
+            fi
+        fi
     else
-        logE "Database is not reachable!"
+        logE "Database is not reachable! Host ${DBC_DB_HOST}; port ${DBC_DB_PORT}"
     fi
+}
+
+function cleanupInstallFolder(){
+    # Potential improvement for data storage
+
+    # TODO: optimize, for the moment I found this to be more appropriate than selecting content in Dockerfile
+
+    pushd .
+
+    cd /opt/sag/products/profiles/SPM/bin
+
+    ./shutdown.sh
+
+    rm -rf /opt/sag/products/_documentation
+    rm -rf /opt/sag/products/bin
+    rm -rf /opt/sag/products/common/src
+    rm -rf /opt/sag/products/profiles/SPM         # not useful in docker
+    rm -rf /opt/sag/products/jvm/*.bck            # no backup needed
+    rm -rf /opt/sag/products/jvm/jvm/src.zip
+    rm -rf /opt/sag/products/jvm/jvm/demo
+    rm -rf /opt/sag/products/jvm/jvm/man
+    rm -rf /opt/sag/products/jvm/jvm/sample
+
+    find /opt/sag/products -type f -iname "*.pdf" -delete
+
+    # Special, to analyze further
+    rm -rf /opt/sag/products/MWS/server/template-derby.zip
+
+    popd
 }

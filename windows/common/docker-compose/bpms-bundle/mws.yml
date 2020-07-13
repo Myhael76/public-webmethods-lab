@@ -42,4 +42,4 @@ services:
       - MWS_NODE_NAME=mws
     ports:
       - "${SAG_W_MWS_PORT}:8585"
-    entrypoint: /opt/sag/mnt/scripts/entrypoints/mws.bash
+    entrypoint: /opt/sag/mnt/scripts/entrypoints/mws.sh

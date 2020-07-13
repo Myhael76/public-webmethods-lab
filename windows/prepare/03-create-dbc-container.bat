@@ -1,6 +1,6 @@
 @echo off
 
-SET ENTRY_POINT=/opt/sag/mnt/scripts/entrypoints/dbcCreate.bash
+SET SAG_W_ENTRY_POINT=/opt/sag/mnt/scripts/entrypoints/dbcCreate.sh
 
 cd ..\build\os\centos-wm-install-helper
 

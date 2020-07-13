@@ -1,14 +1,14 @@
 version: "3.5"
 
 networks:
-    project_internal_network:
+    n1:
       external: false
 services:
   adminer:
     image: adminer
-    container_name: adminer
+    container_name: ${SAG_W_PJ_NAME}-adminer
     hostname: adminer
     networks:
-      - project_internal_network
+      - n1
     ports:
-      - "8080:8080"
+      - "${SAG_W_ADMINER_PORT}:8080"

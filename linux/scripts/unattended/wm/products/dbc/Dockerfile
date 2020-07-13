@@ -31,6 +31,9 @@ COPY ./common/db/Optimize ${SAG_INSTALL_HOME}/common/db/Optimize
 COPY ./common/db/ProcessEngine ${SAG_INSTALL_HOME}/common/db/ProcessEngine
 COPY ./common/db/TradingNetworks ${SAG_INSTALL_HOME}/common/db/TradingNetworks
 
-WORKDIR /opt/sag/products
-
+ENV SAG_HOME=/opt/sag \
+    SAG_INSTALL_HOME=/opt/sag/products \
+    SAG_RUN_HOME=/opt/sag/mnt/runs \
+    SAG_SCRIPTS_HOME=/opt/sag/mnt/scripts \
+#WORKDIR /opt/sag/products
 # Note: this image is NOT intended to contain the concrete jdbc drivers e.g. mysqlce 

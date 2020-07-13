@@ -2,3 +2,5 @@
 *credentials*
 common/mount/runs
 set-env.*
+# exclude local test project
+bpms2-test

@@ -13,7 +13,7 @@ $component=$args[1]
 $cmdToken1=$args[2]
 $cmdToken2=$args[3]
 
-if(('mws','mysql','adminer').contains($component)){
+if(('mws','mysql','adminer','mydbcc').contains($component)){
     $dcYmlFileName="$projectFolder\docker-compose_$component.yml"
 
     if( -Not (Test-Path $dcYmlFileName -PathType Leaf)){
@@ -31,10 +31,45 @@ if(('mws','mysql','adminer').contains($component)){
                 "start"   {docker-compose -f $dcYmlFileName start;   break}
                 "stop"    {docker-compose -f $dcYmlFileName stop;    break}
                 Default {Write-Host "Unknown cmdToken2 for $component $cmdToken1 $cmdToken2"; break}
+            };break
+        }
+        "init"{
+            if('mydbcc'.Equals($component)){
+                # check if mysql is up (Automatic recursive start is not working, to investigate eventually)
+                # Test-NetConnection -ComputerName localhost -Port $env:SAG_W_MYSQL_PORT
+                # if(-Not $?){
+                #     Write-Host "My SQL Must be up! Starting..."
+                #     Invoke-Expression -Command "$MyInvocation.MyCommand.Definition mysql dc up"
+                # }
+                Test-NetConnection -ComputerName localhost -Port $env:SAG_W_MYSQL_PORT
+
+                $socket = new-object Net.Sockets.TcpClient
+                $socket.connect('localhost',$env:SAG_W_MYSQL_PORT)
+                $bConnected=$socket.Connected
+                if(${bConnected}){
+                    $env:SAG_W_ENTRY_POINT="/opt/sag/mnt/scripts/entrypoints/dbcInit.sh"
+                    docker-compose -f $dcYmlFileName up
+                    # Note: error management broken
+                    # TODO: explore this later
+                    # Write-Host "Exit $LastExitCode; $?"
+                    # if($?){
+                    #     Write-Host "Database creation successful"
+                    # }else{
+                    #     Write-Host "Database creation failed"
+                    #     Pause
+                    # }
+                    docker-compose -f $dcYmlFileName down -v;
+                    }
+                else {
+                    Write-Error "MySQL not up nor startable!"
+                }
+            }else{
+                Write-Host "Cannot init $component"
             }
+            break
         }
         "shell"{
-            docker exec -ti "$env:SAG_W_PJ_NAME-$component" $cmdToken2
+            docker exec -ti "$env:SAG_W_PJ_NAME-$component" $cmdToken2; break
         }
         Default {Write-Host "Unknown cmdToken1 for mws: $cmdToken1"; break}
     }

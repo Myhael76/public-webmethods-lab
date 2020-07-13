@@ -3,25 +3,25 @@ version: "3.5"
 volumes:
   mysql_data: {}
 networks:
-    project_internal_network:
+    n1:
       external: false
 services:
   mysql:
     image: mysql/mysql-server:5.7
-    container_name: mysql
+    container_name: ${SAG_W_PJ_NAME}-mysql
     hostname: mysql
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
-      - project_internal_network
+      - n1
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=webmethods
       - MYSQL_USER=webmethods
       - MYSQL_PASSWORD=webmethods
       - MYSQL_LOG_CONSOLE=true
-#      ports:
-#        - "3306:3306"
+    ports:
+      - "${SAG_W_MYSQL_PORT}:3306"
     command: >
       --sql-mode="PIPES_AS_CONCAT,IGNORE_SPACE,NO_KEY_OPTIONS,NO_TABLE_OPTIONS,NO_FIELD_OPTIONS"
       --character-set-server=utf8
