@@ -6,6 +6,3 @@ $PSThisScriptRoot = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
 # Import general project commands
 Write-Output "Script folder: $PSThisScriptRoot"
 Invoke-Expression -Command "$PSThisScriptRoot\..\..\..\common\scripts\project-commands.ps1 $PSThisScriptRoot $args"
-
-Write-Host "Pausing for debug"
-pause

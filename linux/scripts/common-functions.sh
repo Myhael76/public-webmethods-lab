@@ -284,6 +284,44 @@ function setupMwsForBpm(){
     fi
 }
 
+function setupBpmsNodeType1(){
+    assureRunFolder
+    logI "Setting up MWS for BPM"
+    installProducts ${SAG_SCRIPTS_HOME}/unattended/wm/products/bpmsNode/installBpmDevFullNode.wmscript.txt
+    if [[ ${RESULT_installProducts} -eq 0 ]] ; then
+        takeInstallationSnapshot S-01-after-install
+        logI "Bootstrapping Update Manager"
+        bootstrapSum
+        if [[ ${RESULT_bootstrapSum} -eq 0 ]] ; then
+            logI "Applying fixes"
+            patchInstallation
+            if [[ ${RESULT_patchInstallation} -eq 0 ]] ; then
+                takeInstallationSnapshot S-02-after-patch
+
+                # Already created (TBV)
+                # logI "Creating default instance"
+                # createMwsInstance
+
+                # if [[ ${RESULT_createMwsInstance} -eq 0 ]] ; then
+                #     RESULT_setupMwsForBpm=0
+                # else
+                #     logE "Create instance failed: ${PATCH_RESULT}"
+                #     RESULT_setupMwsForBpm=4
+                # fi
+            else
+                logE "Patching failed: ${PATCH_RESULT}"
+                RESULT_setupMwsForBpm=3 # 3 - patching failed
+            fi
+        else
+            logE "SUM Bootstrap failed: ${SUM_BOOT_RESULT}"
+            RESULT_setupMwsForBpm=2 # 2 - bootstrap failed
+        fi
+    else
+        logE "Installation failed: ${INSTALL_RESULT}"
+        RESULT_setupMwsForBpm=1 # 1 - installation failed
+    fi
+}
+
 function startupMwsContainerEntrypoint(){
     unset SAG_RUN_FOLDER # force new run folder, useful only for running manually
     assureRunFolder
@@ -327,6 +365,85 @@ function startupMwsContainerEntrypoint(){
     tail -f /dev/null
 }
 
+function shutdownBpmsType1ContainerEntrypoint(){
+    logI "Stopping IS"
+    /opt/sag/products/profiles/IS_default/bin/shutdown.sh
+
+    logI "Stopping Analysis Engine"
+    /opt/sag/products/optimize/analysis/bin/shutdown.sh
+
+    logI "Stopping MWS"
+    /opt/sag/products/profiles/MWS_default/bin/shutdown.sh
+
+    logI "Stopping UM"
+    /opt/sag/products/UniversalMessaging/server/umserver/bin/nserverdaemon stop
+
+    logI "Stopping SPM"
+    /opt/sag/products/profiles/SPM/bin/shutdown.sh
+
+    sleep 3
+    kill $(ps -ef | grep "/dev/null" | grep -v grep | awk '{print $2}')
+}
+
+function startupBpmsType1ContainerEntrypoint(){
+    unset SAG_RUN_FOLDER # force new run folder, useful only for running manually
+    assureRunFolder
+
+    assureMwsInstanceParameters
+    temp=`(echo > /dev/tcp/${MWS_DB_HOST}/${MWS_DB_PORT}) >/dev/null 2>&1`
+    CHK_DB_UP=$?
+    
+    logI "CHK_DB_UP: ${CHK_DB_UP}"
+
+    if [[ ${CHK_DB_UP} -eq 0 ]] ; then
+
+        HEALTHY=1
+        if [ ! -d "/opt/sag/products/MWS/server/default/bin" ] ; then
+            HEALTHY=0
+            logI "Container has not been set up, installing and creating the instance"
+            setupBpmsNodeType1
+            if [[ ${RESULT_setupMwsForBpm} -eq 0 ]] ; then
+                logI "Setup Successful"
+                # TODO: parametrize and enrich eventually
+                if [[ ""${MWS_DB_TYPE} == "mysqlce" ]]; then
+                    cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-8.0.15.jar /opt/sag/products/MWS/lib/
+                    cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-8.0.15.jar /opt/sag/products/common/lib/ext/
+                    cp -r /opt/sag/mnt/extra/overwrite/install-time/mws/mysqlce/* /opt/sag/products/
+                    cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-8.0.15.jar /opt/sag/products/IntegrationServer/lib/jars/custom 
+                    pushd .
+                    cd /opt/sag/products/MWS/bin
+                    ./mws.sh update
+                    popd
+                fi
+                HEALTHY=1
+            else
+                logE "Setup failed"
+            fi
+        fi
+        if [[ ${HEALTHY} -eq 1 ]] ; then
+            takeInstallationSnapshot Start-01-before-start
+
+            logI "Starting SPM"
+            /opt/sag/products/profiles/SPM/bin/startup.sh
+
+            logI "Starting UM"
+            /opt/sag/products/UniversalMessaging/server/umserver/bin/nserverdaemon start
+
+            logI "Starting IS"
+            /opt/sag/products/profiles/IS_default/bin/startup.sh
+
+            logI "Starting Analysis Engine"
+            /opt/sag/products/optimize/analysis/bin/startup.sh
+
+            logI "Starting MWS"
+            /opt/sag/products/profiles/MWS_default/bin/startup.sh
+        else
+            logE "Cannot start, instance is not healthy"
+        fi
+    else
+        logE "Cannot start: database must be up!"
+    fi
+}
 function startInstallerInAttendedMode(){
     unset SAG_RUN_FOLDER # force new run folder, useful only for running manually
     assureRunFolder
