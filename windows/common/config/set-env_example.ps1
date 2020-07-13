@@ -8,9 +8,6 @@
 # This project Home
 $env:SAG_W_WM_LAB_HOME = (Split-Path -Parent -Path $MyInvocation.MyCommand.Definition) -replace "\\windows\\common\\config", ""
 
-# ?
-#$env:SAG_WM_INSTALL_BASE_DIR="."
-
 # Allow scripts to overwrite the entrypoint
 Write-Host "SAG_W_ENTRY_POINT: " -NoNewline
 if (-not (Test-Path env:SAG_W_ENTRY_POINT)) { 
@@ -47,13 +44,10 @@ $env:SAG_W_TAKE_SNAPHOTS=0
 
 # Business Rules
 $env:SAG_W_LIC_BR="c:\your-path\BR.xml"
-
 # Microservices Runtime
 $env:SAG_W_LIC_MSR="c:\your-path\MSR.xml"
-
 # Integration Server
 $env:SAG_W_LIC_IS="c:\your-path\IS.xml"
-
 # Universal Messaging Realm Server
 $env:SAG_W_LIC_UM="c:\your-path\UM.xml"
 # MashZone NG  Server
@@ -91,17 +85,23 @@ $env:SAG_W_LIC_DES="c:\your-path\Digital_Event_Services.xml"
 
 Write-Host "SAG_W_PROJECT_PORT_PREFIX: " -NoNewline
 if (-not (Test-Path env:SAG_W_PROJECT_PORT_PREFIX)) { 
-	$env:SAG_W_PROJECT_PORT_PREFIX="505"
+	$env:SAG_W_PROJECT_PORT_PREFIX="401"
 	Write-Host "Using default: " -ForegroundColor Yellow -NoNewline
 } else {
 	Write-Host "Using provided: " -ForegroundColor Green -NoNewline
 }
 Write-Host  $env:SAG_W_PROJECT_PORT_PREFIX
 
-$env:SAG_W_MYSQL_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"00"
+$env:SAG_W_MYSQL_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"36"
 $env:SAG_W_ADMINER_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"01"
-$env:SAG_W_MWS_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"02"
-$env:SAG_W_IS_TE_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"03"
-$env:SAG_W_UM_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"04"
-$env:SAG_W_AE_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"05"
+$env:SAG_W_MWS_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"85"
+$env:SAG_W_IS_TE_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"55"
+$env:SAG_W_UM_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"90"
+$env:SAG_W_AE_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"15"
 
+Write-Host "MySQL port: $env:SAG_W_MYSQL_PORT"
+Write-Host "Adminer port: $env:SAG_W_ADMINER_PORT"
+Write-Host "MWS port: $env:SAG_W_MWS_PORT"
+Write-Host "IS_TE port: $env:SAG_W_IS_TE_PORT"
+Write-Host "UM port: $env:SAG_W_UM_PORT"
+Write-Host "Analytic Engine port: $env:SAG_W_AE_PORT"
