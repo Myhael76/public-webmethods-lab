@@ -69,7 +69,7 @@ if(('mws','mysql','adminer','mydbcc','bpms-node-type1').contains($component)){
                 if(${bConnected}){
 
                     Push-Location .
-                    cd ${PSThisScriptRoot}\..\..\
+                    Set-Location ${PSThisScriptRoot}\..\..\
                     .\pullContent.bat
                     Pop-Location
 

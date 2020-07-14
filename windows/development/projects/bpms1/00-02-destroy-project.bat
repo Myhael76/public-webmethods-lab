@@ -18,5 +18,7 @@ call .\02-bpmsNodeType1-03-destroy.bat
 echo Remove Database
 call .\01-mysql-03-destroy.bat
 
+del *.yml
+
 pause
 

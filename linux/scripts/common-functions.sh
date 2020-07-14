@@ -372,6 +372,9 @@ function shutdownBpmsType1ContainerEntrypoint(){
     logI "Stopping Analysis Engine"
     /opt/sag/products/optimize/analysis/bin/shutdown.sh
 
+    logI "Stopping Data Collector"
+    /opt/sag/products/optimize/dataCollector/bin/shutdown.sh
+
     logI "Stopping MWS"
     /opt/sag/products/profiles/MWS_default/bin/shutdown.sh
 
@@ -414,12 +417,28 @@ function startupBpmsType1ContainerEntrypoint(){
                     cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/common/lib/ext/
                     ln -s /opt/sag/products/common/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/MWS/lib/mysql-connector-java-5.1.49.jar
                     ln -s /opt/sag/products/common/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/IntegrationServer/lib/jars/custom/mysql-connector-java-5.1.49.jar
-                    #cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/MWS/lib/
-                    #cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/IntegrationServer/lib/jars/custom 
                     cp -r /opt/sag/mnt/extra/overwrite/install-time/mws/mysqlce/* /opt/sag/products/
                     pushd .
                     cd /opt/sag/products/MWS/bin
                     ./mws.sh update
+
+                    # first MWS startup needs to be controlled
+                    ./mws.sh start
+
+                    MWS_NOT_READY=1
+
+                    while [ ${MWS_NOT_READY} -ne 0 ]
+                    do
+                        logI "Waiting for MWS to initialize"
+                        sleep 60
+                        ./mws.sh ping Administrator manage
+                        MWS_NOT_READY=$?
+                    done
+                    logI "My WebMethods Server is ready"
+
+                    # copy over the configuration prepared for optimize and other configuration to be passed at install time for this node
+                    cp -rf /opt/sag/mnt/extra/overwrite/install-time/bpms-node-type1/* /opt/sag/products/
+
                     popd
                 fi
                 HEALTHY=1
@@ -441,6 +460,9 @@ function startupBpmsType1ContainerEntrypoint(){
 
             logI "Starting Analysis Engine"
             /opt/sag/products/optimize/analysis/bin/startup.sh
+
+            logI "Starting Data Collector"
+            /opt/sag/products/optimize/dataCollector/bin/startup.sh
 
             logI "Starting MWS"
             /opt/sag/products/profiles/MWS_default/bin/startup.sh

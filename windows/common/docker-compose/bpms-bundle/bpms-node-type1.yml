@@ -45,7 +45,6 @@ services:
       - SAG_FIXES_ONLINE=${SAG_W_FIXES_ONLINE}
     ports:
       - "${SAG_W_MWS_PORT}:8585"
-      - "${SAG_W_AE_PORT}:15000"
       - "${SAG_W_IS_TE_PORT}:5555"
       - "${SAG_W_UM_PORT}:9000"
     entrypoint: /opt/sag/mnt/scripts/entrypoints/bpmsNodeType1.sh

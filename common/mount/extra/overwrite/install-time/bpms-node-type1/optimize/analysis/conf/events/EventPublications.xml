@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties>
+    <!-- Comments and resource bundle sections -->
+    <comment>Event Publications Configuration</comment>
+    
+    <!-- KPI Readings Events Enabled property -->
+    <entry key="KPIReadingEventsEnabled" type="Boolean">
+       <rendering-properties>
+            <property name="type" value="checkbox"/>
+            <property name="size" value="25"/>
+            <property name="label" value="Publish Events for KPI Readings"/>
+        </rendering-properties>
+        <value>false</value>
+    </entry>
+
+    <!-- KPI Statistics Events Enabled property -->
+    <entry key="KPIStatisticEventsEnabled" type="Boolean">
+       <rendering-properties>
+            <property name="type" value="checkbox"/>
+            <property name="size" value="25"/>
+            <property name="label" value="Publish Events for KPI Statistics"/>
+        </rendering-properties>
+        <value>false</value>
+    </entry>
+
+    <!-- KPI Event Publication Filtering Options - to Include or Exclude the items in the KPI Filter List -->
+    <entry key="KPIEventFilterOption" type="String">
+        <rendering-properties>
+            <property name="type" value="radio"/>
+            <property name="choices" value="include,exclude"/>
+            <property name="titles" value="Include,Exclude"/>
+            <property name="default" value="include"/>
+            <property name="label" value="KPI Filter Option"/>
+        </rendering-properties>
+        <value>include</value>
+    </entry>
+
+    <!-- KPI Event Publication Filtering List if KPI Definitions Names to filter events on -->
+    <entry key="KPIEventFilterList" type="List">
+        <rendering-properties>
+            <property name="type" value="list"/>
+            <property name="rows" value="15"/>
+            <property name="column.size" value="80"/>
+            <property name="label" value="Filtered KPI Names"/>
+        </rendering-properties>
+        <value></value>
+    </entry>
+
+	<!-- Process Tracking Events Enabled property -->
+    <entry key="ProcessTrackingEventsEnabled" type="Boolean">
+       <rendering-properties>
+            <property name="type" value="checkbox"/>
+            <property name="size" value="25"/>
+            <property name="label" value="Publish Events for Process Tracking"/>
+        </rendering-properties>
+        <value>false</value>
+    </entry>
+
+    <!-- Process Tracking Event Filtering Options - to Include or Exclude process model names in the Filter List -->
+    <entry key="ProcessTrackingEventFilterOption" type="String">
+        <rendering-properties>
+            <property name="type" value="radio"/>
+            <property name="choices" value="include,exclude"/>
+            <property name="titles" value="Include,Exclude"/>
+            <property name="default" value="include"/>
+            <property name="label" value="Process Filter Option"/>
+        </rendering-properties>
+        <value>include</value>
+    </entry>
+    
+    <!-- Process Tracking Event Publication Filtering List of Process Names to filter events on -->
+    <entry key="ProcessTrackingEventFilterList" type="List">
+        <rendering-properties>
+            <property name="type" value="list"/>
+            <property name="rows" value="15"/>
+            <property name="column.size" value="80"/>
+            <property name="label" value="Filtered Process Names"/>
+        </rendering-properties>
+        <list-value></list-value>
+    </entry>
+    
+    <!-- Rule Violations Events Enabled property -->
+    <entry key="RuleViolationEventsEnabled" type="Boolean">
+       <rendering-properties>
+            <property name="type" value="checkbox"/>
+            <property name="size" value="25"/>
+            <property name="label" value="Publish Events for Rules"/>             
+        </rendering-properties>
+        <value>false</value>
+    </entry>
+    
+    <!-- Rule Violation Event Publication Filtering Options - to Include or Exclude the items in the Rule Violations Filter List -->
+    <entry key="RuleViolationEventFilterOption" type="String">
+        <rendering-properties>
+            <property name="type" value="radio"/>
+            <property name="choices" value="include,exclude"/>
+            <property name="titles" value="Include,Exclude"/>
+            <property name="default" value="include"/>
+            <property name="label" value="Rule Filter Option"/>
+        </rendering-properties>
+        <value>include</value>
+    </entry>
+
+    <!-- RuleViolation Event Publication Filtering List if Rule Definitions Names to filter events on -->
+    <entry key="RuleViolationEventFilterList" type="List">
+        <rendering-properties>
+            <property name="type" value="list"/>
+            <property name="rows" value="15"/>
+            <property name="column.size" value="80"/>
+            <property name="label" value="Filtered Rule Names"/>
+        </rendering-properties>
+		<list-value></list-value>
+    </entry> 
+</properties>
