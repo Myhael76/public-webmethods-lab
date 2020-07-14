@@ -39,7 +39,7 @@ All important scripts will produce output in the run folder, defined in ${RUN_FO
 
 # mysqlce driver
 # todo: variabilize this
-mysql-connector-java-8.0.15.jar
+mysql-connector-java-5.1.49.jar
 
 #downloaded from maven repo
 

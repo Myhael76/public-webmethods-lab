@@ -185,8 +185,8 @@ function createMwsInstance(){
 
         # TODO: parametrize eventually
         if [[ ""${MWS_DB_TYPE} == "mysqlce" ]]; then
-            cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-8.0.15.jar /opt/sag/products/MWS/lib/
-            cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-8.0.15.jar /opt/sag/products/common/lib/ext/
+            cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/MWS/lib/
+            cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/common/lib/ext/
             cp -r /opt/sag/mnt/extra/overwrite/install-time/mws/mysqlce/* /opt/sag/products/
         fi
 
@@ -382,6 +382,11 @@ function shutdownBpmsType1ContainerEntrypoint(){
     /opt/sag/products/profiles/SPM/bin/shutdown.sh
 
     sleep 3
+
+    logI "Taking Install snapshot after shutdown"
+    takeInstallationSnapshot after-shutdown
+
+    LogI "Stopping container"
     kill $(ps -ef | grep "/dev/null" | grep -v grep | awk '{print $2}')
 }
 
@@ -406,10 +411,12 @@ function startupBpmsType1ContainerEntrypoint(){
                 logI "Setup Successful"
                 # TODO: parametrize and enrich eventually
                 if [[ ""${MWS_DB_TYPE} == "mysqlce" ]]; then
-                    cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-8.0.15.jar /opt/sag/products/MWS/lib/
-                    cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-8.0.15.jar /opt/sag/products/common/lib/ext/
+                    cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/common/lib/ext/
+                    ln -s /opt/sag/products/common/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/MWS/lib/mysql-connector-java-5.1.49.jar
+                    ln -s /opt/sag/products/common/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/IntegrationServer/lib/jars/custom/mysql-connector-java-5.1.49.jar
+                    #cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/MWS/lib/
+                    #cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/IntegrationServer/lib/jars/custom 
                     cp -r /opt/sag/mnt/extra/overwrite/install-time/mws/mysqlce/* /opt/sag/products/
-                    cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-8.0.15.jar /opt/sag/products/IntegrationServer/lib/jars/custom 
                     pushd .
                     cd /opt/sag/products/MWS/bin
                     ./mws.sh update
@@ -566,7 +573,7 @@ function initializeDatabase(){
 
         # TODO: parametrize eventually
         if [[ ""${DBC_DB_TYPE} == "mysqlce" ]]; then
-            cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-8.0.15.jar /opt/sag/products/common/lib/ext/
+            cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/common/lib/ext/
             B_IMPLEMENTED=1
         else
             logE "DB Type ${DBC_DB_TYPE} not implemented yet.."

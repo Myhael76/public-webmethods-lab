@@ -40,7 +40,9 @@ services:
       - MWS_DB_URL=jdbc:mysql://mysql:3306/webmethods?useSSL=false
       - MWS_DB_USERNAME=webmethods
       - MWS_DB_PASSWORD=webmethods
-      - MWS_NODE_NAME=mws
+      - MWS_NODE_NAME=bpms-node-type1
+      - SAG_TAKE_SNAPHOTS=${SAG_W_TAKE_SNAPHOTS}
+      - SAG_FIXES_ONLINE=${SAG_W_FIXES_ONLINE}
     ports:
       - "${SAG_W_MWS_PORT}:8585"
       - "${SAG_W_AE_PORT}:15000"
