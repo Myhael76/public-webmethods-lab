@@ -67,7 +67,11 @@ if(('mws','mysql','adminer','mydbcc','bpms-node-type1').contains($component)){
                 $socket.connect('localhost',$env:SAG_W_MYSQL_PORT)
                 $bConnected=$socket.Connected
                 if(${bConnected}){
-                    call  $PSThisScriptRoot\..\..\pullContent.bat
+
+                    Push-Location .
+                    cd ${PSThisScriptRoot}\..\..\
+                    .\pullContent.bat
+                    Pop-Location
 
                     $env:SAG_W_ENTRY_POINT="/opt/sag/mnt/scripts/entrypoints/dbcInit.sh"
                     docker-compose -f $dcYmlFileName up

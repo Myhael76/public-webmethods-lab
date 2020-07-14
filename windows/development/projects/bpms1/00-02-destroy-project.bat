@@ -6,6 +6,9 @@ pause
 echo Shutdown BPMS Node
 call .\02-bpmsNodeType1-02-down.bat
 
+echo Shutdown Adminer Node
+call .\S01-adminer-02-down.bat
+
 echo Shutdown Database
 call .\01-mysql-02-down.bat
 
