@@ -15,6 +15,3 @@ switch  -exact -casesensitive  ($command) {
     "shell"   { docker exec -ti centos-sag-osgi-helper-base bash; break }
     Default   { Write-Host "Unknown command $command";       break }
 }
-
-Write-Host "Stopping for debug"
-pause

@@ -20,7 +20,3 @@ if( Test-Path $PSThisScriptRoot\..\..\..\common\config\set-env.ps1 -PathType Lea
 }else{
     Write-Host "Project set-env.ps1 file does not exist, set up the project first!"
 }
-
-
-Write-Host "Stopping for debug"
-pause

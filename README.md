@@ -34,26 +34,7 @@ In order to use this project you will need the following
 
 ## Quick start
 
-- Create a new "runs" folder (e.g. c:\yourPath\runs). Logs, run traces and snapshots will be put here during the runs. This folder will need periodical cleaning.
-- Copy _public-webmethods-lab_\windows\common\config\set-env_example.ps1 to _public-webmethods-lab_\windows\common\config\set-env.ps1 and change all the necessary values according to your environment.
-- Ensure that Docker Desktop allows the mounting of the run folder, installer, sum bootstrap, product and fix images, license files (Docker Desktop -> Settings -> Resources -> File Sharing)
-- Ensure Docker Desktop has at least 6 GB of available RAM (Docker Desktop -> Settings -> Resources -> Memory)
-- Prepare the installation helper image
-  - Run _public-webmethods-lab_\windows\prepare\01-install-helper-up.bat
-  - Wait for the image to be built
-  - Verify you can have a shell on the opened container with
-    - _public-webmethods-lab_\windows\build\os\centos-wm-install-helper\08-test-2-bash-in-existing-container.bat
-  - Shutdown the container with
-    - _public-webmethods-lab_\windows\build\os\centos-wm-install-helper\02-down.bat
-- Prepare the Software AG OSGI Helper image
-  - _public-webmethods-lab_\windows\prepare\02-sag-osgi-helper-up.bat
-  - wait for the image to be built
-  - Verify you can have a shell on the opened container with 
-    - _public-webmethods-lab_\windows\build\os\centos-sag-osgi-helper\08-test-2-bash-in-existing-container.bat
-  - Shutdown the container with
-    - _public-webmethods-lab_\windows\build\os\centos-sag-osgi-helper\02-down.bat
-- Prepare the database configuration docker image
-  - Run _public-webmethods-lab_\windows\prepare\03-create-dbc-container.bat
+- run afterClone.bat
 - Startup the default project
   - Startup the database _public-webmethods-lab_\windows\development\projects\bpms1\01-mysql-01-up.bat
   - Optionally, admininster the database with _public-webmethods-lab_\windows\development\projects\bpms1\S01-adminer-01-up.bat
