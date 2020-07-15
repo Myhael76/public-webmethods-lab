@@ -10,6 +10,7 @@ LABEL maintainer="Myhael76"
 
 RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
     yum install -y docker-ce && \
+    yum install -y unzip && \
     yum install -y net-tools && \
     yum install -y less && \
     yum install -y telnet && \

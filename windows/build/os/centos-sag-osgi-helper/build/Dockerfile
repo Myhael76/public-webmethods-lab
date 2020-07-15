@@ -9,6 +9,7 @@ LABEL maintainer="Myhael76"
 # see https://www.linuxtechi.com/proxy-settings-yum-command-on-rhel-centos-servers/
 
 RUN yum install -y net-tools && \
+    yum install -y unzip && \
     yum install -y less && \
     yum install -y telnet && \
     yum -y update && \

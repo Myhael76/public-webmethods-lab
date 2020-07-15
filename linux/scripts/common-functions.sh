@@ -11,17 +11,20 @@ export NC='\033[0m' 				  	# No Color
 export Green="\033[0;32m"        		# Green
 export Cyan="\033[0;36m"         		# Cyan
 
-LOG_TOKEN_NC="PUBLIC_WM_LAB Common"
-LOG_TOKEN="${Green}COMMON${NC}"
+if [[ ""${LOG_TOKEN} == "" ]]; then
+    LOG_TOKEN="PUBLIC_WM_LAB Common"
+fi
+LOG_TOKEN_C_I="${Green}INFO - ${LOG_TOKEN}${NC}"
+LOG_TOKEN_C_E="${RED}ERROR - ${Green}${LOG_TOKEN}${NC}"
 
 function logI(){
-    echo -e `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN} - ${1}"
-    echo `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN_NC} -INFO- ${1}" >> ${SAG_RUN_FOLDER}/script.trace.log
+    echo -e `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN_C_I} - ${1}"
+    echo `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN} -INFO- ${1}" >> ${SAG_RUN_FOLDER}/script.trace.log
 }
 
 function logE(){
-    echo -e `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN} - ${RED}${1}${NC}"
-    echo `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN_NC} -ERROR- ${1}" >> ${SAG_RUN_FOLDER}/script.trace.log
+    echo -e `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN_C_E} - ${RED}${1}${NC}"
+    echo `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN} -ERROR- ${1}" >> ${SAG_RUN_FOLDER}/script.trace.log
 }
 
 function portIsReachable(){
