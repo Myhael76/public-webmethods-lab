@@ -26,7 +26,7 @@ services:
       - bpms-node-type1-sum-home:/opt/sag/sum/
       - ${SAG_W_RUNS_FOLDER}/:/opt/sag/mnt/runs/
       - ${SAG_W_WM_LAB_HOME}/common/mount/extra:/opt/sag/mnt/extra/
-      - ${SAG_W_WM_LAB_HOME}/common/config/secret/:/opt/sag/mnt/secret/
+      - ${SAG_W_WM_LAB_HOME}/windows/common/config/secret/:/opt/sag/mnt/secret/
       - ${SAG_W_WM_LAB_HOME}/linux/scripts/:/opt/sag/mnt/scripts/
       - ${SAG_W_PRODUCT_IMAGE}:/opt/sag/mnt/wm-install-files/products.zip
       - ${SAG_W_FIXES_IMAGE}:/opt/sag/mnt/wm-install-files/fixes.zip
