@@ -286,7 +286,7 @@ function setupMwsForBpm(){
 
 function setupBpmsNodeType1(){
     assureRunFolder
-    logI "Setting up MWS for BPM"
+    logI "Setting up Node Type 1 for BPM"
     installProducts ${SAG_SCRIPTS_HOME}/unattended/wm/products/bpmsNode/installBpmDevFullNode.wmscript.txt
     if [[ ${RESULT_installProducts} -eq 0 ]] ; then
         takeInstallationSnapshot S-01-after-install
@@ -308,17 +308,18 @@ function setupBpmsNodeType1(){
                 #     logE "Create instance failed: ${PATCH_RESULT}"
                 #     RESULT_setupMwsForBpm=4
                 # fi
+                RESULT_setupBpmsNodeType1=0
             else
                 logE "Patching failed: ${PATCH_RESULT}"
-                RESULT_setupMwsForBpm=3 # 3 - patching failed
+                RESULT_setupBpmsNodeType1=3 # 3 - patching failed
             fi
         else
             logE "SUM Bootstrap failed: ${SUM_BOOT_RESULT}"
-            RESULT_setupMwsForBpm=2 # 2 - bootstrap failed
+            RESULT_setupBpmsNodeType1=2 # 2 - bootstrap failed
         fi
     else
         logE "Installation failed: ${INSTALL_RESULT}"
-        RESULT_setupMwsForBpm=1 # 1 - installation failed
+        RESULT_setupBpmsNodeType1=1 # 1 - installation failed
     fi
 }
 
@@ -366,23 +367,24 @@ function startupMwsContainerEntrypoint(){
 }
 
 function shutdownBpmsType1ContainerEntrypoint(){
+    assureRunFolder
     logI "Stopping IS"
-    /opt/sag/products/profiles/IS_default/bin/shutdown.sh
+    /opt/sag/products/profiles/IS_default/bin/shutdown.sh >/${SAG_RUN_FOLDER}/01-stop-is.out 2>/${SAG_RUN_FOLDER}/01-stop-is.err
 
     logI "Stopping Analysis Engine"
-    /opt/sag/products/optimize/analysis/bin/shutdown.sh
+    /opt/sag/products/optimize/analysis/bin/shutdown.sh >/${SAG_RUN_FOLDER}/02-stop-ae.out 2>/${SAG_RUN_FOLDER}/02-stop-ae.err
 
     logI "Stopping Data Collector"
-    /opt/sag/products/optimize/dataCollector/bin/shutdown.sh
+    /opt/sag/products/optimize/dataCollector/bin/shutdown.sh >/${SAG_RUN_FOLDER}/03-stop-dc.out 2>/${SAG_RUN_FOLDER}/03-stop-dc.err
 
     logI "Stopping MWS"
-    /opt/sag/products/profiles/MWS_default/bin/shutdown.sh
+    /opt/sag/products/profiles/MWS_default/bin/shutdown.sh >/${SAG_RUN_FOLDER}/04-stop-mws.out 2>/${SAG_RUN_FOLDER}/04-stop-mws.err
 
     logI "Stopping UM"
-    /opt/sag/products/UniversalMessaging/server/umserver/bin/nserverdaemon stop
+    /opt/sag/products/UniversalMessaging/server/umserver/bin/nserverdaemon stop >/${SAG_RUN_FOLDER}/05-stop-um.out 2>/${SAG_RUN_FOLDER}/05-stop-um.err
 
     logI "Stopping SPM"
-    /opt/sag/products/profiles/SPM/bin/shutdown.sh
+    /opt/sag/products/profiles/SPM/bin/shutdown.sh >/${SAG_RUN_FOLDER}/06-stop-spm.out 2>/${SAG_RUN_FOLDER}/06-stop-spm.err
 
     sleep 3
 
@@ -410,7 +412,7 @@ function startupBpmsType1ContainerEntrypoint(){
             HEALTHY=0
             logI "Container has not been set up, installing and creating the instance"
             setupBpmsNodeType1
-            if [[ ${RESULT_setupMwsForBpm} -eq 0 ]] ; then
+            if [[ ${RESULT_setupBpmsNodeType1} -eq 0 ]] ; then
                 logI "Setup Successful"
                 # TODO: parametrize and enrich eventually
                 if [[ ""${MWS_DB_TYPE} == "mysqlce" ]]; then
@@ -420,10 +422,10 @@ function startupBpmsType1ContainerEntrypoint(){
                     cp -r /opt/sag/mnt/extra/overwrite/install-time/mws/mysqlce/* /opt/sag/products/
                     pushd .
                     cd /opt/sag/products/MWS/bin
-                    ./mws.sh update
+                    ./mws.sh update >/${SAG_RUN_FOLDER}/PS01-update-mws.out 2>/${SAG_RUN_FOLDER}/PS01-update-mws.err
 
                     # first MWS startup needs to be controlled
-                    ./mws.sh start
+                    ./mws.sh start >/${SAG_RUN_FOLDER}/PS02-start-mws.out 2>/${SAG_RUN_FOLDER}/PS02-start-mws.err
 
                     MWS_NOT_READY=1
 
@@ -431,7 +433,7 @@ function startupBpmsType1ContainerEntrypoint(){
                     do
                         logI "Waiting for MWS to initialize"
                         sleep 60
-                        ./mws.sh ping Administrator manage
+                        ./mws.sh ping Administrator manage >/dev/null 2>/dev/null
                         MWS_NOT_READY=$?
                     done
                     logI "My WebMethods Server is ready"
@@ -450,22 +452,22 @@ function startupBpmsType1ContainerEntrypoint(){
             takeInstallationSnapshot Start-01-before-start
 
             logI "Starting SPM"
-            /opt/sag/products/profiles/SPM/bin/startup.sh
+            /opt/sag/products/profiles/SPM/bin/startup.sh >/${SAG_RUN_FOLDER}/UP-01-spm.out 2>/${SAG_RUN_FOLDER}/UP-01-spm.err
 
             logI "Starting UM"
-            /opt/sag/products/UniversalMessaging/server/umserver/bin/nserverdaemon start
+            /opt/sag/products/UniversalMessaging/server/umserver/bin/nserverdaemon start >/${SAG_RUN_FOLDER}/UP-02-um.out 2>/${SAG_RUN_FOLDER}/UP-02-um.err
 
             logI "Starting IS"
-            /opt/sag/products/profiles/IS_default/bin/startup.sh
+            /opt/sag/products/profiles/IS_default/bin/startup.sh >/${SAG_RUN_FOLDER}/UP-03-is.out 2>/${SAG_RUN_FOLDER}/UP-01-is.err
 
             logI "Starting Analysis Engine"
-            /opt/sag/products/optimize/analysis/bin/startup.sh
+            /opt/sag/products/optimize/analysis/bin/startup.sh >/${SAG_RUN_FOLDER}/UP-04-ae.out 2>/${SAG_RUN_FOLDER}/UP-04-ae.err
 
             logI "Starting Data Collector"
-            /opt/sag/products/optimize/dataCollector/bin/startup.sh
+            /opt/sag/products/optimize/dataCollector/bin/startup.sh >/${SAG_RUN_FOLDER}/UP-05-dc.out 2>/${SAG_RUN_FOLDER}/UP-05-dc.err
 
             logI "Starting MWS"
-            /opt/sag/products/profiles/MWS_default/bin/startup.sh
+            /opt/sag/products/profiles/MWS_default/bin/startup.sh >/${SAG_RUN_FOLDER}/UP-06-mws.out 2>/${SAG_RUN_FOLDER}/UP-06-mws.err
         else
             logE "Cannot start, instance is not healthy"
         fi
