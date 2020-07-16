@@ -524,13 +524,13 @@ function buildDbcContainer(){
             setupDbc
             if [[ ${RESULT_setupDbc} -eq 0 ]] ; then
                 logI "Building container mydbcc-1005"
-                logI "taking a snapshot of current images"
+                logI "Taking a snapshot of current images"
                 docker images > ${SAG_RUN_FOLDER}/docker-images-before-build.out
                 cp ${SAG_SCRIPTS_HOME}/unattended/wm/products/dbc/Dockerfile /opt/sag/products
                 pushd .
                 cd /opt/sag/products
                 docker build -t mydbcc-1005 . >${SAG_RUN_FOLDER}/container-image-build.out 2>/${SAG_RUN_FOLDER}/container-image-build.err
-                logI "Image build, taking a snapshot of current images"
+                logI "Image built, taking a snapshot of current images"
                 docker images > ${SAG_RUN_FOLDER}/docker-images-after-build.out
                 docker image prune -f # remove intermediary alpine + jvm image or older untagged mydbcc
                 popd
