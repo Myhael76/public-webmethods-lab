@@ -1,0 +1,1 @@
+Powershell.exe -executionpolicy Bypass -File .\local-commands.ps1 mws shell bash

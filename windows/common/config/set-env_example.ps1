@@ -75,10 +75,7 @@ $env:SAG_W_LIC_DES="c:\your-path\Digital_Event_Services.xml"
 # Convention:
 # all ports are defined as XXXYY, where
 #  XXX is the prefix of the project 
-#  YY is one of the following
-#  - 02 -> MWS
-#  - 03 -> Main IS, contining TE client
-#  - 2? -> more IS / MSR ports
+#  YY is one of the suffixes in the below code
 # Give acronyms to ISes (e.g. below TE)
 # These ports are set on the docker-compose project, the below ones are examples
 # Set default values if not provided here
@@ -92,8 +89,13 @@ if (-not (Test-Path env:SAG_W_PROJECT_PORT_PREFIX)) {
 }
 Write-Host  $env:SAG_W_PROJECT_PORT_PREFIX
 
-$env:SAG_W_MYSQL_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"36"
+# Supporting non Software AG software
 $env:SAG_W_ADMINER_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"01"
+$env:SAG_W_SAML_IDP1_CLEAR_PORT:SAG_W_PROJECT_PORT_PREFIX+"02"
+$env:SAG_W_SAML_IDP1_SSL_PORT:SAG_W_PROJECT_PORT_PREFIX+"03"
+$env:SAG_W_MYSQL_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"36"
+
+# Software AG platform ports
 $env:SAG_W_MWS_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"85"
 $env:SAG_W_IS_TE_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"55"
 $env:SAG_W_UM_PORT=$env:SAG_W_PROJECT_PORT_PREFIX+"90"
@@ -102,8 +104,10 @@ $env:SAG_W_AE_PORT_REG=$env:SAG_W_PROJECT_PORT_PREFIX+"16"
 $env:SAG_W_DC_PORT_CFG=$env:SAG_W_PROJECT_PORT_PREFIX+"25"
 $env:SAG_W_DC_PORT_REG=$env:SAG_W_PROJECT_PORT_PREFIX+"26"
 
-Write-Host "MySQL port: $env:SAG_W_MYSQL_PORT"
 Write-Host "Adminer port: $env:SAG_W_ADMINER_PORT"
+Write-Host "MySQL port: $env:SAG_W_MYSQL_PORT"
+Write-Host "SAML IdP clear port: $env:SAG_W_SAML_IDP1_CLEAR_PORT"
+Write-Host "SAML IdP SSL port: $env:SAG_W_SAML_IDP1_SSL_PORT"
 Write-Host "MWS port: $env:SAG_W_MWS_PORT"
 Write-Host "IS_TE port: $env:SAG_W_IS_TE_PORT"
 Write-Host "UM port: $env:SAG_W_UM_PORT"

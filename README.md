@@ -48,3 +48,46 @@ In order to use this project you will need the following
   - Initialize the database with _public-webmethods-lab_\windows\development\projects\bpms1\S02-alpine_dbcc_create-all.bat
   - Startup the bpms node with _public-webmethods-lab_\windows\development\projects\bpms1\02-bpmsNodeType1-01-up.bat
   - After MWS setup is finished manually set the configuration for optimize for process (default values). These will be set automatically in a future version
+
+## Common use cases
+
+### Refreshing the image for database configurator
+
+If your database configurator falls behind with respect to fixes you will need to update it to the latest version. Follow these steps
+
+- Ensure access to latest or newer fixes by one of the following
+  - set project to take the latest fixes online ($env:SAG_W_FIXES_ONLINE=1 in set-env.ps1) or
+  - provide newere fixes image ($env:SAG_W_FIXES_ONLINE=0 and $env:SAG_W_FIXES_IMAGE=c:\yourPath\fixes-file-name.zip)
+- Run _public-webmethods-lab_\windows\prepare\04-my-dbc-container-refresh.bat
+
+### Authoring new install scripts
+
+WebMethods installation scripts are found in the folder _public-webmethods-lab_\linux\scripts\unattended\wm\products.
+To experiment or produce new scripts begin with the following:
+1. run the project centos-wm-install-helper ( shortcut _public-webmethods-lab_\windows\build\os\centos-wm-install-helper\01-up.bat )
+2. obtain a shell in the started container ( shortcut _public-webmethods-lab_\windows\build\os\centos-wm-install-helper\08-test-2-bash-in-existing-container.bat )
+3. in the shell source the provided commands with:
+
+```bash
+. /opt/sag/mnt/scripts/common-functions.sh
+```
+
+The command will produce an output such as:
+
+```bash
+20-08-19T07.51.12_434 INFO - PUBLIC_WM_LAB Common - SAG_RUN_FOLDER set to /opt/sag/mnt/runs/run_20-08-19T07.51.12
+```
+
+4. Startup an attended installation with:
+
+```bash
+startInstallerInAttendedMode
+```
+
+5. Follow the wizzard and select your desired products. The installation script is automatically created in the run folder
+
+*Note*: in console mode the installer does not have the possibility of creating the script without installing the products. In our case the installation will also be produced. The installation itself is not maintained in a volume, once the project is stopped it will be thrown away.
+
+6. Verify the installation script and qualify it according to your local needs
+7. Close your shell
+8. Shutdown the project (installation will be thrown away, shortcut _public-webmethods-lab_\windows\build\os\centos-wm-install-helper\05-stop.bat

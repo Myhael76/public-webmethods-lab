@@ -17,17 +17,17 @@ fi
 LOG_TOKEN_C_I="${Green}INFO - ${LOG_TOKEN}${NC}"
 LOG_TOKEN_C_E="${RED}ERROR - ${Green}${LOG_TOKEN}${NC}"
 
-function logI(){
+logI(){
     echo -e `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN_C_I} - ${1}"
     echo `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN} -INFO- ${1}" >> ${SAG_RUN_FOLDER}/script.trace.log
 }
 
-function logE(){
+logE(){
     echo -e `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN_C_E} - ${RED}${1}${NC}"
     echo `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN} -ERROR- ${1}" >> ${SAG_RUN_FOLDER}/script.trace.log
 }
 
-function portIsReachable(){
+portIsReachable(){
     # Params: $1 -> host $2 -> port
     if [ -f /usr/bin/nc ]; then 
         nc -z ${1} ${2}                                         # alpine image
@@ -37,7 +37,7 @@ function portIsReachable(){
     if [ $? -eq 0 ] ; then echo 1; fi
 }
 
-function takeInstallationSnapshot(){
+takeInstallationSnapshot(){
     # $1 is the "tag" of the snapshot
     if [[ ${SAG_TAKE_SNAPHOTS} -eq 1 ]]; then
         logI "Taking snapshot ${1} ..."
@@ -46,7 +46,7 @@ function takeInstallationSnapshot(){
     fi
 }
 
-function assureRunFolder(){
+assureRunFolder(){
     if [[ ""${SAG_RUN_FOLDER} == "" ]]; then
         export SAG_RUN_FOLDER="/opt/sag/mnt/runs/run_"`date +%y-%m-%dT%H.%M.%S`
         mkdir -p ${SAG_RUN_FOLDER}
@@ -56,7 +56,7 @@ function assureRunFolder(){
 
 assureRunFolder
 
-function bootstrapSum(){
+bootstrapSum(){
     assureRunFolder
     logI "Bootstrapping SUM ..."
     /opt/sag/mnt/wm-install-files/sum-bootstrap.bin --accept-license -d /opt/sag/sum \
@@ -71,7 +71,7 @@ function bootstrapSum(){
     fi 
 }
 
-function installProducts(){
+installProducts(){
     # param $1 is the products installation script
 
     logI "Installing product ..."
@@ -91,7 +91,7 @@ function installProducts(){
     fi 
 }
 
-function patchInstallation(){
+patchInstallation(){
     ###### 03 - Patch installation
     # TODO: render patching optional with a parameter
     logI "Applying latest fixes ..."
@@ -116,7 +116,7 @@ function patchInstallation(){
     popd
 }
 
-function cleanMwsInstanceParameters(){
+cleanMwsInstanceParameters(){
     unset MWS_DB_TYPE
     unset MWS_DB_HOST
     unset MWS_DB_PORT
@@ -127,7 +127,7 @@ function cleanMwsInstanceParameters(){
     unset MWS_NODE_NAME
 }
 
-function assureMwsInstanceParameters(){
+assureMwsInstanceParameters(){
 
     if [[ ""${MWS_DB_TYPE} == "" ]]; then
         export MWS_DB_TYPE="mysqlce"
@@ -174,7 +174,7 @@ function assureMwsInstanceParameters(){
     echo -e "${Green}MWS_NODE_NAME=${NC}"${MWS_NODE_NAME}
 }
 
-function createMwsInstance(){
+createMwsInstance(){
 
     assureMwsInstanceParameters
     temp=`(echo > /dev/tcp/${MWS_DB_HOST}/${MWS_DB_PORT}) >/dev/null 2>&1`
@@ -187,12 +187,6 @@ function createMwsInstance(){
         takeInstallationSnapshot IC-01-before-instance-creation
 
         # TODO: parametrize eventually
-        if [[ ""${MWS_DB_TYPE} == "mysqlce" ]]; then
-            cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/MWS/lib/
-            cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/common/lib/ext/
-            cp -r /opt/sag/mnt/extra/overwrite/install-time/mws/mysqlce/* /opt/sag/products/
-        fi
-
         logI "Instance does not exist, creating ..."
         JAVA_OPTS='-Ddb.type='${MWS_DB_TYPE}
 
@@ -225,21 +219,36 @@ function createMwsInstance(){
 
         if [[ ${NEW_RET_VAL} -eq 0 ]] ; then
             logI "Instance default created, initializing ..."
+
+            if [[ ""${MWS_DB_TYPE} == "mysqlce" ]]; then
+                cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/common/lib/ext/
+                ln -s /opt/sag/products/common/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/MWS/lib/mysql-connector-java-5.1.49.jar
+                cp -r /opt/sag/mnt/extra/overwrite/install-time/mws/mysqlce/* /opt/sag/products/
+            fi
+
             pushd .
             cd /opt/sag/products/MWS/bin
-            ./mws.sh init >/${SAG_RUN_FOLDER}/02-mws-init.out 2>/${SAG_RUN_FOLDER}/02-mws-init.err
-            MWS_INIT_RESULT=$?
-            popd
+            ./mws.sh update >/${SAG_RUN_FOLDER}/02-mws-update.out 2>/${SAG_RUN_FOLDER}/02-mws-update.err
+            MWS_UPD_RESULT=$?
 
-            takeInstallationSnapshot IC-03-after-init
+            if [[ ${MWS_UPD_RESULT} -eq 0 ]]; then
+                ./mws.sh init >/${SAG_RUN_FOLDER}/02-mws-init.out 2>/${SAG_RUN_FOLDER}/02-mws-init.err
+                MWS_INIT_RESULT=$?
 
-            if [[ ${MWS_INIT_RESULT} -eq 0 ]] ; then
-                logI "Instance default initialized "
-                RESULT_createMwsInstance=0
+                takeInstallationSnapshot IC-03-after-init
+
+                if [[ ${MWS_INIT_RESULT} -eq 0 ]] ; then
+                    logI "Instance default initialized "
+                    RESULT_createMwsInstance=0
+                else
+                    logE "Instance default not initialized, error code ${MWS_INIT_RESULT}"
+                    RESULT_createMwsInstance=4 # Init failed
+                fi
             else
-                logE "Instance default not initialized, error code ${MWS_INIT_RESULT}"
-                RESULT_createMwsInstance=3 # Init failed
+                logE "Instance default not updated!, error code ${MWS_UPD_RESULT}"
+                RESULT_createMwsInstance=3 # Update failed
             fi
+            popd
         else
             logE "Instance default not created, error code ${NEW_RET_VAL}"
             RESULT_createMwsInstance=2 # Creation failed
@@ -250,7 +259,23 @@ function createMwsInstance(){
     fi
 }
 
-function setupMwsForBpm(){
+shutdownMwsContainerEntrypoint(){
+    assureRunFolder
+
+    logI "Stopping MWS"
+    /opt/sag/products/profiles/MWS_default/bin/shutdown.sh >/${SAG_RUN_FOLDER}/04-stop-mws.out 2>/${SAG_RUN_FOLDER}/04-stop-mws.err
+
+    sleep 10 # TODO: Enhance to wait for the actual shutdown (?)
+
+    logI "Taking Install snapshot after shutdown"
+    takeInstallationSnapshot after-shutdown
+
+    LogI "Stopping container"
+    kill $(ps -ef | grep "/dev/null" | grep -v grep | awk '{print $2}')
+
+}
+
+setupMwsForBpm(){
     assureRunFolder
     logI "Setting up MWS for BPM"
     installProducts ${SAG_SCRIPTS_HOME}/unattended/wm/products/mws/bpm-set-1.wmscript.txt
@@ -287,7 +312,7 @@ function setupMwsForBpm(){
     fi
 }
 
-function setupBpmsNodeType1(){
+setupBpmsNodeType1(){
     assureRunFolder
     logI "Setting up Node Type 1 for BPM"
     installProducts ${SAG_SCRIPTS_HOME}/unattended/wm/products/bpmsNode/installBpmDevFullNode.wmscript.txt
@@ -326,7 +351,7 @@ function setupBpmsNodeType1(){
     fi
 }
 
-function startupMwsContainerEntrypoint(){
+startupMwsContainerEntrypoint(){
     unset SAG_RUN_FOLDER # force new run folder, useful only for running manually
     assureRunFolder
 
@@ -352,11 +377,15 @@ function startupMwsContainerEntrypoint(){
         fi
         if [[ ${HEALTHY} -eq 1 ]] ; then
             takeInstallationSnapshot Start-01-before-start
-            logI "Starting MWS, look at ${SAG_RUN_FOLDER}/run.out"
-            cd /opt/sag/products/MWS/bin/
-            ./mws.sh run 1>>${SAG_RUN_FOLDER}/run.out 2>>run.err
-            logI "MWS run exited: $? Taking snapshot"
-            takeInstallationSnapshot Start-02-after-stop
+
+            logI "Starting MWS"
+            /opt/sag/products/profiles/MWS_default/bin/startup.sh >/${SAG_RUN_FOLDER}/UP-06-mws.out 2>/${SAG_RUN_FOLDER}/UP-06-mws.err
+
+            # logI "Starting MWS, look at ${SAG_RUN_FOLDER}/run.out"
+            # cd /opt/sag/products/MWS/bin/
+            # ./mws.sh run 1>>${SAG_RUN_FOLDER}/run.out 2>>run.err
+            # logI "MWS run exited: $? Taking snapshot"
+            # takeInstallationSnapshot Start-02-after-stop
         else
             logE "Cannot start, instance is not healthy"
         fi
@@ -369,7 +398,7 @@ function startupMwsContainerEntrypoint(){
     tail -f /dev/null
 }
 
-function shutdownBpmsType1ContainerEntrypoint(){
+shutdownBpmsType1ContainerEntrypoint(){
     assureRunFolder
     logI "Stopping IS"
     /opt/sag/products/profiles/IS_default/bin/shutdown.sh >/${SAG_RUN_FOLDER}/01-stop-is.out 2>/${SAG_RUN_FOLDER}/01-stop-is.err
@@ -398,7 +427,7 @@ function shutdownBpmsType1ContainerEntrypoint(){
     kill $(ps -ef | grep "/dev/null" | grep -v grep | awk '{print $2}')
 }
 
-function startupBpmsType1ContainerEntrypoint(){
+startupBpmsType1ContainerEntrypoint(){
     unset SAG_RUN_FOLDER # force new run folder, useful only for running manually
     assureRunFolder
 
@@ -478,7 +507,7 @@ function startupBpmsType1ContainerEntrypoint(){
         logE "Cannot start: database must be up!"
     fi
 }
-function startInstallerInAttendedMode(){
+startInstallerInAttendedMode(){
     unset SAG_RUN_FOLDER # force new run folder, useful only for running manually
     assureRunFolder
     /opt/sag/mnt/wm-install-files/installer.bin -console \
@@ -487,7 +516,7 @@ function startInstallerInAttendedMode(){
         -writeScript ${SAG_RUN_FOLDER}/install.wmscript.txt
 }
 
-function setupDbc(){
+setupDbc(){
     assureRunFolder
     logI "Setting up Database Configurator"
     installProducts ${SAG_SCRIPTS_HOME}/unattended/wm/products/dbc/install.dbc.wmscript.txt
@@ -515,7 +544,7 @@ function setupDbc(){
     fi
 }
 
-function buildDbcContainer(){
+buildDbcContainer(){
     assureRunFolder
     docker info >/dev/null 2>&1
     
@@ -545,7 +574,7 @@ function buildDbcContainer(){
     fi
 }
 
-function assureDbcParameters(){
+assureDbcParameters(){
 
     if [[ ""${DBC_DB_TYPE} == "" ]]; then
         export DBC_DB_TYPE="mysqlce"
@@ -589,7 +618,7 @@ function assureDbcParameters(){
     #echo -e "${Green}DBC_DB_PASSWORD=${NC}"${DBC_DB_PASSWORD}
 }
 
-function initializeDatabase(){
+initializeDatabase(){
 
     assureRunFolder
     assureDbcParameters
@@ -630,7 +659,7 @@ function initializeDatabase(){
     fi
 }
 
-function cleanupInstallFolder(){
+cleanupInstallFolder(){
     # Potential improvement for data storage
 
     # TODO: optimize, for the moment I found this to be more appropriate than selecting content in Dockerfile

@@ -46,6 +46,8 @@ if(('mws','mysql','adminer','mydbcc','bpms-node-type1').contains($component)){
                 "stop"    {
                     if('bpms-node-type1'.Equals($component)){
                         docker exec -ti $env:SAG_W_PJ_NAME-bpms-node-type1 /opt/sag/mnt/scripts/entrypoints/bpmsNodeType1Stop.sh
+                    } elseif('mws'.Equals($component)){
+                        docker exec -ti $env:SAG_W_PJ_NAME-bpms-node-type1 /opt/sag/mnt/scripts/entrypoints/shutdownMwsContainerEntrypoint.sh
                     }
                     docker-compose -f $dcYmlFileName stop;
                     break
