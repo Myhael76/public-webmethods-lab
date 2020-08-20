@@ -88,6 +88,9 @@ startInstallerInAttendedMode
 
 *Note*: in console mode the installer does not have the possibility of creating the script without installing the products. In our case the installation will also be produced. The installation itself is not maintained in a volume, once the project is stopped it will be thrown away.
 
+If you do not want to install after obtaining the script, interrupt the process when you observe the script has been created. For example, when producing the script to install MWS, the script was created immediately after the business rules license file input, just before the final install confirmation "The products listed below are ready to be saved to script /opt/sag/mnt/runs/run_20-08-19T08.41.27/install.wmscript.txt and installed." At this point chose "X" to exit the installer. The script will remain on the run folder and the products will not be installed.
+
+
 6. Verify the installation script and qualify it according to your local needs
 7. Close your shell
 8. Shutdown the project (installation will be thrown away, shortcut _public-webmethods-lab_\windows\build\os\centos-wm-install-helper\05-stop.bat

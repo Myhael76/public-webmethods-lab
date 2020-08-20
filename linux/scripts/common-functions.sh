@@ -276,6 +276,97 @@ shutdownMwsContainerEntrypoint(){
 }
 
 setupMwsForBpm(){
+    # 2020-08-19: there are some unidentified problems when creating the instance after installation
+    # switched to create the instance at install time
+    assureRunFolder
+
+    logI "Setting up MWS for BPM"
+
+    # Note: setting up with default instance requires Database to be up and reachable
+    assureMwsInstanceParameters
+    temp=`(echo > /dev/tcp/${MWS_DB_HOST}/${MWS_DB_PORT}) >/dev/null 2>&1`
+    CHK_DB_UP=$?
+    
+    logI "CHK_DB_UP: ${CHK_DB_UP}"
+
+    if [[ ${CHK_DB_UP} -eq 0 ]] ; then
+        installProducts ${SAG_SCRIPTS_HOME}/unattended/wm/products/mws/bpm-set-2.wmscript.txt
+        if [[ ${RESULT_installProducts} -eq 0 ]] ; then
+            takeInstallationSnapshot S-01-after-install
+            logI "Bootstrapping Update Manager"
+            bootstrapSum
+            if [[ ${RESULT_bootstrapSum} -eq 0 ]] ; then
+                logI "Applying fixes"
+                patchInstallation
+                takeInstallationSnapshot S-02-after-patch
+                if [[ ${RESULT_patchInstallation} -eq 0 ]] ; then
+
+                    LOCAL_INSTANCE_UPDATED=1 # i.e. assume already up to date with the exceptions below
+                    if [[ "${MWS_DB_TYPE}" == "mysqlce" ]]; then
+                        LOCAL_INSTANCE_UPDATED=0
+                        cp /opt/sag/mnt/extra/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/common/lib/ext/
+                        ln -s /opt/sag/products/common/lib/ext/mysql-connector-java-5.1.49.jar /opt/sag/products/MWS/lib/mysql-connector-java-5.1.49.jar
+                        cp -r /opt/sag/mnt/extra/overwrite/install-time/mws/mysqlce/* /opt/sag/products/
+                        pushd .
+                        logI "Updating instance to conenect to MySQL Community Edition"
+                        cd /opt/sag/products/MWS/bin
+                        ./mws.sh getconfig cluster.xml >/${SAG_RUN_FOLDER}/03-get-cluster-config.out 2>/${SAG_RUN_FOLDER}/03-get-cluster-config.err
+                        ./mws.sh update >/${SAG_RUN_FOLDER}/03-mws-update.out 2>/${SAG_RUN_FOLDER}/03-mws-update.err
+                        RESULT_mws_update=$?
+                        takeInstallationSnapshot S-03-after-update
+                        if [[ ${RESULT_mws_update} -eq 0 ]]; then
+                            logI "MWS instance updated successfully"
+                            LOCAL_INSTANCE_UPDATED=1
+                        else
+                            LOCAL_INSTANCE_UPDATED=0
+                            logE "MWS instance update failed, code: ${RESULT_mws_update}"
+                        fi
+                        popd
+                    fi
+
+                    if [[ ${LOCAL_INSTANCE_UPDATED} -eq 1 ]]; then
+                        pushd .
+                        logI "Initializing MWS instance"
+                        cd /opt/sag/products/MWS/bin
+                        ./mws.sh getconfig cluster.xml >/${SAG_RUN_FOLDER}/04-get-cluster-config.out 2>/${SAG_RUN_FOLDER}/04-get-cluster-config.err
+                        ./mws.sh init >/${SAG_RUN_FOLDER}/04-mws-init.out 2>/${SAG_RUN_FOLDER}/04-mws-init.err
+                        RESULT_mws_init=$?
+                        takeInstallationSnapshot S-04-after-init
+                        if [[ ${RESULT_mws_init} -eq 0 ]]; then
+                            logI "MWS instance initialized successfully"
+                            RESULT_setupMwsForBpm=0
+                        else
+                            RESULT_setupMwsForBpm=6
+                            logE "MWS instance init failed, code: ${RESULT_mws_init}"
+                        fi
+                        popd
+                    else
+                        logE "Instance update failed"
+                        RESULT_setupMwsForBpm=5
+                    fi
+                else
+                    logE "Patching failed: ${PATCH_RESULT}"
+                    RESULT_setupMwsForBpm=3 # 3 - patching failed
+                fi
+            else
+                logE "SUM Bootstrap failed: ${SUM_BOOT_RESULT}"
+                RESULT_setupMwsForBpm=2 # 2 - bootstrap failed
+            fi
+        else
+            logE "Installation failed: ${INSTALL_RESULT}"
+            RESULT_setupMwsForBpm=1 # 1 - installation failed
+        fi
+    else
+        logE "Installation failed: Database not available"
+        RESULT_setupMwsForBpm=1 # 4 - installation failed
+    fi
+
+
+}
+
+setupMwsForBpm_old(){
+    # 2020-08-19: there are some unidentified problems when creating the instance after installation
+    # switched to create the instance at install time
     assureRunFolder
     logI "Setting up MWS for BPM"
     installProducts ${SAG_SCRIPTS_HOME}/unattended/wm/products/mws/bpm-set-1.wmscript.txt
@@ -352,8 +443,9 @@ setupBpmsNodeType1(){
 }
 
 startupMwsContainerEntrypoint(){
+
     unset SAG_RUN_FOLDER # force new run folder, useful only for running manually
-    assureRunFolder
+    assureRunFolder 
 
     assureMwsInstanceParameters
     temp=`(echo > /dev/tcp/${MWS_DB_HOST}/${MWS_DB_PORT}) >/dev/null 2>&1`
@@ -378,14 +470,15 @@ startupMwsContainerEntrypoint(){
         if [[ ${HEALTHY} -eq 1 ]] ; then
             takeInstallationSnapshot Start-01-before-start
 
-            logI "Starting MWS"
-            /opt/sag/products/profiles/MWS_default/bin/startup.sh >/${SAG_RUN_FOLDER}/UP-06-mws.out 2>/${SAG_RUN_FOLDER}/UP-06-mws.err
+            # logI "Starting MWS"
+            # /opt/sag/products/profiles/MWS_default/bin/startup.sh >/${SAG_RUN_FOLDER}/UP-06-mws.out 2>/${SAG_RUN_FOLDER}/UP-06-mws.err
 
-            # logI "Starting MWS, look at ${SAG_RUN_FOLDER}/run.out"
-            # cd /opt/sag/products/MWS/bin/
-            # ./mws.sh run 1>>${SAG_RUN_FOLDER}/run.out 2>>run.err
-            # logI "MWS run exited: $? Taking snapshot"
-            # takeInstallationSnapshot Start-02-after-stop
+            logI "Starting MWS, log at ${SAG_RUN_FOLDER}/run.out"
+            cd /opt/sag/products/MWS/bin/
+            ./mws.sh getconfig cluster.xml >/${SAG_RUN_FOLDER}/get-cluster-config-before-run.out 2>/${SAG_RUN_FOLDER}/get-cluster-config-before-run.err
+            ./mws.sh run 1>>${SAG_RUN_FOLDER}/run.out 2>>run.err
+            logI "MWS run exited: $? Taking snapshot"
+            takeInstallationSnapshot Start-02-after-stop
         else
             logE "Cannot start, instance is not healthy"
         fi

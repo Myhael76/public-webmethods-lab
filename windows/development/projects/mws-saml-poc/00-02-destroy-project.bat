@@ -13,7 +13,7 @@ echo Shutdown Database
 call .\01-mysql-02-down.bat
 
 echo Remove BPMS Node
-call .\02-02-mws-03-destroy.bat
+call .\02-mws-03-destroy.bat
 
 echo Remove Database
 call .\01-mysql-03-destroy.bat

@@ -11,20 +11,10 @@ services:
     networks:
       - n1
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=webmethods
-      - MYSQL_USER=webmethods
-      - MYSQL_PASSWORD=webmethods
-      - MYSQL_LOG_CONSOLE=true
+      - SIMPLESAMLPHP_SP_ENTITY_ID=http://mws:8585
+      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=http://mws:8585/what here?
+      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=http://mws:8585/what here?
     ports:
       - "${SAG_W_SAML_IDP1_CLEAR_PORT}:8080"
-      - "${SAG_W_SAML_IDP1_SSL_PORT}:8080"
-    command: >
-      --sql-mode="PIPES_AS_CONCAT,IGNORE_SPACE,NO_KEY_OPTIONS,NO_TABLE_OPTIONS,NO_FIELD_OPTIONS"
-      --character-set-server=utf8
-      --collation-server=utf8_general_ci
-      --max_allowed_packet=128M
-      --default-storage-engine=innodb
-      --lower_case_table_names=1
-      --innodb_buffer_pool_size=5G
-      --innodb_log_file_size=80M
+      - "${SAG_W_SAML_IDP1_SSL_PORT}:8443"
+
