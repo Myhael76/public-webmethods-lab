@@ -268,7 +268,7 @@ shutdownMwsContainerEntrypoint(){
     sleep 10 # TODO: Enhance to wait for the actual shutdown (?)
 
     logI "Taking Install snapshot after shutdown"
-    takeInstallationSnapshot after-shutdown
+    takeInstallationSnapshot after-mws-shutdown
 
     LogI "Stopping container"
     kill $(ps -ef | grep "/dev/null" | grep -v grep | awk '{print $2}')
@@ -779,4 +779,24 @@ cleanupInstallFolder(){
     rm -rf /opt/sag/products/MWS/server/template-derby.zip
 
     popd
+}
+
+cafCipherUtilEncryptPassword(){
+
+    CP="/opt/sag/products/common/lib/wm-caf-common.jar"
+    CP="${CP}:/opt/sag/products/common/lib/wm-caf-common.jar"
+    CP="${CP}:/opt/sag/products/common/lib/ext/slf4j-api.jar"
+    CP="${CP}:/opt/sag/products/common/lib/wm-scg-security.jar"
+    CP="${CP}:/opt/sag/products/common/lib/wm-scg-core.jar"
+    CP="${CP}:/opt/sag/products/common/lib/ext/enttoolkit.jar"
+
+    CMD="/opt/sag/products/jvm/jvm/jre/bin/java -cp "'"'"${CP}"'"'" com.webmethods.caf.common.CipherUtil ${1}"
+    
+    MY_ENCRYPTED_PASSWORD=`${CMD}`
+    RESULT_cafCipherUtilEncryptPassword=$?
+
+    if [ ${RESULT_cafCipherUtilEncryptPassword} -eq 0 ] ; then
+        logI "Password encrypted successfully"
+        export MY_ENCRYPTED_PASSWORD
+    fi
 }
