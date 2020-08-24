@@ -13,7 +13,7 @@ $component=$args[1]
 $cmdToken1=$args[2]
 $cmdToken2=$args[3]
 
-if(('mws','mysql','adminer','mydbcc','bpms-node-type1').contains($component)){
+if(('idp','mws','mysql','adminer','mydbcc','bpms-node-type1').contains($component)){
     $dcYmlFileName="$projectFolder\docker-compose_$component.yml"
 
     if( -Not (Test-Path $dcYmlFileName -PathType Leaf)){
@@ -30,6 +30,8 @@ if(('mws','mysql','adminer','mydbcc','bpms-node-type1').contains($component)){
                     if('bpms-node-type1'.Equals($component)){
                         #docker exec bpms1-bpms-node-type1 ${SAG_SCRIPTS_HOME}/entrypoints/bpmsNodeType1Stop.sh
                         docker exec -ti $env:SAG_W_PJ_NAME-bpms-node-type1 /opt/sag/mnt/scripts/entrypoints/bpmsNodeType1Stop.sh
+                    }elseif('mws'.Equals($component)){
+                        docker exec -ti $env:SAG_W_PJ_NAME-mws /opt/sag/mnt/scripts/entrypoints/mwsStop.sh
                     }
                     docker-compose -f $dcYmlFileName down;
                     break

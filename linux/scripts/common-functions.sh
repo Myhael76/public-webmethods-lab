@@ -27,6 +27,16 @@ logE(){
     echo `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN} -ERROR- ${1}" >> ${SAG_RUN_FOLDER}/script.trace.log
 }
 
+if [ -z ${SAG_DEFAULT_CERTIFICATES_PASSWORD+x} ]; then
+    logI "Setting default SSL stores password!"
+    export SAG_DEFAULT_CERTIFICATES_PASSWORD="changeIt"
+fi
+
+#Project Constants
+export SAG_PROJECT_TRUSTSTORE="/opt/sag/certificates/projectTruststore.jks"
+export SAG_MWS_KEYSTORE="/opt/sag/certificates/store/mws/full.chain.key.store.p12"
+
+
 portIsReachable(){
     # Params: $1 -> host $2 -> port
     if [ -f /usr/bin/nc ]; then 
@@ -273,6 +283,49 @@ shutdownMwsContainerEntrypoint(){
     LogI "Stopping container"
     kill $(ps -ef | grep "/dev/null" | grep -v grep | awk '{print $2}')
 
+}
+
+addPemCertToProjectJksTruststore(){
+    # Params: 
+    # 1: pem file containing a certificate
+    # 2: key alias
+    # by convention, the jks trust store is ${SAG_PROJECT_TRUSTSTORE}
+    # e.g. CA cart is /opt/sag/certificates/store/ca/certificateAuthority.cert.pem
+    if [ -f ${1} ]; then
+        /opt/sag/products/jvm/jvm/jre/bin/keytool \
+            -importcert -file ${1} -alias ${2} \
+            -noprompt -keystore ${SAG_PROJECT_TRUSTSTORE} \
+            -storepass ${SAG_DEFAULT_CERTIFICATES_PASSWORD}
+        RESULT_addPemCertToProjectJksTruststore=$?
+        logI "DEBUG: Adding certificate ${1} with alias ${2} to project keystore is ${RESULT_addPemCertToProjectJksTruststore}"
+    else
+        logE "Certificate file ${1} not found"
+    fi
+}
+
+addDefaultCACertificatesToProjectStore(){
+    addPemCertToProjectJksTruststore /opt/sag/certificates/store/ca/certificateAuthority.cert.pem laboratoryCA
+}
+
+setupSslForMws(){
+    if [ -z ${SAG_DEFAULT_CERTIFICATES_PASSWORD+x} ]; then
+        logE "Cannot setup SSL without a passphrase. Set the variable SAG_DEFAULT_CERTIFICATES_PASSWORD first!"
+        RESULT_setupSslForMws=1
+    else
+        addDefaultCACertificatesToProjectStore
+        # TODO: enforce error management
+        cafCipherUtilEncryptPassword ${SAG_DEFAULT_CERTIFICATES_PASSWORD}
+
+        # Stores password
+        sed -i "s/\(set\.JAVA_TRUSTSTORE_PASSWORD=\).*\$/\1${MY_ENCRYPTED_PASSWORD}/" /opt/sag/products/profiles/MWS_default/configuration/custom_wrapper.conf
+        sed -i "s/\(set\.JAVA_KEYSTORE_PASSWORD=\).*\$/\1${MY_ENCRYPTED_PASSWORD}/" /opt/sag/products/profiles/MWS_default/configuration/custom_wrapper.conf
+
+        # Truststore
+        sed -i "s;\(set\.JAVA_TRUSTSTORE=\).*\$;\1${SAG_PROJECT_TRUSTSTORE};" /opt/sag/products/profiles/MWS_default/configuration/custom_wrapper.conf
+
+        # Keystore
+        sed -i "s;\(set\.JAVA_KEYSTORE=\).*\$;\1${SAG_MWS_KEYSTORE};" /opt/sag/products/profiles/MWS_default/configuration/custom_wrapper.conf
+    fi
 }
 
 setupMwsForBpm(){

@@ -6,14 +6,14 @@ networks:
 services:
   mysql:
     image: kristophjunge/test-saml-idp
-    container_name: ${SAG_W_PJ_NAME}-saml-idp1
-    hostname: saml-idp1
+    container_name: ${SAG_W_PJ_NAME}-idp
+    hostname: idp
     networks:
       - n1
     environment:
       - SIMPLESAMLPHP_SP_ENTITY_ID=http://mws:8585
-      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=http://mws:8585/what here?
-      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=http://mws:8585/what here?
+      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=http://mws:8585/what-here?
+      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=http://mws:8585/what-here?
     ports:
       - "${SAG_W_SAML_IDP1_CLEAR_PORT}:8080"
       - "${SAG_W_SAML_IDP1_SSL_PORT}:8443"

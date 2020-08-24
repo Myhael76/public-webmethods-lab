@@ -1,30 +1,29 @@
 version: "3.5"
 
 volumes:
-  mws-install-home: {}
-  mws-sum-home:
+  bpms-node-type1-install-home: {}
+  bpms-node-type1-sum-home:
     driver_opts:
       type: tmpfs
       device: tmpfs
-  mws-temp:
+  bpms-node-type1-temp:
     driver_opts:
       type: tmpfs
       device: tmpfs
-
 networks:
     n1:
       external: false
 services:
-  mws:
+  bpms-node-type1:
     image: centos-sag-osgi-helper
-    container_name: ${SAG_W_PJ_NAME}-mws
-    hostname: mws
+    container_name: ${SAG_W_PJ_NAME}-bpms-node-type1
+    hostname: bpms-node-type1
     networks:
       - n1
     volumes:
-      - mws-temp:/tmp/
-      - mws-install-home:/opt/sag/products/
-      - mws-sum-home:/opt/sag/sum/
+      - bpms-node-type1-temp:/tmp/
+      - bpms-node-type1-install-home:/opt/sag/products/
+      - bpms-node-type1-sum-home:/opt/sag/sum/
       - ${SAG_W_RUNS_FOLDER}/:/opt/sag/mnt/runs/
       - ${SAG_W_WM_LAB_HOME}/common/mount/extra:/opt/sag/mnt/extra/
       - ${SAG_W_WM_LAB_HOME}/windows/common/config/secret/:/opt/sag/mnt/secret/
@@ -34,15 +33,18 @@ services:
       - ${SAG_W_INSTALLER_BIN}:/opt/sag/mnt/wm-install-files/installer.bin
       - ${SAG_W_UPD_MGR_BIN}:/opt/sag/mnt/wm-install-files/sum-bootstrap.bin
       - ${SAG_W_LIC_BR}:/opt/sag/mnt/wm-install-files/licenses/br.xml
+      - ${SAG_W_LIC_MSR}:/opt/sag/mnt/wm-install-files/licenses/is.xml
+      - ${SAG_W_LIC_UM}:/opt/sag/mnt/wm-install-files/licenses/um.xml
     environment:
       - MWS_DB_TYPE=mysqlce
       - MWS_DB_URL=jdbc:mysql://mysql:3306/webmethods?useSSL=false
       - MWS_DB_USERNAME=webmethods
       - MWS_DB_PASSWORD=webmethods
-      - MWS_NODE_NAME=mws
+      - MWS_NODE_NAME=bpms-node-type1
       - SAG_TAKE_SNAPHOTS=${SAG_W_TAKE_SNAPHOTS}
       - SAG_FIXES_ONLINE=${SAG_W_FIXES_ONLINE}
-      - SAG_DEFAULT_CERTIFICATES_PASSWORD=${SAG_W_DEFAULT_CERTIFICATES_PASSWORD}
     ports:
       - "${SAG_W_MWS_PORT}:8585"
-    entrypoint: /opt/sag/mnt/scripts/entrypoints/mws.sh
+      - "${SAG_W_IS_TE_PORT}:5555"
+      - "${SAG_W_UM_PORT}:9000"
+    entrypoint: /opt/sag/mnt/scripts/entrypoints/bpmsNodeType1.sh

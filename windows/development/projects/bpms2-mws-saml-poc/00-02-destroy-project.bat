@@ -18,7 +18,12 @@ call .\02-mws-03-destroy.bat
 echo Remove Database
 call .\01-mysql-03-destroy.bat
 
-del *.yml
+:: some yamls are specific to this project
+:: del *.yml
+
+del docker-compose_adminer.yml
+del docker-compose_mysql.yml
+del docker-compose_mydbcc.yml
 
 pause
 
