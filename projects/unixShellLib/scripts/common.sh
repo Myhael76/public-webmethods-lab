@@ -199,7 +199,7 @@ patchInstallation(){
     
     RESULT_patchInstallation=$?
         
-    rm /dev/shm/fixes.wmscript.txt
+    rm -f /dev/shm/fixes.wmscript.txt
     popd
 }
 
