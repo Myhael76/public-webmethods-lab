@@ -32,7 +32,19 @@ services:
       - ${SAG_W_LIC_MSR}:/opt/sag/mnt/wm-install-files/licenses/msr.xml
       - ${SAG_W_LIC_IS}:/opt/sag/mnt/wm-install-files/licenses/is.xml
       - ${SAG_W_LIC_UM}:/opt/sag/mnt/wm-install-files/licenses/um.xml
+      - ${SAG_W_LIC_IP_IS}:/opt/sag/mnt/wm-install-files/licenses/ip/is.xml
+      - ${SAG_W_LIC_IP_UM}:/opt/sag/mnt/wm-install-files/licenses/ip/um.xml
+      - ${SAG_W_LIC_IP_TC_CLUSTERING_IS}:/opt/sag/mnt/wm-install-files/licenses/ip/tc-is-clustering/terracotta-license.key
+      - ${SAG_W_LIC_IP_EG}:/opt/sag/mnt/wm-install-files/licenses/ip/eg.xml
+      - ${SAG_W_LIC_MFT_AT}:/opt/sag/mnt/wm-install-files/licenses/mft/at.xml
+      - ${SAG_W_LIC_MFT_ATG}:/opt/sag/mnt/wm-install-files/licenses/mft/atg.xml
+      - ${SAG_W_LIC_API_CS}:/opt/sag/mnt/wm-install-files/licenses/apim/cs.xml
+      - ${SAG_W_LIC_API_MED}:/opt/sag/mnt/wm-install-files/licenses/apim/med.xml
+      - ${SAG_W_LIC_API_GW_S}:/opt/sag/mnt/wm-install-files/licenses/apim/gws.xml
+      - ${SAG_W_LIC_API_GW_A}:/opt/sag/mnt/wm-install-files/licenses/apim/gwa.xml
+      - ${SAG_W_LIC_API_POR}:/opt/sag/mnt/wm-install-files/licenses/apim/por.xml
     environment:
       - SAG_FIXES_ONLINE=${SAG_W_FIXES_ONLINE}
       - SAG_TAKE_SNAPHOTS=${SAG_W_TAKE_SNAPHOTS}
+      - SAG_PRODUCTS_VERSION=${SAG_W_PRODUCTS_VERSION}
     entrypoint: ${SAG_W_ENTRY_POINT}

@@ -1,0 +1,1 @@
+docker exec -ti wm-install-helper-base /bin/bash

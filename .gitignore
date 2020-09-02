@@ -5,3 +5,4 @@ set-env.*
 # exclude local test project
 bpms2-test
 windows/development/projects/bpms1/*.yml
+runs/
