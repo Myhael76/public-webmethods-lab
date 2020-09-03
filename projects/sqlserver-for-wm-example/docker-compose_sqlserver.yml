@@ -1,0 +1,21 @@
+version: "3.5"
+
+volumes:
+  sqlserver_data: {}
+networks:
+    n1:
+      external: false
+services:
+  mysql:
+    image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
+    container_name: ${H_WMLAB_PJ_NAME}-${H_WMLAB_SQLSERVER_HOSTNAME} 
+    hostname: ${H_WMLAB_SQLSERVER_HOSTNAME}
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      n1:
+        aliases:
+          - ${H_WMLAB_SQLSERVER_HOSTNAME}
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${H_WMLAB_SQLSERVER_SA_PASSWORD}
