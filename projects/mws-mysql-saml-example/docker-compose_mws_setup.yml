@@ -1,0 +1,76 @@
+version: "3.5"
+
+volumes:
+  mws-install-home: {}
+  mws-sum-home:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  mws-temp:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+
+networks:
+    n1:
+      external: false
+services:
+  mws:
+    image: centos-wm-install-helper
+    container_name: ${H_WMLAB_PJ_NAME}-${H_WMLAB_MWS_HOSTNAME}
+    hostname: ${H_WMLAB_MWS_HOSTNAME}
+    networks:
+      n1:
+        aliases:
+          - ${H_WMLAB_MWS_HOSTNAME}
+    volumes:
+      - ../unixShellLib/scripts/:/mnt/scripts/lib/
+      - mws-temp:/tmp/
+      - mws-install-home:${H_WMLAB_WM_INSTALL_HOME}
+      - mws-sum-home:/opt/sag/sum/
+      - ./runs/:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - ./certificates/:/opt/sag/certificates/store/
+      - ./scripts/:/mnt/scripts/local/
+      # Installer related
+      - ${H_WMLAB_INSTALLER_BIN}:${H_WMLAB_INSTALLER_BIN_MOUNT_POINT}
+      - ${H_WMLAB_PRODUCTS_IMAGE}:${H_WMLAB_PRODUCTS_IMAGE_MOUNT_POINT}
+      # License Related
+      - ${H_WMLAB_BR_LICENSE_FILE}:${H_WMLAB_BR_LICENSE_FILE_MOUNT_POINT}
+      # Patching related
+      - ${H_WMLAB_SUM10_BOOTSTRAP_BIN}:${H_WMLAB_SUM10_BOOTSTRAP_BIN_MOUNT_POINT}
+      - ${H_WMLAB_SUM11_BOOTSTRAP_BIN}:${H_WMLAB_SUM11_BOOTSTRAP_BIN_MOUNT_POINT}
+      - ${H_WMLAB_FIXES_IMAGE_FILE}:${H_WMLAB_FIXES_IMAGE_FILE_MOUNT_POINT}
+      - ${H_WMLAB_FIXES_ONLINE_CRED_FILE}:${H_WMLAB_FIXES_ONLINE_CRED_FILE_MOUNT_POINT}
+    environment:
+      - WMLAB_RUN_BASE_MOUNT=${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - WMLAB_DEBUG_ON=${H_WMLAB_DEBUG_ON}
+      # Database related
+      - WMLAB_MYSQL_HOSTNAME=${H_WMLAB_MYSQL_HOSTNAME}
+      - WMLAB_MYSQL_DATABASE_NAME=${H_WMLAB_MYSQL_DATABASE_NAME}
+      - WMLAB_MYSQL_USER_NAME=${H_WMLAB_MYSQL_USER_NAME}
+      - WMLAB_MYSQL_PASSWORD=${H_WMLAB_MYSQL_PASSWORD}
+      - WMLAB_MWS_HOSTNAME=${H_WMLAB_MWS_HOSTNAME}
+      # Setup related
+      - WMLAB_TAKE_SNAPHOTS=${H_WMLAB_TAKE_SNAPHOTS}
+      - WMLAB_JDBC_DRIVER_URL=${H_WMLAB_JDBC_DRIVER_URL}
+      - WMLAB_JDBC_DRIVER_FILENAME=${H_WMLAB_JDBC_DRIVER_FILENAME}
+      - WMLAB_WM_INSTALL_HOME=${H_WMLAB_WM_INSTALL_HOME}
+      - WMLAB_BND_FILENAME=${H_WMLAB_BND_FILENAME}
+      - WMLAB_Bundle_SymbolicName=${H_WMLAB_Bundle_SymbolicName}
+      - WMLAB_Bundle_Version=${H_WMLAB_Bundle_Version}
+      # Installer related
+      - WMLAB_PRODUCTS_VERSION=${H_WMLAB_PRODUCTS_VERSION}
+      - WMLAB_INSTALLER_BIN=${H_WMLAB_INSTALLER_BIN_MOUNT_POINT}
+      - WMLAB_PRODUCTS_IMAGE=${H_WMLAB_PRODUCTS_IMAGE_MOUNT_POINT}
+      # License related - not needed
+      # - WMLAB_BR_LICENSE_FILE=${H_WMLAB_BR_LICENSE_FILE_MOUNT_POINT}
+      # Patching related
+      - WMLAB_FIXES_ONLINE=${H_WMLAB_FIXES_ONLINE}
+      - WMLAB_SKIP_PATCHING=${H_WMLAB_SKIP_PATCHING}
+      - WMLAB_SUM10_BOOTSTRAP_BIN=${H_WMLAB_SUM10_BOOTSTRAP_BIN_MOUNT_POINT}
+      - WMLAB_SUM11_BOOTSTRAP_BIN=${H_WMLAB_SUM11_BOOTSTRAP_BIN_MOUNT_POINT}
+      - WMLAB_FIXES_IMAGE_FILE=${H_WMLAB_FIXES_IMAGE_FILE_MOUNT_POINT}
+      - WMLAB_FIXES_ONLINE_CRED_FILE=${H_WMLAB_FIXES_ONLINE_CRED_FILE_MOUNT_POINT}
+    ports:
+      - "${H_WMLAB_MWS_PORT}:8585"
+    entrypoint: /mnt/scripts/local/${H_WMLAB_PRODUCTS_VERSION}/mwsSetupEntryPoint.sh

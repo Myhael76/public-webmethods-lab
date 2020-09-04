@@ -46,7 +46,4 @@ else
     #exit 1
 fi
 
-logI "stopping for debug"
-tail -f /dev/null
-
 exit 0
