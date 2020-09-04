@@ -189,7 +189,7 @@ patchInstallation(){
         cat "${WMLAB_FIXES_ONLINE_CRED_FILE}" >> /dev/shm/fixes.wmscript.txt
     else
         echo "action=Install fixes from image" >> /dev/shm/fixes.wmscript.txt
-        echo "${WMLAB_FIXES_IMAGE_FILE}" >> /dev/shm/fixes.wmscript.txt
+        echo "imageFile=${WMLAB_FIXES_IMAGE_FILE}" >> /dev/shm/fixes.wmscript.txt
     fi
 
     controlledExec "./UpdateManagerCMD.sh -readScript /dev/shm/fixes.wmscript.txt" "PatchInstallation"
@@ -215,7 +215,7 @@ startInstallerInAttendedMode(){
 
 genericProductsSetup(){
     logI "Installing products according to script ${1}"
-    installProducts ${1}
+    installProducts "${1}"
     if [[ ${RESULT_installProducts} -eq 0 ]] ; then
         takeInstallationSnapshot Setup-01-after-install
         logI "Bootstrapping Update Manager"
