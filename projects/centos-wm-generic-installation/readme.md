@@ -1,6 +1,8 @@
-# CENTOS:7 based Software AG OSGI Base Image
+# CENTOS:7 based Software AG Generic Installation Container Image
 
 This image will be used for all Software AG installations where the common osgi framework makes the installation folder too variable to be copied over as a docker layer.
+This project's purpose is to build the container as it is needed in other projects, but not to use it directly.
+
 
 ## Conventions
 
@@ -21,5 +23,3 @@ This image will be used for all Software AG installations where the common osgi 
 - lic/msr.xml
 - lic/um.xml
 - lic/is.xml
-
-To continue

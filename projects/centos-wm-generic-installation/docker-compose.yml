@@ -1,0 +1,23 @@
+version: "3.5"
+
+volumes: 
+  centos-wm-install-home: {}
+  centos-wm-sum-home:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  temp:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+services:
+  wm-generic-host-base:
+    build: ./build
+    image: wm-generic-host
+    container_name: wm-generic-host
+    hostname: wm-generic-host
+    volumes:
+      - temp:/tmp/
+      - centos-wm-install-home:/opt/sag/products/
+      - centos-wm-sum-home:/opt/sag/sum/
+    entrypoint: exit

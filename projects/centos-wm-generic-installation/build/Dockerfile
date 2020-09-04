@@ -3,11 +3,6 @@ FROM ${SRC_IMAGE}
 
 LABEL maintainer="Myhael76"
 
-# if you need proxy change this file by adding a command like
-# echo proxy=http://your-server:12345 >> /etc/yum.conf
-# as the first command (i.e. before caling yum)
-# see https://www.linuxtechi.com/proxy-settings-yum-command-on-rhel-centos-servers/
-
 RUN yum install -y net-tools && \
     yum install -y unzip && \
     yum install -y less && \
@@ -26,7 +21,6 @@ ENV SAG_HOME=/opt/sag \
     SAG_LICENSE_FOLDER=/opt/sag/mnt/wm-install-files/licenses
 
 RUN groupadd -g 1724 sagadmin; useradd -u 1724 -m -g 1724 -d ${SAG_HOME} sagadmin
-#; chown -R 1724:1724 ${SAG_HOME}
 
 USER 1724
 # need to create these for permissions inheritance (which works in a strange manner now??)
@@ -40,8 +34,6 @@ RUN mkdir -p    ${SAG_HOME} \
                 ${SAG_LICENSE_FOLDER}
 
 ENV JAVA_HOME=${SAG_INSTALL_HOME}/jvm/jvm/ JRE_HOME=${SAG_INSTALL_HOME}/jvm/jvm/
-
-# Is EXPOSE necessary?
 
 # Expect this to be overwritten
 ENTRYPOINT ["tail -f /dev/null"]
