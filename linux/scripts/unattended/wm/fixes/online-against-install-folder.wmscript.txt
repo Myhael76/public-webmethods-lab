@@ -1,4 +1,0 @@
-installSP=N
-action=Install fixes from Empower
-installDir=/opt/sag/products
-selectedFixes=spro:all

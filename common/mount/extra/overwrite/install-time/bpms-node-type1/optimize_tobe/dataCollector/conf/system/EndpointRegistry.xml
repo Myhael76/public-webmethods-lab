@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<endpoint-registry>
-<endpoint host="localhost" name="Configuration Agent" path="" port="15001" protocol="http"/>
-<endpoint host="localhost" name="WS Registry" path="" port="12603" protocol="http"/>
-<endpoint host="localhost" name="JMS Provider" path="" port="9000" protocol="nsp"/>
-</endpoint-registry>

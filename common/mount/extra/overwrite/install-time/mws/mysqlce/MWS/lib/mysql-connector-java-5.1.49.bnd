@@ -1,8 +1,0 @@
-# attach as fragment to the caf.server bundle
-Fragment-Host: com.webmethods.caf.server
-Bundle-SymbolicName: mysql-connector-java-
-Bundle-Version: 5.1.49
-Include-Resource: mysql-connector-java-5.1.49.jar
--exportcontents: *
-Bundle-ClassPath: mysql-connector-java-5.1.49.jar
-Import-Package: *;resolution:=optional
