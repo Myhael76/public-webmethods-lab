@@ -110,8 +110,8 @@ bootstrapSum(){
     if [ -f  ${BIN_FILE} ]; then
         logI "Bootstrapping SUM from ${BIN_FILE}..."
         ${BIN_FILE} --accept-license -d "${WMLAB_SUM_HOME}" \
-            > "${WMLAB_RUN_FOLDER}/sum-boot.out" \
-            2> "${WMLAB_RUN_FOLDER}/sum-boot.err"
+            > "${WMLAB_RUN_FOLDER}/01.02.sum-boot.out" \
+            2> "${WMLAB_RUN_FOLDER}/01.02.sum-boot.err"
         RESULT_bootstrapSum=$?
         logI "Result: ${RESULT_bootstrapSum}"
         if [ ${RESULT_bootstrapSum} -eq 0 ]; then
@@ -153,9 +153,9 @@ installProducts(){
             "${WMLAB_INSTALLER_BIN}" \
                 -readScript "${SCRIPT_FILE}" \
                 -debugLvl verbose \
-                -debugFile "${WMLAB_RUN_FOLDER}/product-install.log"\
-                > "${WMLAB_RUN_FOLDER}/product-install.out" \
-                2> "${WMLAB_RUN_FOLDER}/product-install.err"
+                -debugFile "${WMLAB_RUN_FOLDER}/01.01.product-install.log"\
+                > "${WMLAB_RUN_FOLDER}/01.01.product-install.out" \
+                2> "${WMLAB_RUN_FOLDER}/01.01.product-install.err"
             
             RESULT_installProducts=$?
             if [ ${RESULT_installProducts} -eq 0 ] ; then
@@ -192,7 +192,7 @@ patchInstallation(){
         echo "imageFile=${WMLAB_FIXES_IMAGE_FILE}" >> /dev/shm/fixes.wmscript.txt
     fi
 
-    controlledExec "./UpdateManagerCMD.sh -readScript /dev/shm/fixes.wmscript.txt" "PatchInstallation"
+    controlledExec "./UpdateManagerCMD.sh -readScript /dev/shm/fixes.wmscript.txt" "01.03.PatchInstallation"
     #./UpdateManagerCMD.sh -readScript /dev/shm/fixes.wmscript.txt \
     #    > "${WMLAB_RUN_FOLDER}/patching.out" \
     #    2> "${WMLAB_RUN_FOLDER}/patching.err" 
