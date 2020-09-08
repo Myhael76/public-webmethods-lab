@@ -7,6 +7,7 @@ init(){
     WMLAB_LOCAL_KEYSTORE_PASSWORD=${WMLAB_LOCAL_KEYSTORE_PASSWORD:-"changeIt"}
     WMLAB_LOCAL_TRUSTSTORE_FILE=${WMLAB_LOCAL_TRUSTSTORE_FILE:-"${WMLAB_INSTALL_HOME}/common/conf/local_truststore.jks"}
     WMLAB_LOCAL_TRUSTSTORE_PASSWORD=${WMLAB_LOCAL_TRUSTSTORE_PASSWORD:-"changeIt"}
+    WMLAB_LOCAL_WEBSSO_PROPS_FILE="${WMLAB_INSTALL_HOME}/MWS/server/default/config/websso.properties"
 }
 
 init
@@ -62,4 +63,14 @@ updateCustomWrapperForHttps(){
     sed -i "s;\(set\.JAVA_TRUSTSTORE=\).*\$;\1${WMLAB_LOCAL_TRUSTSTORE_FILE};" ${WMLAB_INSTALL_HOME}/profiles/MWS_default/configuration/custom_wrapper.conf
     # Keystore
     sed -i "s;\(set\.JAVA_KEYSTORE=\).*\$;\1${WMLAB_LOCAL_KEYSTORE_FILE};" ${WMLAB_INSTALL_HOME}/profiles/MWS_default/configuration/custom_wrapper.conf
+}
+
+generateWebSsoProperties(){
+    {
+        echo "SSO_KEYSTORE=${WMLAB_INSTALL_HOME}/common/conf/local_keystore.p12"
+        echo "SSO_KEYSTORE_TYPE=PKCS12"
+        echo "SSO_KEYSTORE_PASSWORD=${WMLAB_LOCAL_TRUSTSTORE_PASSWORD}"
+        echo "SSO_DEFAULT_ALIAS=${WMLAB_LOCAL_KEYSTORE_KEY_ALIAS}"
+        echo "SSO_IDP_METADATA_URL=http://idp:8080/simplesaml/saml2/idp/metadata.php"
+    } > "${WMLAB_LOCAL_WEBSSO_PROPS_FILE}"
 }

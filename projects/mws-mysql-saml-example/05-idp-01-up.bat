@@ -1,1 +1,1 @@
-Powershell.exe -executionpolicy Bypass -File .\local-commands.ps1 idp dc up
+docker-compose -f docker-compose_idp.yml up

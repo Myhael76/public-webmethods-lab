@@ -144,6 +144,7 @@ if [ "${RESULT_setupLocal}" -eq 0 ]; then
                 addPemCertToProjectJksTruststore /opt/sag/certificates/store/ca/certificateAuthority.cert.pem "server"
                 cp /opt/sag/certificates/store/mws/full.chain.key.store.p12 "${WMLAB_LOCAL_KEYSTORE_FILE}"
                 updateCustomWrapperForHttps
+                generateWebSsoProperties
                 logI "Setup successful"
             else
                 logE "Initialize instance failed (code ${RESULT_initializeMwsDefaultInstance}), cannot continue!"

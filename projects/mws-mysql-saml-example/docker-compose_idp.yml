@@ -4,7 +4,7 @@ networks:
     n1:
       external: false
 services:
-  mysql:
+  idp:
     image: kristophjunge/test-saml-idp
     container_name: ${H_WMLAB_PJ_NAME}-idp
     hostname: idp
@@ -12,10 +12,14 @@ services:
       n1:
         aliases:
           - idp
+    volumes:
+      - ./idp/authsources.php:/var/www/simplesamlphp/config/authsources.php
+      # Note: hardcoded port inside the above file for now
     environment:
-      - SIMPLESAMLPHP_SP_ENTITY_ID=http://${H_WMLAB_MWS_HOSTNAME}:8585
-      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=http://${H_WMLAB_MWS_HOSTNAME}:8585/what-here?
-      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=http://${H_WMLAB_MWS_HOSTNAME}:8585/what-here?
+      - SIMPLESAMLPHP_SP_ENTITY_ID=https://${H_WMLAB_MWS_HOSTNAME}:8787
+      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=https://${H_WMLAB_MWS_HOSTNAME}:8787/
+      #- SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=https://${H_WMLAB_MWS_HOSTNAME}:8787/?nosso=
+      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=https://${H_WMLAB_MWS_HOSTNAME}:8787/
     ports:
       - "${H_WMLAB_SAML_IDP1_CLEAR_PORT}:8080"
       - "${H_WMLAB_SAML_IDP1_SSL_PORT}:8443"
