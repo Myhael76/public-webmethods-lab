@@ -2,6 +2,8 @@
 
 . /mnt/scripts/lib/common.sh
 
+. /mnt/scripts/local/certificatesCommon.sh
+
 logI "Setting up MWS ..."
 logEnv
 
@@ -23,8 +25,7 @@ createMwsDefaultInstance(){
     JAVA_OPTS=${JAVA_OPTS}' -Ddb.password="'${WMLAB_MYSQL_PASSWORD}'"'
 
     JAVA_OPTS=${JAVA_OPTS}' -Dnode.name='${WMLAB_MWS_HOSTNAME}
-    JAVA_OPTS=${JAVA_OPTS}' -Dserver.features=default'
-    JAVA_OPTS=${JAVA_OPTS}' -Dinstall.service=false'
+    JAVA_OPTS=${JAVA_OPTS}' -Dhttps.port=8787'
     
     cmd="./mws.sh new ${JAVA_OPTS}"
 
@@ -37,6 +38,7 @@ createMwsDefaultInstance(){
 
 generateBndFile(){
     fullFileName="${WMLAB_WM_INSTALL_HOME}/MWS/lib/${WMLAB_BND_FILENAME}"
+    logI "Preparing BND file ${WMLAB_BND_FILENAME}"
     echo "# attach as fragment to the caf.server bundle" > ${fullFileName}
     echo "Fragment-Host: com.webmethods.caf.server" >> ${fullFileName}
     echo "Bundle-SymbolicName: ${WMLAB_Bundle_SymbolicName}" >> ${fullFileName}
@@ -45,6 +47,23 @@ generateBndFile(){
     echo "-exportcontents: *" >> ${fullFileName}
     echo "Bundle-ClassPath: ${WMLAB_JDBC_DRIVER_FILENAME}" >> ${fullFileName}
     echo "Import-Package: *;resolution:=optional" >> ${fullFileName}
+    logD "Dump BND File ${WMLAB_BND_FILENAME}"
+    controlledExec "cat ${fullFileName}" "DumpBndFile"
+}
+
+prepareJdbcDriver(){
+    downloadCmd="curl -o "'"${WMLAB_WM_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME}" "${WMLAB_JDBC_DRIVER_URL}"'
+    controlledExec "${downloadCmd}" "03-JDBCDriver-Download"
+
+    if [ -f "${WMLAB_WM_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME}" ]; then
+        cp ${WMLAB_WM_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME} ${WMLAB_WM_INSTALL_HOME}/MWS/lib/${WMLAB_JDBC_DRIVER_FILENAME}
+        generateBndFile
+        RESULT_prepareJdbcDriver=0
+    else
+        RESULT_prepareJdbcDriver=1
+        logE "Could not download JDBC driver from ${WMLAB_JDBC_DRIVER_URL}"
+    fi
+    unset downloadCmd
 }
 
 linkDatabase(){
@@ -57,7 +76,8 @@ linkDatabase(){
         controlledExec "${downloadCmd}" "03-JDBCDriver-Download"
 
         if [ -f "${WMLAB_WM_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME}" ]; then
-            ln -s ${WMLAB_WM_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME} ${WMLAB_WM_INSTALL_HOME}/MWS/lib/${WMLAB_JDBC_DRIVER_FILENAME}
+            # ln -s ${WMLAB_WM_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME} ${WMLAB_WM_INSTALL_HOME}/MWS/lib/${WMLAB_JDBC_DRIVER_FILENAME}
+            cp ${WMLAB_WM_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME} ${WMLAB_WM_INSTALL_HOME}/MWS/lib/${WMLAB_JDBC_DRIVER_FILENAME}
             logD "generating BND file"
             generateBndFile
             logI "Updating instance"
@@ -87,35 +107,58 @@ linkDatabase(){
 
 initializeMwsDefaultInstance(){
     logI "Initializing default MWS instance..."
-    pushd .
-    cd "${WMLAB_WM_INSTALL_HOME}/MWS/bin"
-    controlledExec "./mws.sh init" "05-InitInstance"
-    RESULT_initializeMwsInstance="${RESULT_controlledExec}"
-    popd
+    
+    temp=`(echo > /dev/tcp/${WMLAB_MYSQL_HOSTNAME}/3306) >/dev/null 2>&1`
+    CHK_DB_UP=$?
+
+    if [ ${CHK_DB_UP} -eq 0 ] ; then
+        pushd .
+        cd "${WMLAB_WM_INSTALL_HOME}/MWS/bin"
+        controlledExec "./mws.sh init" "05-InitInstance"
+        if [ "${RESULT_controlledExec}" -eq 0 ]; then
+            RESULT_initializeMwsDefaultInstance=0
+            logI "Init command successful"
+        else
+            RESULT_initializeMwsDefaultInstance=2
+            logE "Init command failed (code ${RESULT_controlledExec})"
+        fi
+        popd
+    else
+        logE "Database at ${WMLAB_MYSQL_HOSTNAME}:3306 not reachable!"
+        RESULT_initializeMwsDefaultInstance=1
+    fi
 }
 
 # Main Sequence
 setupLocal
 if [ "${RESULT_setupLocal}" -eq 0 ]; then
-    createMwsDefaultInstance
-    if [ "${RESULT_createInstance}" -eq 0 ]; then
-        linkDatabase
-        if [ "${RESULT_linkDatabase}" -eq 0 ]; then
+    prepareJdbcDriver
+    if [ ${RESULT_prepareJdbcDriver} -eq 0 ]; then
+        takeInstallationSnapshot "Before MWS server Instance Creation"
+        createMwsDefaultInstance
+        takeInstallationSnapshot "After MWS server Instance Creation"
+        if [ "${RESULT_createInstance}" -eq 0 ]; then
             initializeMwsDefaultInstance
-            if [ "${RESULT_initializeMwsInstance}" -eq 0 ]; then
-                logI "MWS Setup successful"
+            if [ "${RESULT_initializeMwsDefaultInstance}" -eq 0 ]; then
+                logI "Setting up configuration for HTTPS"
+                addPemCertToProjectJksTruststore /opt/sag/certificates/store/ca/certificateAuthority.cert.pem "server"
+                cp /opt/sag/certificates/store/mws/full.chain.key.store.p12 "${WMLAB_LOCAL_KEYSTORE_FILE}"
+                updateCustomWrapperForHttps
+                logI "Setup successful"
             else
-                logE "Link Database Failed (code ${RESULT_linkDatabase}), cannot continue!"
+                logE "Initialize instance failed (code ${RESULT_initializeMwsDefaultInstance}), cannot continue!"
             fi
         else
-            logE "Link Database Failed (code ${RESULT_linkDatabase}), cannot continue!"
+            logE "Create instance failed (code ${RESULT_createInstance}), cannot continue!"
         fi
     else
-        logE "Create instance failed (code ${RESULT_createInstance}), cannot continue!"
+        logE "JDBC Driver setup failed (code ${RESULT_prepareJdbcDriver}), cannot continue!"
     fi
 else
     logE "Setting up MWS failed (code ${RESULT_setupLocal}), cannot continue!"
 fi
+
+takeInstallationSnapshot "AfterSetup"
 
 if [ "${WMLAB_DEBUG_ON}" -eq 1 ]; then
     logD "Stopping execution for debug"

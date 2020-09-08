@@ -32,10 +32,10 @@
 #### Run this project
 
 - set all the necessary env variables
-- startup mysql (01-mysql-01-up.bat)
-- optionally startuo adminer (S01-adminer-01-up.bat) if you want to introspect mysql contents
-- execute init-db.bat after mysql finished its own startup. wait for the command to finish
+- startup mysql (01.01.startMySql.bat)
+- optionally startu adminer (S01-adminer-01-up.bat) if you want to introspect mysql contents
+- execute 02.init.02.mws1.bat after mysql finished its own startup. Wait for the command to finish
   - Note: only one version may be used at a time. If you use 10.3 call init-db.v1003.bat ONLY
-- execute init-mws.bat
-
-ATM this command fails for a probable bug. Investigations are on going.
+- execute 02.init.02.mws1.bat
+- if projects stops for debug, explicitly stop mws with 04.stop.01.mws1.bat
+- All the subsequent starts for mws will need to be done with 03.start.01.mws1.bat

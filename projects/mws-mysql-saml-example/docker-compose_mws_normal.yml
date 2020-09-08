@@ -1,0 +1,43 @@
+version: "3.5"
+
+volumes:
+  mws-install-home: {}
+  mws-sum-home:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  mws-temp:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+
+networks:
+    n1:
+      external: false
+services:
+  mws:
+    image: centos-wm-install-helper
+    container_name: ${H_WMLAB_PJ_NAME}-${H_WMLAB_MWS_HOSTNAME}
+    hostname: ${H_WMLAB_MWS_HOSTNAME}
+    networks:
+      n1:
+        aliases:
+          - ${H_WMLAB_MWS_HOSTNAME}
+    volumes:
+      - ../unixShellLib/scripts/:/mnt/scripts/lib/
+      - mws-temp:/tmp/
+      - mws-install-home:${H_WMLAB_WM_INSTALL_HOME}
+      - mws-sum-home:/opt/sag/sum/
+      - ./runs/:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - ./scripts/:/mnt/scripts/local/
+    environment:
+      - WMLAB_RUN_BASE_MOUNT=${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - WMLAB_DEBUG_ON=${H_WMLAB_DEBUG_ON}
+      # Setup related
+      - WMLAB_TAKE_SNAPHOTS=${H_WMLAB_TAKE_SNAPHOTS}
+      - WMLAB_WM_INSTALL_HOME=${H_WMLAB_WM_INSTALL_HOME}
+      #- WMLAB_LOCAL_KEYSTORE_PASSWORD=${H_WMLAB_LOCAL_KEYSTORE_PASSWORD}
+    ports:
+      - "${H_WMLAB_MWS_PORT}:8585"
+      - "${H_WMLAB_MWS_HTTPS_PORT}:8787"
+    entrypoint: /mnt/scripts/local/1005/mwsNormalEntryPoint.sh
