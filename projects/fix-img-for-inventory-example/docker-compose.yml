@@ -10,7 +10,7 @@ services:
       - ./scripts/:/mnt/scripts/local/
       - ./runs/:/mnt/runs/
       # Base assets
-      - ${H_WMLAB_INVENTORY_FILE}:/mnt/wm-files/inventory.json
+      - ./inventory.json:/mnt/wm-files/inventory.json
       - ${H_WMLAB_SUM11_BOOTSTRAP_BIN}:/mnt/wm-files/sum-bootstrap.bin
       - ${H_WMLAB_FIXES_ONLINE_CRED_FILE}:/mnt/wm-files/sum-online-credentials.txt
       - ./patch.wmscript:/mnt/wm-files/patch.wmscript
