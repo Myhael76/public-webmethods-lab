@@ -30,6 +30,7 @@ services:
       - mws-sum-home:/opt/sag/sum/
       - ./runs/:${H_WMLAB_RUN_BASE_MOUNT_POINT}
       - ./scripts/:/mnt/scripts/local/
+      - ./share/:/mnt/share/
     environment:
       - WMLAB_RUN_BASE_MOUNT=${H_WMLAB_RUN_BASE_MOUNT_POINT}
       - WMLAB_DEBUG_ON=${H_WMLAB_DEBUG_ON}

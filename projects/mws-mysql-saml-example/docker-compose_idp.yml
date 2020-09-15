@@ -15,6 +15,7 @@ services:
     volumes:
       - ./idp/authsources.php:/var/www/simplesamlphp/config/authsources.php
       # Note: hardcoded port inside the above file for now
+      - ./share/:/mnt/share/
     environment:
       - SIMPLESAMLPHP_SP_ENTITY_ID=https://${H_WMLAB_MWS_HOSTNAME}:8787
       - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=https://${H_WMLAB_MWS_HOSTNAME}:8787/
