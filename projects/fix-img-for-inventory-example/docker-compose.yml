@@ -1,0 +1,23 @@
+version: "3.5"
+
+services:
+  sum-example-1:
+    image: centos-wm-install-helper
+    container_name: sum-example-1
+    hostname: sum-example-1
+    volumes:
+      - ../unixShellLib/scripts/:/mnt/scripts/lib/
+      - ./scripts/:/mnt/scripts/local/
+      - ./runs/:/mnt/runs/
+      # Base assets
+      - ${H_WMLAB_INVENTORY_FILE}:/mnt/wm-files/inventory.json
+      - ${H_WMLAB_SUM11_BOOTSTRAP_BIN}:/mnt/wm-files/sum-bootstrap.bin
+      - ${H_WMLAB_FIXES_ONLINE_CRED_FILE}:/mnt/wm-files/sum-online-credentials.txt
+      - ./patch.wmscript:/mnt/wm-files/patch.wmscript
+      # TODO
+    environment:
+      - WMLAB_RUN_BASE_MOUNT=/mnt/runs/
+      - WMLAB_SUM11_BOOTSTRAP_BIN=/mnt/wm-files/sum-bootstrap.bin
+      - WMLAB_FIXES_ONLINE_CRED_FILE=/mnt/wm-files/sum-online-credentials.txt
+      - WMLAB_SUM_HOME=/opt/sag/sum
+    entrypoint: /mnt/scripts/local/entrypoint.sh
