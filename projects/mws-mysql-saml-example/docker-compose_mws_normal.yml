@@ -38,6 +38,6 @@ services:
       - WMLAB_WM_INSTALL_HOME=${H_WMLAB_WM_INSTALL_HOME}
       #- WMLAB_LOCAL_KEYSTORE_PASSWORD=${H_WMLAB_LOCAL_KEYSTORE_PASSWORD}
     ports:
-      - "${H_WMLAB_MWS_PORT}:8585"
+      - "${H_WMLAB_MWS_PORT}:8686"
       - "${H_WMLAB_MWS_HTTPS_PORT}:8787"
     entrypoint: /mnt/scripts/local/1005/mwsNormalEntryPoint.sh

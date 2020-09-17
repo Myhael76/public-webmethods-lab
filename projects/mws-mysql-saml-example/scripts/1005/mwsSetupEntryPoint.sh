@@ -25,6 +25,7 @@ createMwsDefaultInstance(){
     JAVA_OPTS=${JAVA_OPTS}' -Ddb.password="'${WMLAB_MYSQL_PASSWORD}'"'
 
     JAVA_OPTS=${JAVA_OPTS}' -Dnode.name='${WMLAB_MWS_HOSTNAME}
+    JAVA_OPTS=${JAVA_OPTS}' -Dhttp.port=8686'
     JAVA_OPTS=${JAVA_OPTS}' -Dhttps.port=8787'
     
     cmd="./mws.sh new ${JAVA_OPTS}"
