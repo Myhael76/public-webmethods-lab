@@ -2,3 +2,4 @@
 *credentials*
 runs/
 temp_pj_*
+.env
