@@ -19,3 +19,9 @@ This is provided for local PC usage, laboratories and as a starting point for bu
 ## Usage
 
 - run 01.generateEnvFile.bat to setup your local environment. The script will ask you to pick the files for the above prerequisites
+- run 02.build.bat
+- run 03.test.bat eventually to startup a container from the generated image and play with it
+
+## TODO
+
+- generalize for other versions. ATM this was tested with 1005 only

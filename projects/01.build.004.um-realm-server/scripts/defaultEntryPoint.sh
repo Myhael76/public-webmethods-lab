@@ -5,6 +5,9 @@
 logD "Environment dump below"
 logEnv
 
+
+# TODO: specific for 1005 for now, to split and move the specific part to the version folder
+
 logI "Checking docker client availability..."
 docker info >/dev/null 2>&1
 if [ $? -eq 0 ]; then
@@ -79,5 +82,4 @@ else
     exit 1
 fi
 
-tail -f /dev/null
 exit 0
