@@ -31,6 +31,7 @@ In order to use this project you will need the following
   - Terracotta Big Memory
   - API MicroGateway
 - Direct access to internet from the containers. In case a proxy is needed to access internet, configure it on the Docker Desktop properties.
+- All paths that will be provided in the .env files must not contain spaces or special chars.
 
 ## Quick start
 
