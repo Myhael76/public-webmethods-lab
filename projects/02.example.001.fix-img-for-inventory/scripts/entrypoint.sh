@@ -21,3 +21,4 @@ cd /opt/sag/sum/bin
     -createImage "${WMLAB_RUN_FOLDER}/fixes.image" \
     > "${WMLAB_RUN_FOLDER}/Update.out" \
     2> "${WMLAB_RUN_FOLDER}/Update.err"
+
