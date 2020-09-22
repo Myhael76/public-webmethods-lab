@@ -1,5 +1,6 @@
 Add-Type -AssemblyName System.Windows.Forms
 
+$PSDefaultParameterValues['Out-File:Encoding'] = 'utf8'
 function lookupForLocalFile{
     param (
         $WindowTitle
