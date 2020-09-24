@@ -239,3 +239,56 @@ genericProductsSetup(){
         RESULT_genericProductsSetup=1 # 1 - installation failed
     fi
 }
+
+startDstatResourceMonitor(){
+    if command -v dstat &> /dev/null
+    then
+        logI "Spawning new dstat resource monitor."
+        d=`date +%y-%m-%dT%H.%M.%S_%3N`
+        pushd .
+        nohup dstat -t -T -l -c -m -s -r -d --fs --disk-tps --disk-util --tcp --dbus -n -N total,lo --net-packets --output "${WMLAB_RUN_FOLDER}/dstat_output_$d.csv" >/dev/null &
+        popd
+        logI "dstat resource monitor launched, output file is ${WMLAB_RUN_FOLDER}/dstat_output_$d.csv"
+    else
+        logW "dstat command not found"
+    fi
+}
+
+startDockerMonitor(){
+    # parameter $1 -> grep tocken, normally the docker instance name or id
+
+    h=`docker stats -a --no-stream | grep CPU | awk -v OFS="," '$1=$1'`
+    h=${h/,\/,/,}
+    h=${h/NET,I\/O/NET I,NET O}
+    h=${h/BLOCK,I\/O/BLOCK I,BLOCK O}
+    h=${h/CPU,%/CPU%}
+    h=${h/MEM,USAGE/MEM UASGE}
+    h=${h/MEM,%/MEM%}
+    d=`date +%y-%m-%dT%H.%M.%S_%3N`
+
+    f="${WMLAB_RUN_FOLDER}/dockerMon_$1_$d.csv"
+
+    logI "Starting new docker monitor for container $1, file is $f"
+    echo $h > "$f"
+
+    daemonDockerMonitor $1 $f &
+}
+
+daemonDockerMonitor(){
+    # parameter $1 -> grep tocken, normally the docker instance name or id
+    # parameter $2 -> file
+    while true; do
+        sleep 1
+        writeDockerMonitorLine $1 >> $2
+    done
+}
+
+writeDockerMonitorLine(){
+    # parameter $1 -> grep tocken, normally the docker instance name or id
+    d=`date +%y-%m-%dT%H.%M.%S_%3N`
+    l=`docker stats -a --no-stream | grep $1 | awk -v OFS="," '$1=$1'`
+    l=${l/,\/,/,}
+    l=${l/,\/,/,}
+    l=${l/,\/,/,}
+   echo "$d,$l"
+}
