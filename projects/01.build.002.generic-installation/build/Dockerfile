@@ -7,6 +7,7 @@ RUN yum install -y net-tools && \
     yum install -y unzip && \
     yum install -y less && \
     yum install -y telnet && \
+    yum install -y dstat && \
     yum -y update && \
     yum clean all && \
     rm -rf /var/cache/yum
