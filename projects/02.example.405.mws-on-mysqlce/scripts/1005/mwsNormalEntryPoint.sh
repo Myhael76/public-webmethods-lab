@@ -15,6 +15,8 @@ onKill(){
 trap "onInterrupt" SIGINT SIGTERM
 trap "onKill" SIGKILL
 
+startDstatResourceMonitor
+
 logI "Starting up MWS"
 
 cd /opt/sag/products/MWS/bin

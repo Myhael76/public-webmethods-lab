@@ -35,6 +35,7 @@ init(){
     #when going online provide credentials in the dedicated file
     WMLAB_FIXES_ONLINE_CRED_FILE=${WMLAB_FIXES_ONLINE_CRED_FILE:-"./secret/sumCredentials.txt"}  # default go online
     WMLAB_FIXES_IMAGE_FILE=${WMLAB_FIXES_IMAGE_FILE:-"pleaseProvideFixesImageFileHere_env_WMLAB_FIXES_IMAGE_FILE"}
+    WMLAB_MONITORING_ON=${WMLAB_MONITORING_ON:-"0"}
 
     ### Follow the convention for artifacts or provide the variables upfront!
     ### These rules are valid for all containers
@@ -241,37 +242,44 @@ genericProductsSetup(){
 }
 
 startDstatResourceMonitor(){
-    if command -v dstat &> /dev/null
-    then
-        logI "Spawning new dstat resource monitor."
-        d=`date +%y-%m-%dT%H.%M.%S_%3N`
-        pushd .
-        nohup dstat -t -T -l -c -m -s -r -d --fs --disk-tps --disk-util --tcp --dbus -n -N total,lo --net-packets --output "${WMLAB_RUN_FOLDER}/dstat_output_$d.csv" >/dev/null &
-        popd
-        logI "dstat resource monitor launched, output file is ${WMLAB_RUN_FOLDER}/dstat_output_$d.csv"
+    if [ "${WMLAB_MONITORING_ON}" -eq 1 ]; then
+        if command -v dstat &> /dev/null
+        then
+            logI "Spawning new dstat resource monitor."
+            d=`date +%y-%m-%dT%H.%M.%S_%3N`
+            pushd .
+            nohup dstat -t -T -l -c -m -s -r -d --fs --disk-tps --disk-util --tcp --dbus -n -N total,lo --net-packets --output "${WMLAB_RUN_FOLDER}/dstat_output_$d.csv" >/dev/null &
+            popd
+            logI "dstat resource monitor launched, output file is ${WMLAB_RUN_FOLDER}/dstat_output_$d.csv"
+        else
+            logW "dstat command not found"
+        fi
     else
-        logW "dstat command not found"
+        logW "startDstatResourceMonitor cannot be launched, monitoring is disabled"
     fi
 }
 
 startDockerMonitor(){
     # parameter $1 -> grep tocken, normally the docker instance name or id
+    if [ "${WMLAB_MONITORING_ON}" -eq 1 ]; then
+        h=`docker stats -a --no-stream | grep CPU | awk -v OFS="," '$1=$1'`
+        h=${h/,\/,/,}
+        h=${h/NET,I\/O/NET I,NET O}
+        h=${h/BLOCK,I\/O/BLOCK I,BLOCK O}
+        h=${h/CPU,%/CPU%}
+        h=${h/MEM,USAGE/MEM UASGE}
+        h=${h/MEM,%/MEM%}
+        d=`date +%y-%m-%dT%H.%M.%S_%3N`
 
-    h=`docker stats -a --no-stream | grep CPU | awk -v OFS="," '$1=$1'`
-    h=${h/,\/,/,}
-    h=${h/NET,I\/O/NET I,NET O}
-    h=${h/BLOCK,I\/O/BLOCK I,BLOCK O}
-    h=${h/CPU,%/CPU%}
-    h=${h/MEM,USAGE/MEM UASGE}
-    h=${h/MEM,%/MEM%}
-    d=`date +%y-%m-%dT%H.%M.%S_%3N`
+        f="${WMLAB_RUN_FOLDER}/dockerMon_$1_$d.csv"
 
-    f="${WMLAB_RUN_FOLDER}/dockerMon_$1_$d.csv"
+        logI "Starting new docker monitor for container $1, file is $f"
+        echo $h > "$f"
 
-    logI "Starting new docker monitor for container $1, file is $f"
-    echo $h > "$f"
-
-    daemonDockerMonitor $1 $f &
+        daemonDockerMonitor $1 $f &
+    else
+        logW "startDstatResourceMonitor cannot be launched, monitoring is disabled"
+    fi
 }
 
 daemonDockerMonitor(){

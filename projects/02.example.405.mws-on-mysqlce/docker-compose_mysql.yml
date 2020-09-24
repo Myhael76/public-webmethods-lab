@@ -12,6 +12,8 @@ services:
     hostname: ${H_WMLAB_MYSQL_HOSTNAME}
     volumes:
       - mysqlce_data:/var/lib/mysql
+      - ../unixShellLib/scripts/:/mnt/scripts/lib/
+      - ./runs/:${H_WMLAB_RUN_BASE_MOUNT_POINT}
     networks:
       n1:
         aliases:
@@ -22,6 +24,7 @@ services:
       - MYSQL_USER=${H_WMLAB_MYSQL_USER_NAME}
       - MYSQL_PASSWORD=${H_WMLAB_MYSQL_PASSWORD}
       - MYSQL_LOG_CONSOLE=true
+      - WMLAB_MONITORING_ON=${H_WMLAB_MONITORING_ON}
     command: >
       --sql-mode="PIPES_AS_CONCAT,IGNORE_SPACE,NO_KEY_OPTIONS,NO_TABLE_OPTIONS,NO_FIELD_OPTIONS"
       --character-set-server=utf8

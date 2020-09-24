@@ -129,6 +129,7 @@ initializeMwsDefaultInstance(){
 }
 
 # Main Sequence
+startDstatResourceMonitor
 setupLocal
 if [ "${RESULT_setupLocal}" -eq 0 ]; then
     prepareJdbcDriver

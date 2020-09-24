@@ -16,7 +16,7 @@ networks:
       external: false
 services:
   mws:
-    image: centos-wm-install-helper
+    image: wm-generic-host
     container_name: ${H_WMLAB_PJ_NAME}-${H_WMLAB_MWS_HOSTNAME}
     hostname: ${H_WMLAB_MWS_HOSTNAME}
     networks:
@@ -36,6 +36,7 @@ services:
       # Setup related
       - WMLAB_TAKE_SNAPHOTS=${H_WMLAB_TAKE_SNAPHOTS}
       - WMLAB_WM_INSTALL_HOME=${H_WMLAB_WM_INSTALL_HOME}
+      - WMLAB_MONITORING_ON=${H_WMLAB_MONITORING_ON}
     ports:
       - "${H_WMLAB_MWS_PORT}:8585"
     entrypoint: /mnt/scripts/local/1005/mwsNormalEntryPoint.sh 
