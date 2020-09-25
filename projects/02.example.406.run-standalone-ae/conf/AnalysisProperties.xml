@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties>
+
+	<!-- Comments and resource bundle sections -->
+	<comment>Analysis Properties Configuration</comment>
+
+	<!--Trending Algorithms properties-->
+	<!-- how many stand devs to create a diagnosis -->
+	<entry key="tolerance" type="Double">
+		<rendering-properties>
+			<property name="type" value="textfield"/>
+			<property name="size" value="25"/>
+			<property name="label" value="Tolerance"/>
+		</rendering-properties>
+		<value>1.0</value>
+	</entry>
+
+	<!-- after how many consecutive trends to create a diagnosis -->
+	<entry key="trendingThreshold" type="Integer">
+		<rendering-properties>
+			<property name="type" value="textfield"/>
+			<property name="size" value="25"/>
+			<property name="label" value="Trending Threshold"/>
+		</rendering-properties>
+		<value>3</value>
+	</entry>
+
+	<!--number between 0 and 1, only trigger trending if the difference between readings is greater than this percentage-->
+	<entry key="trendingTolerance" type="Double">
+		<rendering-properties>
+			<property name="type" value="textfield"/>
+			<property name="size" value="25"/>
+			<property name="label" value="Trending Tolerance"/>
+		</rendering-properties>
+		<value>0.005</value>
+	</entry>
+
+	<!--
+		The following flags enable or disable the AE from performing diagnostics against each monitor reading and
+		storing and tracking these diagnostic readings in the BAM_ALG_MONITOR and DG_WAREHOUSE_STATS_FACT tables.
+		If users are not interested in tracking any of these specific algorithms then they should be disabled in order
+		to reduce the overhead that they introduce.
+	-->
+	<entry key="AboveNormalAlgFlag" type="Boolean">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>true</value>
+	</entry>
+	<entry key="BelowNormalAlgFlag" type="Boolean">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>true</value>
+	</entry>
+	<entry key="AboveMeanAlgFlag" type="Boolean">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>true</value>
+	</entry>
+	<entry key="BelowMeanAlgFlag" type="Boolean">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>true</value>
+	</entry>
+	<entry key="TrendUpAlgFlag" type="Boolean">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>true</value>
+	</entry>
+	<entry key="TrendDownAlgFlag" type="Boolean">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>true</value>
+	</entry>
+	<entry key="SlopeAboveAlgFlag" type="Boolean">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>true</value>
+	</entry>
+	<entry key="SlopeBelowAlgFlag" type="Boolean">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>true</value>
+	</entry>
+	<!-- The number of weeks to go back in time for rule back-population  -->
+	<entry key="ruleBackPopulationWeeks" type="Integer">
+		<rendering-properties>
+			<property name="type" value="textfield"/>
+			<property name="size" value="25"/>
+			<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>24</value>
+	</entry>
+	<!--
+	For either the downtime case or the backdated data case use this
+	setting to specify how many readings are produced per KPI instance per
+	KPI instance interval.
+	If you have 100 kpi instances of one minute interval size and a setting
+	of 1440 or one day's worth of intervals then to process a week of backdated
+	data would take approximately 7 minutes.  So each minute 144000 readings would
+	be published by the AE.  If this causes you to run out of memory try setting
+	the value lower.
+	You should be able to watch the queue sizes on the broker queue pages to see
+	if queue/kpi_aggregate_diagnosis or queue/kpi_aggregate_stats are backing up.
+	If so try increasing the maximum number of database connections available to the AE.
+	If that does not help set this value lower
+	10080 = 7 days of 1 minute monitor readings.
+	1440 = 1 day of 1 minute monitor readings.
+	770 = .5 day of 1 minute monitor readings.
+	If you have thousands of kpi instances or small hardware such as for a demo go
+	with a number lower than 1440.
+	-->
+	<entry key="maxReadingsPerIteration" type="Integer">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>10080</value>
+	</entry>
+	<!--
+	This specifies the earliest date the system will attempt to produce readings for backdated
+	data.  This is specified in weeks so 52 weeks is approximately 1 year.  Default is
+	approximately 3 months back.
+	-->
+	<entry key="maxBackdatedDataConsumptionInWeeks" type="Integer">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>26</value>
+	</entry>
+	<!--
+	This flag is used in the case where the AE has been unable to produce
+	readings from some period of time.  If this flag is set to true the
+	AE will attempt to "catch up" to the current time by producing
+	maxReadingsPerIteration for each KPI instance for each interval size.
+	So if the KPI instance has a one minute interval and 1440 maxReadingsPerIteration
+	then each minute the AE will attempt to produce up to 1440 readings or as many readings
+	as are necessary to catch up whichever is less until it does finally catch up.  As
+	you can see the longer the downtime period the more intervals that are used for
+	catching up.  If you are running out of memory when attempting to catch up then
+	either reduce the maxReadingsPerIteration or set this flag to false.
+	-->
+	<entry key="supportDowntimeReadings" type="Boolean">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>true</value>
+	</entry>
+	<!--
+	This flag is used in the case where a KPI instance has never had
+	a reading produced, then backdated data is fed in and the AE has
+	to produce readings for each interval from the earliest backdated
+	data up to the latest date.
+	If you don't want readings generated for the backdated data change
+	this flag to false.
+	-->
+	<entry key="supportBackdatedDataReadingGeneration" type="Boolean">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>true</value>
+	</entry>
+
+	<!-- how long to hold readings before processing to ensure accurate rule evaluation -->
+	<entry key="kpiRuleLatencyPeriod" type="Long">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+<!--			<property name="label" value="KPI Rule latency period (millis)"/>-->
+		</rendering-properties>
+		<value>10000</value>
+	</entry>
+
+	<!-- how long to hold dimension-alized events before processing to ensure accurate rule evaluation -->
+	<entry key="eventRuleLatencyPeriod" type="Long">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+<!--            <property name="label" value="Event Rule latency period (millis)"/>-->
+		</rendering-properties>
+		<value>10000</value>
+	</entry>
+
+	<!-- how long to hold mapped events before processing to ensure accurate rule evaluation -->
+	<entry key="thresholdRuleLatencyPeriod" type="Long">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+<!--            <property name="label" value="Threshold Rule latency period (millis)"/>-->
+		</rendering-properties>
+		<value>1000</value>
+	</entry>
+
+	<!-- turn on/off Performance Metrics -->
+	<entry key="EventProcessingMetricsFlag" type="Boolean">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="label" value="Publish Event Processing Metrics"/>
+		</rendering-properties>
+		<value>true</value>
+	</entry>
+
+	<!-- turn on/off Performance Metrics -->
+	<entry key="PersistenceMetricsFlag" type="Boolean">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="label" value="Publish Persistence Metrics"/>
+		</rendering-properties>
+		<value>true</value>
+	</entry>
+
+</properties>

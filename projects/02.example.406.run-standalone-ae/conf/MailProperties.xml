@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- Comments and resource bundle sections -->
+	<comment>Mail Configuration Properties</comment>
+
+	<entry key="MailServer" type="String">
+		<rendering-properties>
+			<property name="type" value="textfield"/>
+			<property name="size" value="25"/>
+			<property name="label" value="Mail Server"/>
+		</rendering-properties>
+		<value>localhost</value>
+	</entry>
+
+	<entry key="AuthenticationRequired" type="Boolean">
+		<rendering-properties>
+			<property name="type" value="choice"/>
+			<property name="choices" value="true false"/>
+			<property name="default" value="true"/>
+			<property name="label" value="Authentication Required"/>
+		</rendering-properties>
+		<value>false</value>
+	</entry>
+
+	<entry key="ServerUser" type="String">
+		<rendering-properties>
+			<property name="type" value="textfield"/>
+			<property name="size" value="25"/>
+			<property name="label" value="Server User"/>
+		</rendering-properties>
+		<value>admin</value>
+	</entry>
+
+	<entry key="ServerPassword" type="Password">
+		<rendering-properties>
+			<property name="type" value="password"/>
+			<property name="size" value="25"/>
+			<property name="label" value="Server Password"/>
+		</rendering-properties>
+		<value>mailServerPasswordHandle</value>
+	</entry>
+
+   <entry key="SenderDomain" type="String">
+		<rendering-properties>
+			<property name="type" value="textfield"/>
+			<property name="size" value="25"/>
+			<property name="label" value="Sender Domain"/>
+		</rendering-properties>
+		<value>mydomain</value>
+	</entry>
+
+	<entry key="DefaultSender" type="String">
+		<rendering-properties>
+			<property name="type" value="textfield"/>
+			<property name="size" value="25"/>
+			<property name="label" value="Default Sender"/>
+		</rendering-properties>
+		<value>optimize@localhost</value>
+	</entry>
+
+	<entry key="AdminAddress" type="String">
+		<rendering-properties>
+			<property name="type" value="textfield"/>
+			<property name="size" value="25"/>
+			<property name="label" value="Admin Address"/>
+		</rendering-properties>
+		<value>admin@localhost</value>
+	</entry>
+
+	<entry key="DefaultMailEncoding" type="String">
+		<rendering-properties>
+			<property name="type" value="textfield"/>
+			<property name="size" value="25"/>
+			<property name="label" value="Default Mail Encoding"/>
+		</rendering-properties>
+		<value>UTF-8</value>
+	</entry>
+
+	<entry key="Templates" type="Map">
+		<rendering-properties>
+			<property name="type" value="map"/>
+			<property name="rows" value="15"/>
+			<property name="column1.size" value="50"/>
+			<property name="column2.size" value="50"/>
+		</rendering-properties>
+		<map-value name="DefaultTemplate" value="./templates/DefaultEmailAlert.template.vm"/>
+		<map-value name="Business monitor violation" value="./templates/BusinessMonitorViolation.template"/>
+		<map-value name="SNMPAlert" value="./templates/SNMPAlert.template"/>
+	</entry>
+
+    <entry key="SocketTimeout" type="String">
+        <rendering-properties>
+            <property name="label" value="Socket Timeout"/>
+            <property name="size" value="25"/>
+            <property name="type" value="textfield"/>
+        </rendering-properties>
+        <value>60000</value>
+    </entry>
+
+</properties>

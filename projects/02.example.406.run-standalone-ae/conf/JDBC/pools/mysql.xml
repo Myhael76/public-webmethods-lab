@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<connection-pool>
+<name>mysql</name>
+<min-size>0</min-size>
+<max-size>5</max-size>
+<idle-timeout>20</idle-timeout>
+<rampup-delay>500</rampup-delay>
+<create-attempts>8</create-attempts>
+<backoff-delay>500</backoff-delay>
+<max-cached-statements>0</max-cached-statements>
+<connection>
+<url>jdbc:mysql://mysql:3306/webmethods?relaxAutoCommit=true&amp;useSSL=false</url>
+<driver-class>com.mysql.jdbc.Driver</driver-class>
+<user-id>webmethods</user-id>
+<password-handle>1594741603491_0</password-handle>
+<passman-id/>
+</connection>
+</connection-pool>

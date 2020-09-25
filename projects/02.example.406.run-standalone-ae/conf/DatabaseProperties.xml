@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright (c) 2001 - 2010 Software AG, Darmstadt, Germany and/or Software AG USA,
+  ~ Inc., Reston, VA, United States of America, and/or their licensors.
+  ~
+  ~ THIS PROGRAM IS CONFIDENTIAL, PROPRIETARY AND A TRADE SECRET TO SOFTWARE AG
+  ~ AND MAY NOT BE REPRODUCED, PUBLISHED OR DISCLOSED TO OTHERS WITHOUT THE
+  ~ EXPRESS WRITTEN CONSENT OF SOFTWARE AG.
+  -->
+
+<properties>
+
+	<!-- Comments and resource bundle sections -->
+	<comment>Database Properties Configuration</comment>
+
+	<entry key="wrapConnections" type="Boolean">
+		<rendering-properties>
+            <property name="type" value="checkbox"/>
+            <property name="default" value="false"/>
+            <property name="label" value="Wrap Connections"/>
+            <property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>false</value>
+	</entry>
+
+    
+     <entry key="disableDDLStatements" type="Boolean">
+		<rendering-properties>
+            <property name="type" value="checkbox"/>
+            <property name="default" value="true"/>
+            <property name="label" value="Disable DDL Statements"/>
+		</rendering-properties>
+        <value>false</value>
+    </entry>
+	
+    <entry key="DDLStatementsOutputDirectory" type="String">
+        <rendering-properties>
+            <property name="default" value="../logs"/>
+            <property name="label" value="DDL statements output directory"/>
+            <property name="type" value="textfield"/>
+            <property name="hidden" value="true"/>
+        </rendering-properties>
+        <value>../logs</value>
+    </entry>	
+    
+    <!--
+        Maximum number of executed statements per JDBC transaction. The larger this setting the longer
+        a transaction may remain open, holding read locks, until a commit is performed. Setting this too small can
+        impact db performance.
+    -->
+    <entry key="commitSize" type="Integer">
+        <rendering-properties>
+            <property name="type" value="textfield"/>
+            <property name="size" value="25"/>
+            <property name="label" value="JDBC Transaction Commit Size"/>
+            <property name="hidden" value="true"/>
+        </rendering-properties>
+        <value>500</value>
+    </entry>
+</properties>
