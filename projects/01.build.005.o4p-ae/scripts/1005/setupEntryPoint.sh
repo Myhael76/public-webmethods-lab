@@ -49,6 +49,9 @@ if [ $? -eq 0 ]; then
 		mv ${WMLAB_INSTALL_HOME}/common/runtime ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
 		mv ${WMLAB_INSTALL_HOME}/optimize ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/
 
+		downloadCmd="curl -o "'"${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME}" "${WMLAB_JDBC_DRIVER_URL}"'
+		controlledExec "${downloadCmd}" "03-JDBCDriver-Download"
+
 		## Note: following folders contain logs, they should be mounted
 		# optimize/analysis/logs
 		# common/runtime/agent/logs
