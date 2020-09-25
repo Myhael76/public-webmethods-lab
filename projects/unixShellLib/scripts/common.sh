@@ -18,29 +18,30 @@ init(){
     ########### Variables with defaults 
     # (using shell expansion: https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion)
 
-    WMLAB_LOG_TOKEN=${WMLAB_LOG_TOKEN:-"PUBLIC_WM_LAB Common"}
-    WMLAB_DEBUG_ON=${WMLAB_DEBUG_ON:-1} # Debug by default is 1
-    WMLAB_RUN_BASE_MOUNT=${WMLAB_RUN_BASE_MOUNT:-/mnt/runs}
-    WMLAB_RUN_FOLDER=${WMLAB_RUN_FOLDER:-"${WMLAB_RUN_BASE_MOUNT}/${CRT_DATE}"} # ATTN Alpine does not have millis, we accept that
-    WMLAB_PRODUCTS_VERSION=${WMLAB_PRODUCTS_VERSION:-"1005"}           # assume no version combinations
+    export WMLAB_LOG_TOKEN=${WMLAB_LOG_TOKEN:-"PUBLIC_WM_LAB Common"}
+    export WMLAB_DEBUG_ON=${WMLAB_DEBUG_ON:-1} # Debug by default is 1
+    export WMLAB_RUN_BASE_MOUNT=${WMLAB_RUN_BASE_MOUNT:-/mnt/runs}
+    export WMLAB_RUN_FOLDER=${WMLAB_RUN_FOLDER:-"${WMLAB_RUN_BASE_MOUNT}/${CRT_DATE}"} # ATTN Alpine does not have millis, we accept that
+    export WMLAB_PRODUCTS_VERSION=${WMLAB_PRODUCTS_VERSION:-"1005"}           # assume no version combinations
     # Installation assets
-    WMLAB_INSTALL_HOME=${WMLAB_INSTALL_HOME:-"/opt/sag/products"}      # default install home
-    WMLAB_INSTALLER_BIN=${WMLAB_INSTALLER_BIN:-"/mnt/sag/artifacts/Installers/LNX64/installer.bin"}
-    WMLAB_PRODUCTS_IMAGE=${WMLAB_PRODUCTS_IMAGE:-"pleaseProvideProductsImageFileHere_env_WMLAB_PRODUCTS_IMAGE"}
-    WMLAB_INSTALL_SCRIPT_FILE=${WMLAB_INSTALL_SCRIPT_FILE:-"Pleae provide an installer script!"}
+    export WMLAB_INSTALL_HOME=${WMLAB_INSTALL_HOME:-"/opt/sag/products"}      # default install home
+    export WMLAB_INSTALLER_BIN=${WMLAB_INSTALLER_BIN:-"/mnt/sag/artifacts/Installers/LNX64/installer.bin"}
+    export WMLAB_PRODUCTS_IMAGE=${WMLAB_PRODUCTS_IMAGE:-"pleaseProvideProductsImageFileHere_env_WMLAB_PRODUCTS_IMAGE"}
+    export WMLAB_INSTALL_SCRIPT_FILE=${WMLAB_INSTALL_SCRIPT_FILE:-"Pleae provide an installer script!"}
     # Patching assets
-    WMLAB_SKIP_PATCHING=${WMLAB_SKIP_PATCHING:-0}                      # always patch by default, 1 means skip
-    WMLAB_SUM_HOME=${WMLAB_SUM_HOME:-"/opt/sag/sum"}                   # default sum install home
-    WMLAB_FIXES_ONLINE=${WMLAB_FIXES_ONLINE:-1}                        # default go online
+    export WMLAB_SKIP_PATCHING=${WMLAB_SKIP_PATCHING:-0}                      # always patch by default, 1 means skip
+    export WMLAB_SUM_HOME=${WMLAB_SUM_HOME:-"/opt/sag/sum"}                   # default sum install home
+    export WMLAB_FIXES_ONLINE=${WMLAB_FIXES_ONLINE:-1}                        # default go online
     #when going online provide credentials in the dedicated file
-    WMLAB_FIXES_ONLINE_CRED_FILE=${WMLAB_FIXES_ONLINE_CRED_FILE:-"./secret/sumCredentials.txt"}  # default go online
-    WMLAB_FIXES_IMAGE_FILE=${WMLAB_FIXES_IMAGE_FILE:-"pleaseProvideFixesImageFileHere_env_WMLAB_FIXES_IMAGE_FILE"}
-    WMLAB_MONITORING_ON=${WMLAB_MONITORING_ON:-"0"}
+    export WMLAB_FIXES_ONLINE_CRED_FILE=${WMLAB_FIXES_ONLINE_CRED_FILE:-"./secret/sumCredentials.txt"}  # default go online
+    export WMLAB_FIXES_IMAGE_FILE=${WMLAB_FIXES_IMAGE_FILE:-"pleaseProvideFixesImageFileHere_env_WMLAB_FIXES_IMAGE_FILE"}
+    export WMLAB_MONITORING_ON=${WMLAB_MONITORING_ON:-"0"}
+    export WMLAB_TAKE_SNAPHOTS=${WMLAB_TAKE_SNAPHOTS:-"0"}
 
     ### Follow the convention for artifacts or provide the variables upfront!
     ### These rules are valid for all containers
-    WMLAB_SUM10_BOOTSTRAP_BIN=${WMLAB_SUM10_BOOTSTRAP_BIN:-"/mnt/sag/artifacts/Installers/LNX64/sum10.bin"}
-    WMLAB_SUM11_BOOTSTRAP_BIN=${WMLAB_SUM11_BOOTSTRAP_BIN:-"/mnt/sag/artifacts/Installers/LNX64/sum11.bin"}
+    export WMLAB_SUM10_BOOTSTRAP_BIN=${WMLAB_SUM10_BOOTSTRAP_BIN:-"/mnt/sag/artifacts/Installers/LNX64/sum10.bin"}
+    export WMLAB_SUM11_BOOTSTRAP_BIN=${WMLAB_SUM11_BOOTSTRAP_BIN:-"/mnt/sag/artifacts/Installers/LNX64/sum11.bin"}
 
     ########### Derived Variables 
     LOG_TOKEN_C_D="${Blue}DEBUG:${Green}${LOG_TOKEN}${NC}"
