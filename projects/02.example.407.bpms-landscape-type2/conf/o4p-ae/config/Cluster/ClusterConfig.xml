@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<cluster id="environment:1" name="o4p-ae-only-authored-template">
+<timestamp>1601309121805</timestamp>
+<description>o4p-ae-only-authored-template</description>
+<tsa/>
+<member id="1" name="Analytic Engine v10.5.0.0">
+<description>Analytic Engine v10.5.0.0</description>
+<host>o4p-ae-server</host>
+</member>
+</cluster>

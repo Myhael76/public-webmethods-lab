@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties>
+
+	<!-- Comments and resource bundle sections -->
+	<comment>JNDI Properties</comment>
+
+	<entry key="ConnectionUri" type="String">
+		<rendering-properties>
+			<property name="type" value="textfield"/>
+			<property name="size" value="25"/>
+            <property name="label" value="Broker Name"/>
+		</rendering-properties>
+		<value></value>
+	</entry>
+
+	<entry key="NamingFactoryProperty" type="String">
+		<rendering-properties>
+			<property name="type" value="textfield"/>
+			<property name="size" value="25"/>
+			<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>java.naming.factory.initial</value>
+	</entry>
+
+	<entry key="NamingFactoryImpl" type="String">
+		<rendering-properties>
+			<property name="type" value="choice"/>
+			<property name="choices" value="com.webmethods.jms.naming.WmJmsNamingCtxFactory, com.pcbsys.nirvana.nSpace.NirvanaContextFactory"/>
+			<property name="default" value="com.pcbsys.nirvana.nSpace.NirvanaContextFactory"/>
+			<property name="titles" value="Broker (deprecated), Universal Messaging"/>
+			<property name="label" value="Naming Factory Type"/>
+		</rendering-properties>
+		<value>com.pcbsys.nirvana.nSpace.NirvanaContextFactory</value>
+	</entry>
+
+	<entry key="ConnectionFactoryProperty" type="String">
+		<rendering-properties>
+			<property name="type" value="textfield"/>
+			<property name="size" value="25"/>
+			<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>connection_factory.name</value>
+	</entry>
+
+	<entry key="ConnectionFactoryName" type="String">
+		<rendering-properties>
+			<property name="type" value="textfield"/>
+			<property name="size" value="25"/>
+            <property name="label" value="Connection Factory Name"/>
+			<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>jms/optimize/connection_factory</value>
+	</entry>
+
+    <entry key="UseSSL" type="Boolean">
+		<rendering-properties>
+			<property name="type" value="choice"/>
+			<property name="choices" value="true false"/>
+			<property name="default" value="true"/>
+			<property name="label" value="Enable SSL"/>
+		</rendering-properties>
+		<value>false</value>
+	</entry>
+
+    <entry key="UseEncryption" type="Boolean">
+		<rendering-properties>
+			<property name="type" value="choice"/>
+			<property name="choices" value="true false"/>
+			<property name="default" value="true"/>
+			<property name="label" value="Encryption"/>
+		</rendering-properties>
+		<value>false</value>
+	</entry>
+
+    <entry key="KeyStoreFile" type="String">
+		<rendering-properties>
+			<property name="type" value="textfield"/>
+			<property name="size" value="80"/>
+            <property name="label" value="Key Store File"/>
+		</rendering-properties>
+		<value></value>
+	</entry>
+
+	<entry key="KeyStoreType" type="String">
+		<rendering-properties>
+			<property name="type" value="choice"/>
+			<property name="choices" value="PKCS12, JKS"/>
+            <property name="default" value="PKCS12"/>
+			<property name="label" value="Key Store Type"/>
+		</rendering-properties>
+	    <value>PKCS12</value>
+	</entry>
+
+    <entry key="DN" type="String">
+		<rendering-properties>
+			<property name="type" value="textfield"/>
+			<property name="size" value="80"/>
+            <property name="label" value="Distinquished Name"/>
+		</rendering-properties>
+		<value></value>
+	</entry>
+
+    <entry key="TrustStoreFile" type="String">
+		<rendering-properties>
+			<property name="type" value="textfield"/>
+			<property name="size" value="80"/>
+            <property name="label" value="Trust Store File"/>
+		</rendering-properties>
+		<value></value>
+	</entry>
+
+	<entry key="TrustStoreType" type="String">
+		<rendering-properties>
+			<property name="type" value="choice"/>
+			<property name="choices" value="PKCS12, JKS"/>
+			<property name="label" value="Trust Store Type"/>
+		</rendering-properties>
+	    <value>JKS</value>
+	</entry>
+
+    <entry key="StorePassword" type="Password">
+		<rendering-properties>
+			<property name="type" value="password"/>
+			<property name="size" value="25"/>
+			<property name="label" value="Key and Trust Store Password"/>
+		</rendering-properties>
+		<value>brokerKeyAndTrustStorePasswordHandle</value>
+	</entry>
+
+    <entry key="JmsUrlOverride" type="String">
+		<rendering-properties>
+			<property name="type" value="textfield"/>
+			<property name="size" value="200"/>
+            <property name="label" value="JMS Cluster URL"/>
+		</rendering-properties>
+		<value></value>
+	</entry>
+
+</properties>

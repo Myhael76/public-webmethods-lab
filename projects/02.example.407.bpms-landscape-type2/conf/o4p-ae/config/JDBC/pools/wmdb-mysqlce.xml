@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<connection-pool>
+<name>wmdb-mysqlce</name>
+<min-size>8</min-size>
+<max-size>60</max-size>
+<idle-timeout>20</idle-timeout>
+<rampup-delay>500</rampup-delay>
+<create-attempts>8</create-attempts>
+<backoff-delay>500</backoff-delay>
+<max-cached-statements>0</max-cached-statements>
+<connection>
+<url>jdbc:mysql://wmdb-mysqlce:3306/webmethods?relaxAutoCommit=true&amp;amp;useSSL=false</url>
+<driver-class>com.mysql.jdbc.Driver</driver-class>
+<user-id>webmethods</user-id>
+<password-handle>1601308880172_0</password-handle>
+<passman-id/>
+</connection>
+</connection-pool>

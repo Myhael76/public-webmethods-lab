@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<endpoint-registry>
+<endpoint host="o4p-ae-server" name="Configuration Agent" path="" port="15000" protocol="http"/>
+<endpoint host="mwsserver" name="MWS" path="" port="8585" protocol="http"/>
+<endpoint host="o4p-ae-server" name="WS Registry" path="" port="12503" protocol="http"/>
+<endpoint host="umserver" name="JMS Provider" path="" port="9000" protocol="nsp"/>
+</endpoint-registry>

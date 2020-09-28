@@ -27,7 +27,7 @@ Refer to the archi file for design details.
 |S02|mydbcc||DONE|
 |03|um|umserver|DONE|
 |04|mws|mwsserver|DONE|
-|05|o4p-ae|o4paeserver|TODO|
+|05|o4p-ae|o4p-ae-server|WIP|
 |06|is-plus||TODO|
 |07|deployer||TODO|
 |08|msr-sd-1||TODO|
@@ -35,3 +35,27 @@ Refer to the archi file for design details.
 ## Prerequisites
 
 Execute the following projects and their prerequisites first
+
+- 01.build.001.wm-install-helper
+- 01.build.002.generic-installation
+- 01.build.003.mydbcc
+- 01.build.004.um-realm-server
+- 01.build.005.o4p-ae
+- 01.build.007.ccs-tool-for-optimize
+
+## Steps to set up the project
+
+- Initialize database
+  - run 02.01.startMySql.bat
+  - (optional) run S01-adminer-01-up.bat is you want to introspect the database
+  - run S02.init.01.db.bat
+- Initialize MWS
+  - run 04.01.01.mws.init.bat
+
+## Steps to run the project 
+
+- run 02.01.startMySql.bat
+- run 03.01.startUM.bat
+- run 04.02.01.mws.start.bat
+  - manually set the cluster to point to nsp://umserver:9000
+- run 05.01.o4p-ae.start.bat

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- Comments and resource bundle sections -->
+	<comment>Process Tracker Configuration</comment>
+
+	<!--
+		- Interval (in ms) between EarlyStageBreachDetectionTask executions -> Timeout thread will run in every taskExecutionInterval milliseconds
+	-->
+	<entry key="taskExecutionInterval" type="Long">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>30000</value>
+	</entry>
+
+	<!--
+		- The application will wait for data to reach the age of the delay before checking for timeouts.
+		- Increase this delay in high volume systems where data may be sitting on queues for a longer period of time.
+	-->
+	<entry key="timeoutCheckDelay" type="Long">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>30000</value>
+	</entry>
+
+	<!--
+		Multiplier to apply to the current queue delay when adding to timeoutCheckDelay for detecting timeouts.
+	-->
+	<entry key="timeoutCheckQueueDelayMultiplier" type="Double">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>2.0</value>
+	</entry>
+	
+	<!-- Consume Event Option property -->
+	<entry key="consumeEventsOption" type="String">
+	    <rendering-properties>
+			<property name="default" value="mapi"/>
+			<property name="label" value="Input Events"/>
+			<property name="type" value="radio"/>
+			<property name="titles" value="MAPI,EDA"/>
+			<property name="choices" value="mapi, eda"/>
+		</rendering-properties>
+		<value>mapi</value>
+	</entry>
+
+	 <!--
+		- Number process instance database identifiers to cache in memory. The larger the
+		- number the faster the application is able to store and retrieve data. In low
+		- to medium volume systems 10,000 is a typical starting point.
+	-->
+		 <entry key="processInstanceCacheSize" type="Integer">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="false"/>
+				<property name="label" value="Process Instance Cache Size"/>
+             </rendering-properties>
+		<value>5000000</value>
+	</entry>
+
+
+	<!--
+		- The process model will be reloaded from the database every (n)milliseconds.
+		- If a new version of a process model is deployed it may not be visible to the
+		- process tracker for up to the amount of time of the refresh interval.
+	-->
+
+	<entry key="modelRefreshInterval" type="Long">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="false"/>
+				<property name="label" value="Process Model Refresh Interval"/>				
+		</rendering-properties>
+		<value>300000</value>
+	</entry>
+
+	<!--
+		- Data purge configuration
+		- Number of days to save processes for. All closed processes older than the specified number of days will
+			be removed when data purge is run.
+	-->
+		 <entry key="daysToRetainProcesses" type="Integer">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="label" value="Days To Retain Process"/>
+				<property name="hidden" value="true"/>
+		<property name="required" value="true"/>
+		  </rendering-properties>
+		<value>60</value>
+	</entry>
+
+	<entry key="persistentStaging" type="Boolean">
+		<rendering-properties>
+				<property name="type" value="choice"/>
+				<property name="choices" value="true false"/>
+				<property name="default" value="false"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>false</value>
+	</entry>
+
+	<!--
+		If checkDatabaseOnCreate is 'true' then for entry process steps, query the database for an existing
+		process instance if one was not found in the in-memory cache before creating a new process instance record
+		in db. This is most useful for cases where multiple iterations of the same process instance are sent.
+		When set to 'true', multiple iterations will be treated as a single process instance with each step having
+		multiple iterations. When set to 'false', multiple iterations will be treated as separate process instances.
+	-->
+	<entry key="checkDatabaseOnCreate" type="Boolean">
+		<rendering-properties>
+				<property name="type" value="choice"/>
+				<property name="choices" value="true false"/>
+				<property name="default" value="true"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>true</value>
+	</entry>
+
+
+	<!--
+		- Number of items that can go into a single SQL 'in' clause
+		- Ex. select x from y where z in (?, ?, ?, ?)
+		- DBs have a limit to how many items can go in the 'in' clause.
+	-->
+	<entry key="maxSqlInClauseItems" type="Integer">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>100</value>
+	</entry>
+
+	<!--
+		Maximum number of entries to add to the staging queue. Once this maximum is reached
+		the queue will block until a consumer removes an item from the queue.
+		Queue capacity affects both memory consumption, and catastrophic failure impact.
+		The more entries sitting on the queue, the more operations lost if the engine goes down
+		unexpectedly (To be resolved in future release).
+		Once this queue is full, messages will queue up in the inbound data queue.
+	-->
+	<entry key="maxStagingDataQueueSize" type="Integer">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="false"/>
+				<property name="label" value="Staging Queue Maximum Size"/>
+		</rendering-properties>
+		<value>1000000</value>
+	</entry>
+
+	<!--
+		StagingDataProcessor task is a task in the Process Tracker task execution list and thus is run at a
+		regular interval along with other tasks. When StagingDataProcessor wakes up to process items in
+		the staging (operation) queue, stagingDataQueueConsumptionSize defines maximum items to be retrieved.
+		This setting impacts both memory consumption and overall task completion time.
+		By default this size is equal to the 'maxStagingDataQueueSize'.
+	-->
+	<entry key="stagingDataQueueConsumptionSize" type="Integer">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="false"/>
+				<property name="label" value="Staging Queue Processing Batch Size"/>
+		</rendering-properties>
+		<value>1000000</value>
+	</entry>
+	
+	<!--
+		Number of msecs to allow items to sit on staging queue before pulling for processing. This allows
+		steps that may arrive from different sources to 'settle' into the correct order to prevent out of sequence
+		errors.
+	-->
+	<entry key="stagingDataDelay" type="Long">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="false"/>
+				<property name="label" value="Staging Queue Settling Period"/>
+		</rendering-properties>
+		<value>10000</value>
+	</entry>
+
+	<!--
+		Data purge scheduler configuration
+		Interval (in hours) to update data purge schedule in database (based on daysToRetainProcesses parameter) and
+		purge the WORK (temp) tables.
+		This parameter determines how often the database is checked for records that need to be purged the next time
+		the data purge scripts are run. Additionally at this interval, the WORK tables are purged of any INACTIVE
+		records.
+	-->
+	<entry key="dataPurgeSchedulerInterval" type="Integer">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>12</value>
+	</entry>
+
+	<!--
+		During startup of additional Analytic Engines there is a settling period where potential out of sequence
+		events could be detected due to the new AE processing steps for a process in which an existing AE may still be
+		working on earlier steps. This time (in msecs) is how long the new engine will wait to see if these
+		out of sequence conditions go away after the existing AE completes its processing of backlogged steps.
+	-->
+	<entry key="engineStartupSettlingPeriod" type="Long">
+		<rendering-properties>
+				<property name="type" value="textfield"/>
+				<property name="size" value="25"/>
+				<property name="hidden" value="true"/>
+		</rendering-properties>
+		<value>180000</value>
+	</entry>
+</properties>
