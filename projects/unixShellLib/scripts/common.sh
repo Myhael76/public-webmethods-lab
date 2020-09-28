@@ -27,7 +27,7 @@ init(){
     export WMLAB_INSTALL_HOME=${WMLAB_INSTALL_HOME:-"/opt/sag/products"}      # default install home
     export WMLAB_INSTALLER_BIN=${WMLAB_INSTALLER_BIN:-"/mnt/sag/artifacts/Installers/LNX64/installer.bin"}
     export WMLAB_PRODUCTS_IMAGE=${WMLAB_PRODUCTS_IMAGE:-"pleaseProvideProductsImageFileHere_env_WMLAB_PRODUCTS_IMAGE"}
-    export WMLAB_INSTALL_SCRIPT_FILE=${WMLAB_INSTALL_SCRIPT_FILE:-"Pleae provide an installer script!"}
+    export WMLAB_INSTALL_SCRIPT_FILE=${WMLAB_INSTALL_SCRIPT_FILE:-"Please provide an installer script!"}
     # Patching assets
     export WMLAB_SKIP_PATCHING=${WMLAB_SKIP_PATCHING:-0}                      # always patch by default, 1 means skip
     export WMLAB_SUM_HOME=${WMLAB_SUM_HOME:-"/opt/sag/sum"}                   # default sum install home
@@ -115,7 +115,6 @@ bootstrapSum(){
             > "${WMLAB_RUN_FOLDER}/01.02.sum-boot.out" \
             2> "${WMLAB_RUN_FOLDER}/01.02.sum-boot.err"
         RESULT_bootstrapSum=$?
-        logI "Result: ${RESULT_bootstrapSum}"
         if [ ${RESULT_bootstrapSum} -eq 0 ]; then
             logI "SUM Bootstrap successful"
         else
@@ -219,19 +218,25 @@ genericProductsSetup(){
     installProducts "${1}"
     if [[ ${RESULT_installProducts} -eq 0 ]] ; then
         takeInstallationSnapshot 01.Setup-01-after-install
-        bootstrapSum
-        if [[ ${RESULT_bootstrapSum} -eq 0 ]] ; then
-            patchInstallation
-            if [[ ${RESULT_patchInstallation} -eq 0 ]] ; then
-                takeInstallationSnapshot 01.Setup-02-after-patch
-                RESULT_genericProductsSetup=0
+
+        if [ ${WMLAB_SKIP_PATCHING} -eq 0 ]; then
+            bootstrapSum
+            if [[ ${RESULT_bootstrapSum} -eq 0 ]] ; then
+                patchInstallation
+                if [[ ${RESULT_patchInstallation} -eq 0 ]] ; then
+                    takeInstallationSnapshot 01.Setup-02-after-patch
+                    RESULT_genericProductsSetup=0
+                else
+                    logE "Patching failed: ${PATCH_RESULT}"
+                    RESULT_genericProductsSetup=3 # 3 - patching failed
+                fi
             else
-                logE "Patching failed: ${PATCH_RESULT}"
-                RESULT_genericProductsSetup=3 # 3 - patching failed
+                logE "SUM Bootstrap failed: ${SUM_BOOT_RESULT}"
+                RESULT_genericProductsSetup=2 # 2 - bootstrap failed
             fi
         else
-            logE "SUM Bootstrap failed: ${SUM_BOOT_RESULT}"
-            RESULT_genericProductsSetup=2 # 2 - bootstrap failed
+            logI "Patching skipped..."
+            RESULT_genericProductsSetup=0
         fi
     else
         logE "Installation failed: ${INSTALL_RESULT}"
