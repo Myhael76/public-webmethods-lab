@@ -32,6 +32,7 @@ In order to use this project you will need the following
   - API MicroGateway
 - Direct access to internet from the containers. In case a proxy is needed to access internet, configure it on the Docker Desktop properties.
 - All paths that will be provided in the .env files must not contain spaces or special chars.
+- Powershell v5.1 or later is required for guided generation of .env files where this is available
 
 ## Quick start
 

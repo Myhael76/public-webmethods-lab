@@ -2,7 +2,6 @@ version: "3.5"
 
 services:
   centos-wm-install-helper-base:
-    build: ./build
     stop_signal: SIGINT
     image: centos-wm-install-helper
     container_name: wm-install-helper-base
