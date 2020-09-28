@@ -26,8 +26,8 @@ Refer to the archi file for design details.
 |S01|adminer||DONE|
 |S02|mydbcc||DONE|
 |03|um|umserver|DONE|
-|04|mws||TODO|
-|05|o4p-ae||TODO|
+|04|mws|mwsserver|DONE|
+|05|o4p-ae|o4paeserver|TODO|
 |06|is-plus||TODO|
 |07|deployer||TODO|
 |08|msr-sd-1||TODO|
@@ -35,4 +35,3 @@ Refer to the archi file for design details.
 ## Prerequisites
 
 Execute the following projects and their prerequisites first
-
