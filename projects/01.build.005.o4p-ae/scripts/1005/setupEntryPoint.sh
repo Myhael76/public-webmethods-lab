@@ -39,13 +39,16 @@ if [ $? -eq 0 ]; then
 		rm -rf ${WMLAB_INSTALL_HOME}/jvm/jvm/man
 		rm -rf ${WMLAB_INSTALL_HOME}/jvm/jvm/demo
 		rm -f ${WMLAB_INSTALL_HOME}/common/lib/derby.log
-
+		rm -rf ${WMLAB_INSTALL_HOME}/jvm/*.bck
+		
 		# bring files to the context
 		cp /mnt/scripts/local/${WMLAB_PRODUCTS_VERSION}/Dockerfile "${WMLAB_RUN_FOLDER}/docker-build-context"
 		mv ${WMLAB_INSTALL_HOME}/jvm/jvm ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/jvm/
 		mv ${WMLAB_INSTALL_HOME}/common/bin ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
 		mv ${WMLAB_INSTALL_HOME}/common/lib ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
 		mv ${WMLAB_INSTALL_HOME}/common/db ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
+		mv ${WMLAB_INSTALL_HOME}/common/conf ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
+		mv ${WMLAB_INSTALL_HOME}/common/EventTypeStore ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
 		mv ${WMLAB_INSTALL_HOME}/common/runtime ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
 		mv ${WMLAB_INSTALL_HOME}/optimize ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/
 
