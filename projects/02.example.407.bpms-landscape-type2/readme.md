@@ -23,8 +23,8 @@ Refer to the archi file for design details.
 |-|-|-|-|
 |01|base config, license files||DONE|
 |02|db|wmdb-mysql|DONE|
-|S01|adminer||TODO|
-|S02|mydbcc||TODO|
+|S01|adminer||DONE|
+|S02|mydbcc||DONE|
 |03|um||TODO|
 |04|mws||TODO|
 |05|o4p-ae||TODO|
