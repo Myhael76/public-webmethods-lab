@@ -150,7 +150,7 @@ installProducts(){
     fi
 
     if [ -f "${WMLAB_INSTALLER_BIN}" ]; then
-        logI "Installing products ..."
+        logI "Installing products according to script ${SCRIPT_FILE} ..."
         if [ -f "${SCRIPT_FILE}" ]; then
             "${WMLAB_INSTALLER_BIN}" \
                 -readScript "${SCRIPT_FILE}" \
@@ -178,7 +178,7 @@ installProducts(){
 patchInstallation(){
     ###### 03 - Patch installation
     # TODO: render patching optional with a parameter
-    logI "Applying latest fixes ..."
+    logI "Applying fixes ..."
     pushd .
     cd "${WMLAB_SUM_HOME}/bin"
 
@@ -216,17 +216,14 @@ startInstallerInAttendedMode(){
 }
 
 genericProductsSetup(){
-    logI "Installing products according to script ${1}"
     installProducts "${1}"
     if [[ ${RESULT_installProducts} -eq 0 ]] ; then
-        takeInstallationSnapshot Setup-01-after-install
-        logI "Bootstrapping Update Manager"
+        takeInstallationSnapshot 01.Setup-01-after-install
         bootstrapSum
         if [[ ${RESULT_bootstrapSum} -eq 0 ]] ; then
-            logI "Applying fixes"
             patchInstallation
             if [[ ${RESULT_patchInstallation} -eq 0 ]] ; then
-                takeInstallationSnapshot Setup-02-after-patch
+                takeInstallationSnapshot 01.Setup-02-after-patch
                 RESULT_genericProductsSetup=0
             else
                 logE "Patching failed: ${PATCH_RESULT}"
