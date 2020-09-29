@@ -51,6 +51,8 @@ if [ $? -eq 0 ]; then
 		mv ${WMLAB_INSTALL_HOME}/common/EventTypeStore ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
 		mv ${WMLAB_INSTALL_HOME}/common/runtime ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
 		mv ${WMLAB_INSTALL_HOME}/optimize ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/
+		# Try out to see if JSF error disappears
+		mv ${WMLAB_INSTALL_HOME}/* ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/
 
 		downloadCmd="curl -o "'"${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME}" "${WMLAB_JDBC_DRIVER_URL}"'
 		controlledExec "${downloadCmd}" "03-JDBCDriver-Download"
