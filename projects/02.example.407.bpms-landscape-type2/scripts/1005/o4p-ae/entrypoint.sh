@@ -26,6 +26,14 @@ beforeStartConfig(){
     ${CCS_ADMIN_HOME}bin/password_admin.sh -t \
         ${WMLAB_WM_INSTALL_HOME}/optimize/analysis/conf/deployed-passman \
         ${WMLAB_WM_INSTALL_HOME}/optimize/analysis/conf/security/passman/optimize
+
+    # link logs foler  to run folder
+    rm -rf ${WMLAB_WM_INSTALL_HOME}/optimize/analysis/logs
+    mkdir -p ${WMLAB_RUN_FOLDER}/optimizeLogs
+    pushd .
+    cd ${WMLAB_WM_INSTALL_HOME}/optimize/analysis/
+    ln -s ${WMLAB_RUN_FOLDER}/optimizeLogs logs
+    popd
 }
 
 afterStartConfig(){
@@ -45,12 +53,11 @@ if [ ${WMLAB_DEBUG_ON} -eq 1 ]; then
     GLUE_OPTS="$GLUE_OPTS -Xdebug"
 fi
 
-
 beforeStartConfig
 logI "Starting up Analytic Engine"
 
 # Note: the "go background" & already included in the product script!
-controlledExec "./startupAnalyticEngineNoWrapper.sh" "02.1.Analysis Engine first run"
+controlledExec "./startupAnalyticEngineNoWrapper.sh" "02.Analysis Engine start"
 
 afterStartConfig
 
