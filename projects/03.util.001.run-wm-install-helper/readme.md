@@ -22,3 +22,7 @@ Execute in order:
 - Test it by calling 08-test-2-bash-in-existing-container.bat
 - Close the existing container by calling 02-down.bat
 - Call 08-test-1-bash-in-new-container.bat to run an ad-hoc container linked to the host docker daemon
+
+## Use cases
+
+This project may be used to play around with installer, update manager in order to author installation and update scripts
