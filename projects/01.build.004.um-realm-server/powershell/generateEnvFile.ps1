@@ -9,5 +9,5 @@ generateEnvLineForFileRef "H_WMLAB_INSTALLER_BIN" "Please Provide Installer Bina
 generateEnvLineForFileRef "H_WMLAB_PRODUCTS_IMAGE" "Please Provide Products Image File" >> .env
 generateEnvLineForFileRef "H_WMLAB_SUM10_BOOTSTRAP_BIN" "Please Provide Update Manager v10 binary file (if not needed provide any file)" >> .env
 generateEnvLineForFileRef "H_WMLAB_SUM11_BOOTSTRAP_BIN" "Please Provide Update Manager v11 binary file (if not needed provide any file)" >> .env
-generateEnvLineForFileRef "H_WMLAB_FIXES_IMAGE_FILE" "Please Provide Fises Image File" >> .env
+generateEnvLineForFileRef "H_WMLAB_FIXES_IMAGE_FILE" "Please Provide Fixes Image File" >> .env
 generateEnvLineForFileRef "H_WMLAB_LIC_FILE_UM" "Please Provide License File for installing Universal Messaging " >> .env
