@@ -27,10 +27,10 @@ if [ $? -eq 0 ]; then
 
 		# preparing the folder structure
 		mkdir -p ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME
-		mkdir -p \
-			${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/jvm/ \
-			${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/db \
-			${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/optimize
+		#mkdir -p \
+		#	${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/jvm/ \
+		#	${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/db \
+		#	${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/optimize
 
 
 		# clean up a little
@@ -43,14 +43,14 @@ if [ $? -eq 0 ]; then
 		
 		# bring files to the context
 		cp /mnt/scripts/local/${WMLAB_PRODUCTS_VERSION}/Dockerfile "${WMLAB_RUN_FOLDER}/docker-build-context"
-		mv ${WMLAB_INSTALL_HOME}/jvm/jvm ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/jvm/
-		mv ${WMLAB_INSTALL_HOME}/common/bin ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
-		mv ${WMLAB_INSTALL_HOME}/common/lib ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
-		mv ${WMLAB_INSTALL_HOME}/common/db ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
-		mv ${WMLAB_INSTALL_HOME}/common/conf ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
-		mv ${WMLAB_INSTALL_HOME}/common/EventTypeStore ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
-		mv ${WMLAB_INSTALL_HOME}/common/runtime ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
-		mv ${WMLAB_INSTALL_HOME}/optimize ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/
+		#mv ${WMLAB_INSTALL_HOME}/jvm/jvm ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/jvm/
+		#mv ${WMLAB_INSTALL_HOME}/common/bin ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
+		#mv ${WMLAB_INSTALL_HOME}/common/lib ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
+		#mv ${WMLAB_INSTALL_HOME}/common/db ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
+		#mv ${WMLAB_INSTALL_HOME}/common/conf ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
+		#mv ${WMLAB_INSTALL_HOME}/common/EventTypeStore ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
+		#mv ${WMLAB_INSTALL_HOME}/common/runtime ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/common/
+		#mv ${WMLAB_INSTALL_HOME}/optimize ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/
 		# There are other files to copy, I do not know which ones at this point.
 		# not copying this results in some class not found errors, even if the classes are actually loaded
 		# TODO: optimize image
