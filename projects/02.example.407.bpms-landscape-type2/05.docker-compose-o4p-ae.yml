@@ -1,7 +1,5 @@
 version: "3.8"
 
-volumes:
-  o4p-ae-instance: {}
 networks:
     n1:
       external: false
