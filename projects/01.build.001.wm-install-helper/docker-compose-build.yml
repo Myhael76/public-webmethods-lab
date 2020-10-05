@@ -1,15 +1,6 @@
 version: "3.5"
 
 services:
-  centos-wm-install-helper-base:
+  centos-wm-install-helper-builder:
     build: ./build
-    stop_signal: SIGINT
     image: centos-wm-install-helper
-    container_name: wm-install-helper-base
-    hostname: wm-install-helper-base
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ../unixShellLib/scripts/:/mnt/scripts/lib/
-      - ./scripts/:/mnt/scripts/local/
-      - ./runs/:${H_WMLAB_RUN_BASE_MOUNT_POINT}
-    entrypoint: /mnt/scripts/local/buildEntryPoint.sh
