@@ -26,9 +26,9 @@ services:
     volumes:
       - ../unixShellLib/scripts/:/mnt/scripts/lib/
       - mws-temp:/tmp/
-      - mws-install-home:${H_WMLAB_WM_INSTALL_HOME}
+      - mws-install-home:${H_WMLAB_INSTALL_HOME}
       - mws-sum-home:/opt/sag/sum/
-      - ./runs/:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
       - ./certificates/:/opt/sag/certificates/store/
       - ./scripts/:/mnt/scripts/local/
       # Installer related
@@ -54,7 +54,7 @@ services:
       - WMLAB_TAKE_SNAPHOTS=${H_WMLAB_TAKE_SNAPHOTS}
       - WMLAB_JDBC_DRIVER_URL=${H_WMLAB_JDBC_DRIVER_URL}
       - WMLAB_JDBC_DRIVER_FILENAME=${H_WMLAB_JDBC_DRIVER_FILENAME}
-      - WMLAB_WM_INSTALL_HOME=${H_WMLAB_WM_INSTALL_HOME}
+      - WMLAB_INSTALL_HOME=${H_WMLAB_INSTALL_HOME}
       - WMLAB_BND_FILENAME=${H_WMLAB_BND_FILENAME}
       - WMLAB_Bundle_SymbolicName=${H_WMLAB_Bundle_SymbolicName}
       - WMLAB_Bundle_Version=${H_WMLAB_Bundle_Version}

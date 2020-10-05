@@ -5,7 +5,8 @@
     #   - WMLAB_DB_USER_NAME=${H_WMLAB_MYSQL_USER_NAME}
     #   - WMLAB_MYSQL_PASSWORD=${H_WMLAB_MYSQL_PASSWORD}
 
-. /mnt/scripts/lib/common.sh
+# import framework functions
+. ${WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}/common.sh
 
 logI "Initializing database for webmethods products..."
 logEnv

@@ -1,0 +1,53 @@
+version: "3.5"
+
+volumes:
+  mws-install-home: {}
+  mws-sum-home:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  mws-temp:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+
+networks:
+    n1:
+      external: false
+services:
+  mws:
+    image: wm-generic-host
+    container_name: ${H_WMLAB_PJ_NAME}-${H_WMLAB_MWS_HOSTNAME}
+    hostname: ${H_WMLAB_MWS_HOSTNAME}
+    networks:
+      n1:
+        aliases:
+          - ${H_WMLAB_MWS_HOSTNAME}
+    volumes:
+      - mws-temp:/tmp/
+      - mws-install-home:${H_WMLAB_INSTALL_HOME}
+      - mws-sum-home:/opt/sag/sum/
+      # from 00.commons
+      - ../00.commons/lib/unix:${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      # locals
+      - ../unixShellLib/scripts/:/mnt/scripts/lib/
+      - ./scripts/:/mnt/scripts/local/
+    environment:
+      ### from 00.commons
+      # paths
+      - WMLAB_RUN_BASE_MOUNT=${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT=${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      - WMLAB_INSTALL_HOME=${H_WMLAB_INSTALL_HOME}
+      - WMLAB_SUM_HOME=${H_WMLAB_SUM_HOME}
+      # switches
+      - WMLAB_MONITORING_ON=${H_WMLAB_MONITORING_ON}
+      - WMLAB_TAKE_SNAPHOTS=${H_WMLAB_TAKE_SNAPHOTS}
+      - WMLAB_DEBUG_ON=${H_WMLAB_DEBUG_ON}
+      - WMLAB_CTRL_EXEC_STDOUT_ON=${H_WMLAB_CTRL_EXEC_STDOUT_ON}
+      # other parameters
+      - WMLAB_PRODUCTS_VERSION=${H_WMLAB_PRODUCTS_VERSION}
+      ###locals
+    ports:
+      - "${H_WMLAB_MWS_PORT}:8585"
+    entrypoint: /mnt/scripts/local/1005/mwsNormalEntryPoint.sh 

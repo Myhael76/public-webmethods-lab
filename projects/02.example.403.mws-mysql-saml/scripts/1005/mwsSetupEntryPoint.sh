@@ -1,6 +1,7 @@
 #!/bin/sh
 
-. /mnt/scripts/lib/common.sh
+# import setup & framework functions
+. ${WMLAB_SETUP_SHELL_LIB_DIR_MOUNT_POINT}/setupCommons.sh
 
 . /mnt/scripts/local/certificatesCommon.sh
 
@@ -38,7 +39,7 @@ createMwsDefaultInstance(){
 }
 
 generateBndFile(){
-    fullFileName="${WMLAB_WM_INSTALL_HOME}/MWS/lib/${WMLAB_BND_FILENAME}"
+    fullFileName="${WMLAB_INSTALL_HOME}/MWS/lib/${WMLAB_BND_FILENAME}"
     logI "Preparing BND file ${WMLAB_BND_FILENAME}"
     echo "# attach as fragment to the caf.server bundle" > ${fullFileName}
     echo "Fragment-Host: com.webmethods.caf.server" >> ${fullFileName}
@@ -53,11 +54,11 @@ generateBndFile(){
 }
 
 prepareJdbcDriver(){
-    downloadCmd="curl -o "'"${WMLAB_WM_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME}" "${WMLAB_JDBC_DRIVER_URL}"'
+    downloadCmd="curl -o "'"${WMLAB_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME}" "${WMLAB_JDBC_DRIVER_URL}"'
     controlledExec "${downloadCmd}" "03-JDBCDriver-Download"
 
-    if [ -f "${WMLAB_WM_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME}" ]; then
-        cp ${WMLAB_WM_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME} ${WMLAB_WM_INSTALL_HOME}/MWS/lib/${WMLAB_JDBC_DRIVER_FILENAME}
+    if [ -f "${WMLAB_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME}" ]; then
+        cp ${WMLAB_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME} ${WMLAB_INSTALL_HOME}/MWS/lib/${WMLAB_JDBC_DRIVER_FILENAME}
         generateBndFile
         RESULT_prepareJdbcDriver=0
     else
@@ -73,17 +74,17 @@ linkDatabase(){
 
     if [ ${CHK_DB_UP} -eq 0 ] ; then
         logI "Downloading database driver..."
-        downloadCmd="curl -o "'"${WMLAB_WM_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME}" "${WMLAB_JDBC_DRIVER_URL}"'
+        downloadCmd="curl -o "'"${WMLAB_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME}" "${WMLAB_JDBC_DRIVER_URL}"'
         controlledExec "${downloadCmd}" "03-JDBCDriver-Download"
 
-        if [ -f "${WMLAB_WM_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME}" ]; then
-            # ln -s ${WMLAB_WM_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME} ${WMLAB_WM_INSTALL_HOME}/MWS/lib/${WMLAB_JDBC_DRIVER_FILENAME}
-            cp ${WMLAB_WM_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME} ${WMLAB_WM_INSTALL_HOME}/MWS/lib/${WMLAB_JDBC_DRIVER_FILENAME}
+        if [ -f "${WMLAB_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME}" ]; then
+            # ln -s ${WMLAB_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME} ${WMLAB_INSTALL_HOME}/MWS/lib/${WMLAB_JDBC_DRIVER_FILENAME}
+            cp ${WMLAB_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME} ${WMLAB_INSTALL_HOME}/MWS/lib/${WMLAB_JDBC_DRIVER_FILENAME}
             logD "generating BND file"
             generateBndFile
             logI "Updating instance"
             pushd .
-            cd "${WMLAB_WM_INSTALL_HOME}/MWS/bin"
+            cd "${WMLAB_INSTALL_HOME}/MWS/bin"
             controlledExec "./mws.sh update" "04-UpdateInstance"
             if [ ${RESULT_controlledExec} -eq 0 ]; then
                 controlledExec "./mws.sh create-osgi-profile" "05-CreateOsgiProfile"
@@ -114,7 +115,7 @@ initializeMwsDefaultInstance(){
 
     if [ ${CHK_DB_UP} -eq 0 ] ; then
         pushd .
-        cd "${WMLAB_WM_INSTALL_HOME}/MWS/bin"
+        cd "${WMLAB_INSTALL_HOME}/MWS/bin"
         controlledExec "./mws.sh init" "05-InitInstance"
         if [ "${RESULT_controlledExec}" -eq 0 ]; then
             RESULT_initializeMwsDefaultInstance=0

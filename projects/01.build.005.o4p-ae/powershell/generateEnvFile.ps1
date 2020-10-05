@@ -1,4 +1,4 @@
-. ..\powerShellLib\scripts\common.ps1
+. ..\00.commons\lib\powerShell\common.ps1
 
 # TODO: check for credentials file first, doesn't make sense to continue if they are not there
 # TODO: check if .env file exist and ask for permission to overwrite

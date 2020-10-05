@@ -1,6 +1,7 @@
 #!/bin/sh
 
-. /mnt/scripts/lib/common.sh
+# import framework functions
+. ${WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}/common.sh
 
 logI "Container image built successfully. Sleeping 10..."
 

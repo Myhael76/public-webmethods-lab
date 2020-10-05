@@ -1,0 +1,24 @@
+version: "3.8"
+
+# Source file for your projects dependin on 00.commons/lib/unix
+# copy paste what is needed
+
+services:
+  your-service:
+    volumes:
+      - ../00.commons/lib/unix:${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+    environment:
+      # paths
+      - WMLAB_RUN_BASE_MOUNT=${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT=${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      - WMLAB_INSTALL_HOME=${H_WMLAB_INSTALL_HOME}
+      - WMLAB_SUM_HOME=${H_WMLAB_SUM_HOME}
+      # switches
+      - WMLAB_MONITORING_ON=${H_WMLAB_MONITORING_ON}
+      - WMLAB_TAKE_SNAPHOTS=${H_WMLAB_TAKE_SNAPHOTS}
+      - WMLAB_DEBUG_ON=${H_WMLAB_DEBUG_ON}
+      - WMLAB_CTRL_EXEC_STDOUT_ON=${H_WMLAB_CTRL_EXEC_STDOUT_ON}
+      # other parameters
+      - WMLAB_PRODUCTS_VERSION=${H_WMLAB_PRODUCTS_VERSION}
+    entrypoint: ${H_WMLAB_ENTRY_POINT}

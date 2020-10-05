@@ -5,7 +5,8 @@
     #   - WMLAB_DB_USER_NAME=${H_WMLAB_MYSQL_USER_NAME}
     #   - WMLAB_MYSQL_PASSWORD=${H_WMLAB_MYSQL_PASSWORD}
 
-. /mnt/scripts/lib/common.sh
+# import framework functions
+. ${WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}/common.sh
 
 logI "Initializing database for webmethods products..."
 logEnv
@@ -13,10 +14,10 @@ INIT_RESULT=0
 
 if [ `portIsReachable ${WMLAB_DB_HOST_NAME} ${WMLAB_DB_PORT}` ]; then
 
-    apk add --no-cache curl
+    #apk add --no-cache curl
     curl -o "${WMLAB_DBCC_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME}" "${WMLAB_JDBC_DRIVER_URL}"
 
-    DBC_DB_URL="jdbc:mysql://${WMLAB_DB_HOST_NAME}:${WMLAB_DB_PORT}/${WMLAB_MYSQL_DATABASE_NAME}?useSSL=false"
+    DBC_DB_URL="jdbc:mysql://${WMLAB_DB_HOST_NAME}:${WMLAB_DB_PORT}/${WMLAB_MYSQL_DATABASE_NAME}?useSSL=false&relaxAutoCommit=true"
     logD "Computed database URL: ${DBC_DB_URL}"
 
     cd "${WMLAB_DBCC_INSTALL_HOME}/common/db/bin/"
@@ -53,4 +54,9 @@ else
     logE "Database is not reachable! Host ${WMLAB_DB_HOST_NAME}; port ${WMLAB_DB_PORT}"
     INIT_RESULT=1
 fi
+
+if [ ${WMLAB_DEBUG_ON} -eq 1 ]; then
+    logD "Stopping for debug..."
+    tail -f /dev/null
+fi 
 exit ${INIT_RESULT}

@@ -1,6 +1,7 @@
 #!/bin/sh
 
-. /mnt/scripts/lib/common.sh
+# import setup & framework functions
+. ${WMLAB_SETUP_SHELL_LIB_DIR_MOUNT_POINT}/setupCommons.sh
 
 logI "Initializing database for webmethods products..."
 logEnv
@@ -9,12 +10,12 @@ INIT_RESULT=0
 if [ `portIsReachable ${WMLAB_MYSQL_HOSTNAME} 3306` ]; then
 
     apk add --no-cache curl
-    curl -o "${WMLAB_WM_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME}" "${WMLAB_JDBC_DRIVER_URL}"
+    curl -o "${WMLAB_INSTALL_HOME}/common/lib/ext/${WMLAB_JDBC_DRIVER_FILENAME}" "${WMLAB_JDBC_DRIVER_URL}"
 
     DBC_DB_URL="jdbc:mysql://${WMLAB_MYSQL_HOSTNAME}:3306/${WMLAB_MYSQL_DATABASE_NAME}?useSSL=false"
     logD "Computed database URL: ${DBC_DB_URL}"
 
-    cd "${WMLAB_WM_INSTALL_HOME}/common/db/bin/"
+    cd "${WMLAB_INSTALL_HOME}/common/db/bin/"
 
     echo 'CLASSPATH="$CLASSPATH:$DCI_HOME/../lib/ext/'"${WMLAB_JDBC_DRIVER_FILENAME}"'"' >> setEnv.sh
 
@@ -39,7 +40,7 @@ if [ `portIsReachable ${WMLAB_MYSQL_HOSTNAME} 3306` ]; then
             INIT_RESULT=0
         fi
     else
-         logE "Folder ${WMLAB_WM_INSTALL_HOME}/common/db/bin/ not found"
+         logE "Folder ${WMLAB_INSTALL_HOME}/common/db/bin/ not found"
          INIT_RESULT=2
     fi
 else

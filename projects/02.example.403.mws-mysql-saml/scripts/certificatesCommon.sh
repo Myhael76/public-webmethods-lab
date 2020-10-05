@@ -1,7 +1,8 @@
 #!/bin/sh
 
 init(){
-    . /mnt/scripts/lib/common.sh
+    # import framework functions
+    . ${WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}/common.sh
 
     WMLAB_LOCAL_KEYSTORE_FILE=${WMLAB_LOCAL_KEYSTORE_FILE:-"${WMLAB_INSTALL_HOME}/common/conf/local_keystore.p12"}
     WMLAB_LOCAL_KEYSTORE_PASSWORD=${WMLAB_LOCAL_KEYSTORE_PASSWORD:-"changeIt"}

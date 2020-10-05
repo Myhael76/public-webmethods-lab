@@ -13,7 +13,7 @@ services:
     volumes:
       - ../unixShellLib/scripts/:/mnt/scripts/lib/
       - ./scripts/:/mnt/scripts/local/
-      - ./runs/:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
     environment:
       - WMLAB_RUN_BASE_MOUNT=${H_WMLAB_RUN_BASE_MOUNT_POINT}
       - WMLAB_TAKE_SNAPHOTS=${H_WMLAB_TAKE_SNAPHOTS}

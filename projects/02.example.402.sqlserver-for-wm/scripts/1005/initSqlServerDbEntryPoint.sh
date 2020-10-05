@@ -8,7 +8,8 @@
 #     -l jdbc:wm:sqlserver://DBserver:1433;databaseName=master -u webmuser -p w3bmpass
 #     -au sa -ap sa_password -n webmdb
 
-. /mnt/scripts/lib/common.sh
+# import framework functions
+. ${WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}/common.sh
 
 logI "Initializing database for webmethods products..."
 logEnv

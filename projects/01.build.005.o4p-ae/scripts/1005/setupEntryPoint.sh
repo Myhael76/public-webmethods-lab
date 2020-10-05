@@ -1,6 +1,7 @@
 #!/bin/sh
 
-. /mnt/scripts/lib/common.sh
+# import setup & framework functions
+. ${WMLAB_SETUP_SHELL_LIB_DIR_MOUNT_POINT}/setupCommons.sh
 
 logI "Setting up Analytic Engine ..."
 logD "Environment dump below"

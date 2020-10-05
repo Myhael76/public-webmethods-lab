@@ -1,0 +1,25 @@
+version: "3.8"
+
+volumes:
+  realm-server: {}
+services:
+  builder-um-realm-server:
+    image: um-realm-server-1005
+    container_name: um-realm-server-1005-example1
+    hostname: um-realm-server-1005-example1
+    volumes:
+      - ../unixShellLib/scripts/:/mnt/scripts/lib/
+      - ./scripts/:/mnt/scripts/local/
+      - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - ${H_WMLAB_LIC_FILE_UM}:${H_WMLAB_LIC_FILE_UM_MOUNT_POINT}
+      - realm-server:${H_WMLAB_INSTALL_HOME}/UniversalMessaging/server/${H_WMLAB_REALM_NAME}/:rw
+      - ${H_WMLAB_LIC_FILE_UM}:${H_WMLAB_INSTALL_HOME}/UniversalMessaging/server/${H_WMLAB_REALM_NAME}/licence.xml
+    environment:
+      - WMLAB_RUN_BASE_MOUNT=${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - WMLAB_DEBUG_ON=${H_WMLAB_DEBUG_ON}
+      - WMLAB_PRODUCTS_VERSION=${H_WMLAB_PRODUCTS_VERSION}
+      - WMLAB_INSTALL_HOME=${H_WMLAB_INSTALL_HOME}
+      - WMLAB_REALM_NAME=${H_WMLAB_REALM_NAME}
+    ports:
+      - "${H_WMLAB_UM_PORT_HOST_PORT}:${H_WMLAB_UM_PORT_GUEST_PORT}"
+    entrypoint: /mnt/scripts/local/${H_WMLAB_PRODUCTS_VERSION}/entrypoint.sh

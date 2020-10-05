@@ -1,6 +1,7 @@
 #!/bin/sh
 
-. /mnt/scripts/lib/common.sh
+# import framework functions
+. ${WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}/common.sh
 
 logD "Environment dump below"
 logEnv
@@ -18,20 +19,20 @@ onKill(){
 
 beforeStartConfig(){
     logI "Configure - before start"
-    cp -rf /mnt/conf/o4p-ae/config/* ${WMLAB_WM_INSTALL_HOME}/optimize/analysis/conf/
+    cp -rf /mnt/conf/o4p-ae/config/* ${WMLAB_INSTALL_HOME}/optimize/analysis/conf/
     # local only, to be properly inserted n the project
-    export JAVA_HOME=${WMLAB_WM_INSTALL_HOME}/jvm/jvm/jre/
+    export JAVA_HOME=${WMLAB_INSTALL_HOME}/jvm/jvm/jre/
     export CCS_ADMIN_HOME=/opt/sag/ccs-admin/
     chmod u+x ${CCS_ADMIN_HOME}bin/password_admin.sh
     ${CCS_ADMIN_HOME}bin/password_admin.sh -t \
-        ${WMLAB_WM_INSTALL_HOME}/optimize/analysis/conf/deployed-passman \
-        ${WMLAB_WM_INSTALL_HOME}/optimize/analysis/conf/security/passman/optimize
+        ${WMLAB_INSTALL_HOME}/optimize/analysis/conf/deployed-passman \
+        ${WMLAB_INSTALL_HOME}/optimize/analysis/conf/security/passman/optimize
 
     # link logs foler  to run folder
-    rm -rf ${WMLAB_WM_INSTALL_HOME}/optimize/analysis/logs
+    rm -rf ${WMLAB_INSTALL_HOME}/optimize/analysis/logs
     mkdir -p ${WMLAB_RUN_FOLDER}/optimizeLogs
     pushd .
-    cd ${WMLAB_WM_INSTALL_HOME}/optimize/analysis/
+    cd ${WMLAB_INSTALL_HOME}/optimize/analysis/
     ln -s ${WMLAB_RUN_FOLDER}/optimizeLogs logs
     popd
 }
@@ -47,7 +48,7 @@ trap "onKill" SIGKILL
 
 beforeStartConfig
 
-cd ${WMLAB_WM_INSTALL_HOME}/optimize/analysis/bin/
+cd ${WMLAB_INSTALL_HOME}/optimize/analysis/bin/
 
 if [ ${WMLAB_DEBUG_ON} -eq 1 ]; then
     GLUE_OPTS="$GLUE_OPTS -Xdebug"

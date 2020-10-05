@@ -26,16 +26,16 @@ services:
     volumes:
       - ../unixShellLib/scripts/:/mnt/scripts/lib/
       - mws-temp:/tmp/
-      - mws-install-home:${H_WMLAB_WM_INSTALL_HOME}
+      - mws-install-home:${H_WMLAB_INSTALL_HOME}
       - mws-sum-home:/opt/sag/sum/
-      - ./runs/:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
       - ./scripts/:/mnt/scripts/local/
     environment:
       - WMLAB_RUN_BASE_MOUNT=${H_WMLAB_RUN_BASE_MOUNT_POINT}
       - WMLAB_DEBUG_ON=${H_WMLAB_DEBUG_ON}
       # Setup related
       - WMLAB_TAKE_SNAPHOTS=${H_WMLAB_TAKE_SNAPHOTS}
-      - WMLAB_WM_INSTALL_HOME=${H_WMLAB_WM_INSTALL_HOME}
+      - WMLAB_INSTALL_HOME=${H_WMLAB_INSTALL_HOME}
       #- WMLAB_LOCAL_KEYSTORE_PASSWORD=${H_WMLAB_LOCAL_KEYSTORE_PASSWORD}
     ports:
       - "${H_WMLAB_MWS_PORT}:8686"
