@@ -1,5 +1,18 @@
 @echo off
 
-copy .\.env_base .\.env
+:: this project depends on the .env from project 00 and 001.build.000
 
-:: No special choices for now
+:: take .env from 00
+if exist ..\00.commons\.env goto copy_00_env
+
+PUSHD .
+cd ..\00.commons
+echo generating .env file for project 00.commons
+call generateEnv.bat
+POPD
+
+:copy_00_env
+copy ..\00.commons\.env . 
+
+type .\.env_base.md >> .\.env
+

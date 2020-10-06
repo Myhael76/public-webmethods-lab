@@ -38,7 +38,7 @@ trap "onKill" SIGKILL
 
 beforeStartConfig
 
-cd ${SAG_HOME}/optimize/analysis/bin/
+cd ${WMLAB_INSTALL_HOME}/optimize/analysis/bin/
 
 
 
