@@ -11,7 +11,9 @@ services:
     networks:
       - n1
     volumes:
-      - ../unixShellLib/scripts/:/mnt/scripts/lib/
+      # from 00.commons
+      - ../00.commons/lib/unix:${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      # locals 
       - ./scripts/:/mnt/scripts/local/
       - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
     environment:
@@ -25,4 +27,5 @@ services:
       - WMLAB_SQLSERVER_PASSWORD=${H_WMLAB_SQLSERVER_PASSWORD}
       - WMLAB_SQLSERVER_SA_PASSWORD=${H_WMLAB_SQLSERVER_SA_PASSWORD}
       - WMLAB_DBCC_INSTALL_HOME=${H_WMLAB_DBCC_INSTALL_HOME}
+      - WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT=${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
     entrypoint: /mnt/scripts/local/${H_WMLAB_PRODUCTS_VERSION}/initSqlServerDbEntryPoint.sh
