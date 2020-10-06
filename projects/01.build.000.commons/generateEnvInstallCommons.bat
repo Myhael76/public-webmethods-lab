@@ -6,6 +6,6 @@ echo You will now be asked to provide the location of project's required files
 
 pause
 
-echo Local files >>.\.env
+echo ## Local files >>.\.env
 
 Powershell.exe -executionpolicy Bypass -File .\powershell\generateEnvFile.ps1
