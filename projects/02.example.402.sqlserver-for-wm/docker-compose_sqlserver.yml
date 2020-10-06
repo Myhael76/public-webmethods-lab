@@ -6,7 +6,7 @@ networks:
     n1:
       external: false
 services:
-  mysql:
+  sql-server:
     image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
     container_name: ${H_WMLAB_PJ_NAME}-${H_WMLAB_SQLSERVER_HOSTNAME} 
     hostname: ${H_WMLAB_SQLSERVER_HOSTNAME}

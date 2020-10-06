@@ -18,7 +18,8 @@ In order to use this project you will need the following
   - Designer for BPM (no "local development" needed)
   - Universal Messaaging Enterprise Manager
 - Latest Software AG installer for Linux 64 (tested with SoftwareAGInstaller20191216-LinuxX86.bin)
-- Latest Software AG Update Manage Bootstrap for Linux 64 (tested with SoftwareAGUpdateManagerInstaller20200214-LinuxX86.bin)
+- Latest Software AG Update Manager Bootstrap version 11 for Linux 64 (tested with SoftwareAGUpdateManagerInstaller20200214-LinuxX86.bin)
+- Latest Software AG Update Manager Bootstrap version 10 for Linux 64 (tested with SoftwareAGUpdateManagerInstaller20200214-LinuxX86.bin)
 - Product Software AG image - you may use the installer helper to produce one eventually
 - Fixes Software AG image - you may use the installer helper to produce one eventually
 - In case on of the Software AG images are to be produced, empower credentials able to download the products and fixes
@@ -38,21 +39,25 @@ In order to use this project you will need the following
 
 The following projects must be built upfront as they are a prerequisite for many others
 
-- centos-wm-install-helper
-  - we use this as a helper for installations, both for installation script authoring and for installations made during build automation
-  - execute the build command in the project folder
-- centos-wm-generic-installation
-  - this project prepares a base image to be used accross various dynamic installations
-  - run the build command from the folder
-- dbcc-builder
+- execute initial project setup
+  - run generateEnv.bat in folder 00.commons
+  - eventually change the produced .env file in folder 00.commons according to your environment and/or preferences
+  - run generateEnvInstallCommons.bat in folder 01.build.000.commons
+  - eventually change the produced .env file in folder 01.build.000.commons according to your environment and/or preferences
+- project 01.build.001.wm-install-helper - centos-wm-install-helper
+  - run build.bat in folder 01.build.001.wm-install-helper
+- project 01.build.002.generic-installation - wm-generic-host
+  - run build.bat in folder 01.build.002.generic-installation
+- project 01.build.003.mydbcc - dbcc-builder
   - this project builds a container image having the database configurator
-  - playing around with webMEthods requires a database as a prerequisite. The built container will help with the database initialization
-  - change the .env file and provide all the necessary host paths (installer, product image, update manager bootstrap, fixes image etc)
-  - execute the build command in the project folder
+  - playing around with webMethods requires a database as a prerequisite. The built container will help with the database initialization
+  - optionally run generateEnv.bat and change the resulting .env file according to your preferences
+  - run build.bat. If the .env file does not exist, build.bat will call generateEnv.bat and will generate a default .env file
   - build command variations are provided as example
   - Note: the build of this container is not done by docker, therefore do not attempt a "docker-compose build". Use the provided commands as in the windows .bat files
+- each project is built to be used independently. Follow the readmes of each project.
 - try out database preparation projects
-  - mysqlce-for-wm-example
+  - project 02.example.401.mysqlce-for-wm
   - sqlserver-for-wm-example
 
 ## Common use cases
