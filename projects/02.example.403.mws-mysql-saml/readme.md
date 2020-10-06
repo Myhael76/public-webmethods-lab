@@ -11,15 +11,13 @@
 
 ### Build the container image centos-wm-install-helper
 
-- go to folder centos-wm-install-helper
-- set all host paths in .env (now f:\something)
-- run the "build.bat" in the project folder
+- go to folder 01.build.001.wm-install-helper
+- run the "build.bat"
 
 ### Build the container image centos-wm-generic-installation
 
-- go to folder centos-wm-generic-installation
-- set all host paths in .env (now f:\something)
-- run the "build.bat" in the project folder
+- go to folder 01.build.002.generic-installation
+- run the "build.bat"
 
 #### Build the dbcc container images
 
@@ -33,7 +31,7 @@
 
 - set all the necessary env variables
 - startup mysql (01.01.startMySql.bat)
-- optionally startu adminer (S01-adminer-01-up.bat) if you want to introspect mysql contents
+- optionally startup adminer (S01-adminer-01-up.bat) if you want to introspect mysql contents
 - execute 02.init.02.mws1.bat after mysql finished its own startup. Wait for the command to finish
   - Note: only one version may be used at a time. If you use 10.3 call init-db.v1003.bat ONLY
 - execute 02.init.02.mws1.bat

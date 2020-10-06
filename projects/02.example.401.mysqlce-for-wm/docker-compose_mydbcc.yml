@@ -13,8 +13,9 @@ services:
     volumes:
       # from 00.commons
       - ../00.commons/lib/unix:${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
-      - ./scripts/:/mnt/scripts/local/
       - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      # locals
+      - ./scripts/:/mnt/scripts/local/
     environment:
       - WMLAB_RUN_BASE_MOUNT=${H_WMLAB_RUN_BASE_MOUNT_POINT}
       - WMLAB_TAKE_SNAPHOTS=${H_WMLAB_TAKE_SNAPHOTS}
