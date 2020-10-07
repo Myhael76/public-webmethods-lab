@@ -16,7 +16,3 @@ A secondary use case is quickly and dinamically setup database schemas in epheme
 - edit .env and provide all your local paths. All of them are required
 - run build.bat
 - eventually alter build.v1003.bat specifying valid local paths for the parameters and run it
-
-## TODO
-
-- upgrade to .env file generation
