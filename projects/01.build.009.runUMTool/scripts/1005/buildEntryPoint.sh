@@ -29,11 +29,11 @@ if [ $? -eq 0 ]; then
                 cp -r "${WMLAB_INSTALL_HOME}/UniversalMessaging/lib/classes" "${dockerBuildContextFolder}/SAG_HOME/UniversalMessaging/lib/"
                 # Note: * does not work inside the string...
                 cp    "${WMLAB_INSTALL_HOME}/UniversalMessaging/lib/"*.jar   "${dockerBuildContextFolder}/SAG_HOME/UniversalMessaging/lib/"
-                mkdir -p "${dockerBuildContextFolder}/common/lib/ext/log4j"
-                cp "${WMLAB_INSTALL_HOME}/common/lib/ext/log4j/log4j-api.jar" "${dockerBuildContextFolder}/common/lib/ext/log4j/"
-                cp "${WMLAB_INSTALL_HOME}/common/lib/ext/log4j/log4j-core.jar" "${dockerBuildContextFolder}/common/lib/ext/log4j/"
-                mkdir -p "${dockerBuildContextFolder}/UniversalMessaging/tools/runner"
-                cp "${WMLAB_INSTALL_HOME}/UniversalMessaging/tools/runner/"* "${dockerBuildContextFolder}/UniversalMessaging/tools/runner/"
+                mkdir -p "${dockerBuildContextFolder}/SAG_HOME/common/lib/ext/log4j"
+                cp "${WMLAB_INSTALL_HOME}/common/lib/ext/log4j/log4j-api.jar" "${dockerBuildContextFolder}/SAG_HOME/common/lib/ext/log4j/"
+                cp "${WMLAB_INSTALL_HOME}/common/lib/ext/log4j/log4j-core.jar" "${dockerBuildContextFolder}/SAG_HOME/common/lib/ext/log4j/"
+                mkdir -p "${dockerBuildContextFolder}/SAG_HOME/UniversalMessaging/tools/runner"
+                cp "${WMLAB_INSTALL_HOME}/UniversalMessaging/tools/runner/"* "${dockerBuildContextFolder}/SAG_HOME/UniversalMessaging/tools/runner/"
 
                 logI "Building docker image umtool-${WMLAB_PRODUCTS_VERSION}"
                 pushd .
@@ -41,8 +41,6 @@ if [ $? -eq 0 ]; then
                 controlledExec "docker build -t umtool-${WMLAB_PRODUCTS_VERSION} ." "04.buildContainer"
                 logI "Image built, taking a snapshot of current images"
                 docker images > ${WMLAB_RUN_FOLDER}/docker-images-after-build.out
-                logI "Pruning untagged images ..."
-                docker image prune -f # remove intermediary alpine + jvm image or older untagged umtool
                 popd
             else
                 logE "Product Installation failed! (Code ${RESULT_genericProductsSetup})"

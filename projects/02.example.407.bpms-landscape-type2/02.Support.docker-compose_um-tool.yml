@@ -1,0 +1,15 @@
+version: "3.5"
+
+networks:
+    n1:
+      external: false
+services:
+  um-tool:
+    image: umtool-1005
+    container_name: ${H_WMLAB_PJ_NAME}-um-tool
+    hostname: um-tool
+    networks:
+      - n1
+    volumes:
+      - ./scripts/:/mnt/scripts/local/
+    entrypoint: /mnt/scripts/local/${H_WMLAB_PRODUCTS_VERSION}/um-tool/entrypoint.sh
