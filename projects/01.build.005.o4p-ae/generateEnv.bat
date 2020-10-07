@@ -28,3 +28,5 @@ POPD
 :take_01_000_env
 
 type ..\01.build.000.commons\.env >> .\.env
+
+type .\.env_base.md >> .\.env

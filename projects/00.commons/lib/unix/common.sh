@@ -62,7 +62,7 @@ logE(){
 }
 
 logD(){
-    if [ ${WMLAB_DEBUG_ON} -eq 1 ]; then
+    if [ "${WMLAB_DEBUG_ON}" -eq 1 ]; then
         echo -e `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN_C_D} - ${1}"
         echo `date +%y-%m-%dT%H.%M.%S_%3N`" ${LOG_TOKEN} -DEBUG- ${1}" >> ${WMLAB_RUN_FOLDER}/script.trace.log
     fi
@@ -192,4 +192,21 @@ writeDockerMonitorLine(){
     l=${l/,\/,/,}
     l=${l/,\/,/,}
    echo "$d,$l"
+}
+
+basicInstallationCleanup(){
+
+    logI "Cleanup installation folder"
+
+    rm -rf ${WMLAB_INSTALL_HOME}/jvm/jvm*.bck
+    rm -rf ${WMLAB_INSTALL_HOME}/jvm/jvm/sample
+    rm -f ${WMLAB_INSTALL_HOME}/jvm/jvm/src.zip
+    rm -rf ${WMLAB_INSTALL_HOME}/jvm/jvm/man
+    rm -rf ${WMLAB_INSTALL_HOME}/jvm/jvm/demo
+    rm -f ${WMLAB_INSTALL_HOME}/common/lib/derby.log
+
+    rm -rf ${WMLAB_INSTALL_HOME}/install/fix/backup
+
+    # we do not need windows scripts on linux
+    find ${WMLAB_INSTALL_HOME} -type f -name *.bat -exec rm -f "{}" \;
 }
