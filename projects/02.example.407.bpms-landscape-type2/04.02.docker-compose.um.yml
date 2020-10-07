@@ -6,14 +6,16 @@ networks:
     n1:
       external: false
 services:
-  builder-um-realm-server:
+  um-realm-server:
     image: um-realm-server-1005
     container_name: ${H_WMLAB_PJ_NAME}-umserver
     hostname: umserver
     volumes:
-      - ../unixShellLib/scripts/:/mnt/scripts/lib/
-      - ./scripts/:/mnt/scripts/local/
+      ### from 00.commons
+      - ../00.commons/lib/unix:${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
       - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      ### locals
+      - ./scripts/:/mnt/scripts/local/
       - realm-server:${H_WMLAB_INSTALL_HOME}/UniversalMessaging/server/${H_WMLAB_REALM_NAME}/:rw
       - ${H_WMLAB_LIC_FILE_BPMS_UM}:${H_WMLAB_INSTALL_HOME}/UniversalMessaging/server/${H_WMLAB_REALM_NAME}/licence.xml
     networks:
@@ -21,10 +23,20 @@ services:
         aliases:
           - umserver
     environment:
+      ### from 00.commons
+      # paths
       - WMLAB_RUN_BASE_MOUNT=${H_WMLAB_RUN_BASE_MOUNT_POINT}
-      - WMLAB_DEBUG_ON=${H_WMLAB_DEBUG_ON}
-      - WMLAB_PRODUCTS_VERSION=${H_WMLAB_PRODUCTS_VERSION}
+      - WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT=${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
       - WMLAB_INSTALL_HOME=${H_WMLAB_INSTALL_HOME}
+      - WMLAB_SUM_HOME=${H_WMLAB_SUM_HOME}
+      # switches
+      - WMLAB_MONITORING_ON=${H_WMLAB_MONITORING_ON}
+      - WMLAB_TAKE_SNAPHOTS=${H_WMLAB_TAKE_SNAPHOTS}
+      - WMLAB_DEBUG_ON=${H_WMLAB_DEBUG_ON}
+      - WMLAB_CTRL_EXEC_STDOUT_ON=${H_WMLAB_CTRL_EXEC_STDOUT_ON}
+      # other parameters
+      - WMLAB_PRODUCTS_VERSION=${H_WMLAB_PRODUCTS_VERSION}
+      ### locals
       - WMLAB_REALM_NAME=${H_WMLAB_REALM_NAME}
     ports:
       - "${H_WMLAB_UM_PORT_HOST_PORT}:${H_WMLAB_UM_PORT_GUEST_PORT}"
