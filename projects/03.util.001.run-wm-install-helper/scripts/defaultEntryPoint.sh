@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# import framework functions
-. ${WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}/common.sh
+# import setup & framework functions
+. ${WMLAB_SETUP_SHELL_LIB_DIR_MOUNT_POINT}/setupCommons.sh
 
 onInterrupt(){
 	logI "Interrupted!"

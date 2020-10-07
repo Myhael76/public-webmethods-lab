@@ -4,7 +4,8 @@ This is an intermediate image for experimentation, manual build and for build au
 
 ## Prerequisites
 
-- Project unixShellLib
+- Project 00.commons
+- Project 01.build.000.commons
 - A secret credentials file if patching is used online
 - Docker must allow for the declared mounts in docker-compose.yml, configure it to allow mounting accordingly
 - Edit the .env file and resolve all concrete host references to your files, these include
@@ -26,3 +27,30 @@ Execute in order:
 ## Use cases
 
 This project may be used to play around with installer, update manager in order to author installation and update scripts
+
+Example on how to start the installer to author an installation script
+
+```bash
+. /mnt/scripts/lib/setup/setupCommons.sh
+startInstallerInAttendedMode
+```
+
+At the end of the wizzard you will find the install script in the run folder.
+
+Hint: at the wizzard step "The products listed below are ready to be saved to script .... and installed." check if the script file is created, notmally it is. Exitting at this point would skip the actual installation while still preserving the installation script.
+
+Example on how to take snapshots
+
+```bash
+. /mnt/scripts/lib/setup/setupCommons.sh
+export WMLAB_TAKE_SNAPHOTS=1
+takeInstallationSnapshot snaphotName
+```
+
+Example of patch command
+
+```bash
+. /mnt/scripts/lib/setup/setupCommons.sh
+bootstrapSum
+patchInstallation
+```
