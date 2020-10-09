@@ -1,4 +1,4 @@
-# Indemented rnUMTool Container Builder
+# runUMTool Container Builder
 
 This project locally builds an optimized docker image containing the runUMTool only.
 

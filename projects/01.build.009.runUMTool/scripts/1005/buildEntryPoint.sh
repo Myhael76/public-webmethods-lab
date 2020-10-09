@@ -21,10 +21,15 @@ if [ $? -eq 0 ]; then
             if [ "${RESULT_genericProductsSetup}" -eq 0 ]; then
                 logI "Taking a snapshot of current images"
                 docker images > ${WMLAB_RUN_FOLDER}/docker-images-before-build.out
+
+                # cleaning up install folder
+                basicInstallationCleanup
+
                 logI "Preparing docker build context"
                 dockerBuildContextFolder=${WMLAB_RUN_FOLDER}/dockerBuildContext
                 mkdir -p "${dockerBuildContextFolder}/SAG_HOME/UniversalMessaging/lib"
                 cp /mnt/scripts/local/${WMLAB_PRODUCTS_VERSION}/Dockerfile "${dockerBuildContextFolder}/"
+                cp -r "${WMLAB_INSTALL_HOME}/jvm" "${dockerBuildContextFolder}/SAG_HOME/"
                 cp -r "${WMLAB_INSTALL_HOME}/UniversalMessaging/classes" "${dockerBuildContextFolder}/SAG_HOME/UniversalMessaging/"
                 cp -r "${WMLAB_INSTALL_HOME}/UniversalMessaging/lib/classes" "${dockerBuildContextFolder}/SAG_HOME/UniversalMessaging/lib/"
                 # Note: * does not work inside the string...
