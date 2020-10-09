@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  is-plus:
+    image: bpm-isplus-${H_WMLAB_PRODUCTS_VERSION}
+    container_name: ${H_WMLAB_PJ_NAME}-${H_WMLAB_PRODUCTS_VERSION}-is-plus
+    hostname: is-plus
+    volumes:
+      # from 00.commons
+      - ../00.commons/lib/unix:${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      # locals
+      - ./scripts/:/mnt/scripts/local/
+      # give config
+      - ./conf/:/mnt/conf/
+    environment:
+      ### from 00.commons
+      # paths
+      - WMLAB_RUN_BASE_MOUNT=${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT=${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      - WMLAB_INSTALL_HOME=${H_WMLAB_INSTALL_HOME}
+      - WMLAB_SUM_HOME=${H_WMLAB_SUM_HOME}
+      # switches
+      - WMLAB_MONITORING_ON=${H_WMLAB_MONITORING_ON}
+      - WMLAB_TAKE_SNAPHOTS=${H_WMLAB_TAKE_SNAPHOTS}
+      - WMLAB_DEBUG_ON=${H_WMLAB_DEBUG_ON}
+      - WMLAB_CTRL_EXEC_STDOUT_ON=${H_WMLAB_CTRL_EXEC_STDOUT_ON}
+      # other parameters
+      - WMLAB_PRODUCTS_VERSION=${H_WMLAB_PRODUCTS_VERSION} 
+      ### locals
+      - INSTANCE_NAME=default
+    ports:
+      - ${H_WMLAB_IS_PORT_HOST_PORT}:5555
+    entrypoint: /mnt/scripts/local/1005/entrypoint.sh
+    #entrypoint: /opt/sag/products/IntegrationServer/bin/startContainer.sh
