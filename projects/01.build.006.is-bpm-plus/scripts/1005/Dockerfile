@@ -24,4 +24,4 @@ COPY --chown=1724:1724 ./extra/profiles/ $SAG_INSTALL_HOME/profiles/
 
 WORKDIR $SAG_INSTALL_HOME
 
-ENTRYPOINT ["/opt/softwareag/IntegrationServer/bin/startContainer.sh"]
+ENTRYPOINT ["/opt/sag/products/IntegrationServer/bin/startContainer.sh"]
