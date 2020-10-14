@@ -1,0 +1,20 @@
+version: "3.5"
+
+networks:
+    n1:
+      external: false
+services:
+  deployer-abe:
+    image: msr-deployer-abe-1005
+    container_name: ${H_WMLAB_PJ_NAME}-deployer-abe
+    hostname: deployer-abe
+    networks:
+      - n1
+    volumes:
+      # from 00.commons
+      - ../00.commons/lib/unix:${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - ./scripts/:/mnt/scripts/local/
+    ports:
+      - ${H_WMLAB_DEPLOYER_PORT_HOST_PORT}:5555
+    entrypoint: /opt/sag/products/IntegrationServer/bin/startContainer.sh

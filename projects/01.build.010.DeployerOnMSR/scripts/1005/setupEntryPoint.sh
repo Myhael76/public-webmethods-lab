@@ -29,13 +29,14 @@ if [ $? -eq 0 ]; then
 		DOCKER_CONTEXT_FOLDER="${WMLAB_RUN_FOLDER}/docker-build-context"
 
 		mkdir -p "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/common"
-		cp -r "${WMLAB_INSTALL_HOME}/common/bin"  "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/common/"
-		cp -r "${WMLAB_INSTALL_HOME}/common/conf" "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/common/"
-		cp -r "${WMLAB_INSTALL_HOME}/common/db"   "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/common/"
-		cp -r "${WMLAB_INSTALL_HOME}/common/lib"  "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/common/"
+		cp -r "${WMLAB_INSTALL_HOME}/common/bin"                                         "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/common/"
+		cp -r "${WMLAB_INSTALL_HOME}/common/conf"                                        "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/common/"
+		cp -r "${WMLAB_INSTALL_HOME}/common/db"                                          "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/common/"
+		cp -r "${WMLAB_INSTALL_HOME}/common/lib"                                         "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/common/"
+		cp -r "${WMLAB_INSTALL_HOME}/common/AssetBuildEnvironment"                       "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/common/"
 
-		cp -r "${WMLAB_INSTALL_HOME}/jvm"         "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/"
-		cp -r "${WMLAB_INSTALL_HOME}/WS-Stack"    "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/"
+		cp -r "${WMLAB_INSTALL_HOME}/jvm"                                                "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/"
+		cp -r "${WMLAB_INSTALL_HOME}/WS-Stack"                                           "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/"
 
 		mkdir -p "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/IntegrationServer/lib/jars/custom"
 		cp -r "${WMLAB_INSTALL_HOME}/IntegrationServer/bin"                              "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/IntegrationServer/"
@@ -53,11 +54,13 @@ if [ $? -eq 0 ]; then
 		cp -r "${WMLAB_INSTALL_HOME}/IntegrationServer/packages/WmPublic"                 "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/IntegrationServer/packages"
 		#cp -r "${WMLAB_INSTALL_HOME}/IntegrationServer/packages/WmCloud"                  "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/IntegrationServer/packages"
 		cp -r "${WMLAB_INSTALL_HOME}/IntegrationServer/packages/WmAdmin"                  "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/IntegrationServer/packages"
+		cp -r "${WMLAB_INSTALL_HOME}/IntegrationServer/packages/WmDeployer"               "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/IntegrationServer/packages"
+		cp -r "${WMLAB_INSTALL_HOME}/IntegrationServer/packages/WmBrokerDeployer"         "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/IntegrationServer/packages"
+		cp -r "${WMLAB_INSTALL_HOME}/IntegrationServer/packages/WmNUMDeployer"            "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/IntegrationServer/packages"
 
 		# remove license
 		rm -f "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/IntegrationServer/config/licenseKey.xml"
 		touch "${DOCKER_CONTEXT_FOLDER}/SAG_HOME/IntegrationServer/config/licenseKey.xml" # (work around for known bug)
-
 
 		# Mysqlce driver is not packaged
 		logI "Downloading mysqlce driver"
@@ -66,11 +69,11 @@ if [ $? -eq 0 ]; then
 
 		cp /mnt/scripts/local/${WMLAB_PRODUCTS_VERSION}/Dockerfile "${DOCKER_CONTEXT_FOLDER}/" 
 
-		logI "Building docker image for msr-lean-devel-${WMLAB_PRODUCTS_VERSION}"
+		logI "Building docker image for msr-deployer-abe-${WMLAB_PRODUCTS_VERSION}"
 
 		pushd . 
 		cd "${DOCKER_CONTEXT_FOLDER}"/
-		controlledExec "docker build -t msr-lean-devel-${WMLAB_PRODUCTS_VERSION} ." "05.buildIsPlusContainer"
+		controlledExec "docker build -t msr-deployer-abe-${WMLAB_PRODUCTS_VERSION} ." "05.buildIsPlusContainer"
 		if [ ${RESULT_controlledExec} -ne 0 ]; then
 			logE "docker build failed! Code: ${RESULT_controlledExec}"
 		fi
