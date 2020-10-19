@@ -45,17 +45,48 @@ Execute the following projects and their prerequisites first
 
 ## Steps to set up the project
 
+- Set up the project
+  - run 01.Setup.01.generateEnvFile.bat
+  - optionally edit the generated .env file and set up the desired non default options
+- Start up the database
+  - run 01.Setup.02.startMySql.bat
 - Initialize database
-  - run 02.01.startMySql.bat
-  - (optional) run S01-adminer-01-up.bat is you want to introspect the database
-  - run S02.init.01.db.bat
+  - run 01.Setup.03.db.init.bat
+  - wait for the job to finish (window will be closed)
+  - (optional) run 02.Support.01.adminer.up.bat if you want to introspect the database contents
 - Initialize MWS
-  - run 04.01.01.mws.init.bat
+  - run 01.Setup.04.mws.init.bat
+  - wait for the setup to finish
+
+## Steps for the initial configuration
+
+Note: configurations stored in the database wil be maintained accross restarts. Project "clean" will destroy them.
+
+- Start up the database
+  - run 03.ProjectUp.01.db.start.bat
+- Start Universal Messaging Realm Server
+  - run 03.ProjectUp.02.um.start.bat
+- Start MWS
+  - run 03.ProjectUp.03.mws.start.bat. Wait for the MWS web server to come up
+- Manually set the MWS cluster to point to nsp://umserver:9000
+- Bounce MWS
+  - run 05.ProjectDown.04.mws.stop.bat. Wait for the docker container to exit
+  - run 03.ProjectUp.03.mws.start.bat. Wait for the MWS web server to come up (optimize logs are mounted from the run folder)
+  - (optional) open an Enterprise Manager to nsp://localhost:40790 and you should see the relative com.webmethods channels that were created
+    - for the moment there are some class not found exceptions, ignore them
+- Startup Optimize analytic Engine
+  - run 03.ProjectUp.04.o4p-ae.start.bat. Wait for the server to come up
+  - (optional) open an Enterprise Manager to nsp://localhost:40790 and you should see the relative channels created
+- Set up Optimize server o4p-ae-server (default port 12503) in the servers portlet and test it. The AE should be healthy at this point
+- Startup ISPlus
+  - run 03.ProjectUp.05.isplus.start.bat Wait for the serve to come up
+  - In MWS servers portlet set "is-plus" as the ESB / IS server name. Save and check the server status and everything should be green
+
+
+## Steps to stop the project 
+
+Run all the 05.ProjectDown.*.bat commands in the provided order
 
 ## Steps to run the project 
 
-- run 02.01.startMySql.bat
-- run 03.01.startUM.bat
-- run 04.02.01.mws.start.bat
-  - manually set the cluster to point to nsp://umserver:9000
-- run 05.01.o4p-ae.start.bat
+Run all the 03.ProjectUp.*.bat commands in the provided order
