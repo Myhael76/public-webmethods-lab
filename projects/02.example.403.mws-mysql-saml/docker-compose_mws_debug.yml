@@ -24,13 +24,16 @@ services:
         aliases:
           - ${H_WMLAB_MWS_HOSTNAME}
     volumes:
-      - ../unixShellLib/scripts/:/mnt/scripts/lib/
+      # todo: update project scripts for new lib path
+      # from 00.commons
+      - ../00.commons/lib/unix:${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      # locals
+      - ./scripts/:/mnt/scripts/local/
+      - ./share/:/mnt/share/
       - mws-temp:/tmp/
       - mws-install-home:${H_WMLAB_INSTALL_HOME}
       - mws-sum-home:/opt/sag/sum/
-      - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
-      - ./scripts/:/mnt/scripts/local/
-      - ./share/:/mnt/share/
     environment:
       - WMLAB_RUN_BASE_MOUNT=${H_WMLAB_RUN_BASE_MOUNT_POINT}
       - WMLAB_DEBUG_ON=${H_WMLAB_DEBUG_ON}

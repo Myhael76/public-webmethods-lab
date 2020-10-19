@@ -1,3 +1,3 @@
 @echo off
 
-docker-compose -f 04.06.docker-compose.msr.yml up
+docker-compose -f 04.06.docker-compose.msr.yml up -d

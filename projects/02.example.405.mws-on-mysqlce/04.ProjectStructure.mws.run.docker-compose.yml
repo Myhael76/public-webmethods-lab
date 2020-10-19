@@ -31,7 +31,6 @@ services:
       - ../00.commons/lib/unix:${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
       - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
       # locals
-      - ../unixShellLib/scripts/:/mnt/scripts/lib/
       - ./scripts/:/mnt/scripts/local/
     environment:
       ### from 00.commons

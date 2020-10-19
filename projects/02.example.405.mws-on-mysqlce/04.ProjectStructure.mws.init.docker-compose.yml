@@ -24,7 +24,6 @@ services:
         aliases:
           - ${H_WMLAB_MWS_HOSTNAME}
     volumes:
-      - ../unixShellLib/scripts/:/mnt/scripts/lib/
       - mws-temp:/tmp/
       - mws-install-home:${H_WMLAB_INSTALL_HOME}
       - mws-sum-home:/opt/sag/sum/

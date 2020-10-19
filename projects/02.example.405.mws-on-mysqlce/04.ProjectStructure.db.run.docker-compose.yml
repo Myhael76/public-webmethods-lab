@@ -12,7 +12,8 @@ services:
     hostname: ${H_WMLAB_MYSQL_HOSTNAME}
     volumes:
       - mysqlce_data:/var/lib/mysql
-      - ../unixShellLib/scripts/:/mnt/scripts/lib/
+      # from 00.commons
+      - ../00.commons/lib/unix:${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
       - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
     networks:
       n1:
