@@ -90,3 +90,41 @@ Run all the 05.ProjectDown.*.bat commands in the provided order
 ## Steps to run the project 
 
 Run all the 03.ProjectUp.*.bat commands in the provided order
+
+## Steps to clean up the project
+
+Cleaning up will remove all volumes. Stop the project first, ensure no container is running on the project, then run
+
+
+## Work in progress
+
+### Networking for docker desktop on local Windows based host
+
+#### MWS / BC
+
+Use docker internal host to have shareable names
+
+MWS -> cluster settings, set LB to http://host.docker.internal:40785
+
+Other settings
+
+Business Console
+
+http://host.docker.internal:40785/business.console
+
+as Administrator
+
+BC Server Settings
+
+-> isplus http://host.docker.internal:40755
+-> te (mws) http://host.docker.internal:40785
+
+AE
+->  http://host.docker.internal:40715
+Administrator / manage
+
+#### ISPlus
+
+AE host: -> host.docker.internal:40715
+JMS -> umserver:9000
+Task client -> http://host.docker.internal:40785

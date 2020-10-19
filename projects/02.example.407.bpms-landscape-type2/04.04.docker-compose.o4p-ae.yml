@@ -36,4 +36,5 @@ services:
       - WMLAB_PRODUCTS_VERSION=${H_WMLAB_PRODUCTS_VERSION}
     ports:
       - ${H_WMLAB_AE_CONFIG_PORT}:15000
+      - ${H_WMLAB_AE_SERVER_PORT}:12503
     entrypoint: /mnt/scripts/local/${H_WMLAB_PRODUCTS_VERSION}/o4p-ae/entrypoint.sh
