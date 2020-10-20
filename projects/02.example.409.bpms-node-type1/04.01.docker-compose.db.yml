@@ -1,0 +1,50 @@
+version: "3.5"
+
+volumes:
+  mysqlce_data: {}
+networks:
+    n1:
+      external: false
+services:
+  mysql:
+    image: mysql/mysql-server:5.7
+    container_name: ${H_WMLAB_PJ_NAME}-${H_WMLAB_MYSQL_HOSTNAME} 
+    hostname: ${H_WMLAB_MYSQL_HOSTNAME}
+    volumes:
+      # from 00.commons (for monitoring)
+      - ../00.commons/lib/unix:${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - mysqlce_data:/var/lib/mysql
+    networks:
+      n1:
+        aliases:
+          - ${H_WMLAB_MYSQL_HOSTNAME}
+    environment:
+      ### from 00.commons
+      # paths
+      - WMLAB_RUN_BASE_MOUNT=${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT=${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      - WMLAB_INSTALL_HOME=${H_WMLAB_INSTALL_HOME}
+      - WMLAB_SUM_HOME=${H_WMLAB_SUM_HOME}
+      # switches
+      - WMLAB_MONITORING_ON=${H_WMLAB_MONITORING_ON}
+      - WMLAB_TAKE_SNAPHOTS=${H_WMLAB_TAKE_SNAPHOTS}
+      - WMLAB_DEBUG_ON=${H_WMLAB_DEBUG_ON}
+      - WMLAB_CTRL_EXEC_STDOUT_ON=${H_WMLAB_CTRL_EXEC_STDOUT_ON}
+      # other parameters
+      - WMLAB_PRODUCTS_VERSION=${H_WMLAB_PRODUCTS_VERSION}
+      ### locals
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=${H_WMLAB_MYSQL_DATABASE_NAME}
+      - MYSQL_USER=${H_WMLAB_MYSQL_USER_NAME}
+      - MYSQL_PASSWORD=${H_WMLAB_MYSQL_PASSWORD}
+      - MYSQL_LOG_CONSOLE=true
+    command: >
+      --sql-mode="PIPES_AS_CONCAT,IGNORE_SPACE,NO_KEY_OPTIONS,NO_TABLE_OPTIONS,NO_FIELD_OPTIONS"
+      --character-set-server=utf8
+      --collation-server=utf8_general_ci
+      --max_allowed_packet=128M
+      --default-storage-engine=innodb
+      --lower_case_table_names=1
+      --innodb_buffer_pool_size=5G
+      --innodb_log_file_size=80M
