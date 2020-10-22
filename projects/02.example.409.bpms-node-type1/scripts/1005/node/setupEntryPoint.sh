@@ -51,14 +51,14 @@ linkDatabase(){
         pushd .
         cd "${WMLAB_INSTALL_HOME}/MWS/bin"
         controlledExec "./mws.sh update" "04-UpdateInstance"
-        #if [ ${RESULT_controlledExec} -eq 0 ]; then
+        if [ ${RESULT_controlledExec} -eq 0 ]; then
         #    controlledExec "./mws.sh create-osgi-profile" "05-CreateOsgiProfile"
-        #    logI "Update successful"
+            logI "Update successful"
             RESULT_linkDatabase=0
-        #else
-        #    logE "MWS default instance update failed! code ${RESULT_controlledExec}"
-        #    RESULT_linkDatabase=3
-        #fi
+        else
+            logE "MWS default instance update failed! code ${RESULT_controlledExec}"
+            RESULT_linkDatabase=3
+        fi
         popd
     else
         logE "Database not reachable: ${WMLAB_MYSQL_HOSTNAME}:3306"
