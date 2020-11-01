@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  msr-dev-sqlite:
+    image: msr-lean-sqlite-devel-${H_WMLAB_PRODUCTS_VERSION}
+    volumes:
+      # from 00.commons
+      - ../00.commons/lib/unix:${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      # locals
+      - ./scripts/:/mnt/scripts/local/
+      # give initial config
+      - ./init-conf/:/mnt/init-conf/
+      # new packages will be created here
+      - ./project-packages/:/mnt/project-packages/
+      # todo: add license
+      - ${H_WMLAB_LIC_FILE_BPMS_MSR}:/mnt/licenses/msr.xml
+      # todo: project packages
+      # experiment with HOST_DIR
+      #- ./host-dir/:/mnt/host-dir/
+    environment:
+      ### from 00.commons
+      # paths
+      - WMLAB_RUN_BASE_MOUNT=${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT=${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      - WMLAB_INSTALL_HOME=${H_WMLAB_INSTALL_HOME}
+      - WMLAB_SUM_HOME=${H_WMLAB_SUM_HOME}
+      # switches
+      - WMLAB_MONITORING_ON=${H_WMLAB_MONITORING_ON}
+      - WMLAB_TAKE_SNAPHOTS=${H_WMLAB_TAKE_SNAPHOTS}
+      - WMLAB_DEBUG_ON=${H_WMLAB_DEBUG_ON}
+      - WMLAB_CTRL_EXEC_STDOUT_ON=${H_WMLAB_CTRL_EXEC_STDOUT_ON}
+      # other parameters
+      - WMLAB_PRODUCTS_VERSION=${H_WMLAB_PRODUCTS_VERSION}
+      ### locals
+      - SAG_IS_LICENSE_FILE=/mnt/licenses/msr.xml
+      ### other locals (consider grouping in a file)
+      - JAVA_MIN_MEM=${JAVA_MIN_MEM}
+      - JAVA_MAX_MEM=${JAVA_MAX_MEM}
+      # tested OOTB way of working with host dir and externalize packages, it is not what we want
+      #- HOST_DIR=/mnt/host-dir
+      #- EXTERNALIZE_PACKAGES=true
+    ports:
+      - 41055:5555
+    #entrypoint: /opt/sag/products/IntegrationServer/bin/startContainer.sh
+    entrypoint: /mnt/scripts/local/${H_WMLAB_PRODUCTS_VERSION}/entryPoint.sh

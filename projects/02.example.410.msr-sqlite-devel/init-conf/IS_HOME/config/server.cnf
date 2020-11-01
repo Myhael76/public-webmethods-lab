@@ -1,0 +1,15 @@
+# Manually edit all keys of relevance
+# bind to all interfaces
+watt.server.inetaddress=
+# show watt.server.compile in the extended settings
+watt.server.extendedSettingsList=watt.server.compile;watt.server.ns.lockingMode;
+watt.server.compile=/opt/sag/products/jvm/jvm/bin/javac -classpath {0} -d {1} {2}
+watt.server.diagnostic.port=9999
+# do not need locking, the instance is dedicated to one developer only
+watt.server.ns.lockingMode=none
+watt.server.port=5555
+# todo: find the setting telling IS not to create bak files (source control is the correct way)
+watt.debug.level=Warn
+watt.um.clientLog.level=Off
+# we want to see the WmRoot package during development
+watt.server.ns.hideWmRoot=false

@@ -1,0 +1,1 @@
+docker exec -ti 02example410msr-sqlite-devel_msr-dev-sqlite_1 bash
