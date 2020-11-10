@@ -23,3 +23,8 @@ logI "Starting up MWS"
 cd /opt/sag/products/MWS/bin
 
 controlledExec "./mws.sh run" "StartupMWS" & wait
+
+if [ ${WMLAB_DEBUG_ON} -eq 1 ]; then
+    logD "Container finished, stopping for debug..."
+    tail -f /dev/null
+fi
