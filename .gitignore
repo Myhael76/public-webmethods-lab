@@ -4,3 +4,4 @@ runs/
 temp_pj_*
 local*.bat
 .env
+*.local.bat
