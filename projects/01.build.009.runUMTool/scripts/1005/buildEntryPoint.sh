@@ -40,10 +40,10 @@ if [ $? -eq 0 ]; then
                 mkdir -p "${dockerBuildContextFolder}/SAG_HOME/UniversalMessaging/tools/runner"
                 cp "${WMLAB_INSTALL_HOME}/UniversalMessaging/tools/runner/"* "${dockerBuildContextFolder}/SAG_HOME/UniversalMessaging/tools/runner/"
 
-                logI "Building docker image umtool-${WMLAB_PRODUCTS_VERSION}"
+                logI "Building docker image umtool-${WMLAB_PRODUCTS_VERSION}:${WMLAB_FIXES_DATE_TAG}"
                 pushd .
                 cd "${dockerBuildContextFolder}"
-                controlledExec "docker build -t umtool-${WMLAB_PRODUCTS_VERSION} ." "04.buildContainer"
+                controlledExec "docker build -t umtool-${WMLAB_PRODUCTS_VERSION}:last-build -t umtool-${WMLAB_PRODUCTS_VERSION}:${WMLAB_FIXES_DATE_TAG} ." "04.buildContainer"
                 logI "Image built, taking a snapshot of current images"
                 docker images > ${WMLAB_RUN_FOLDER}/docker-images-after-build.out
                 popd

@@ -1,0 +1,44 @@
+FROM centos:7
+
+MAINTAINER Software AG
+ENV SAG_HOME /opt/softwareag
+RUN groupadd -g 1724 sagadmin; useradd -u 1724 -m -g 1724 -d ${SAG_HOME} sagadmin
+USER 1724
+RUN mkdir -p ${SAG_HOME}/jvm ${SAG_HOME}/common ${SAG_HOME}/IntegrationServer ${SAG_HOME}/IntegrationServer/packages ${SAG_HOME}/install
+
+ENV JAVA_HOME ${SAG_HOME}/jvm/jvm/jre/
+ENV JRE_HOME ${SAG_HOME}/jvm/jvm/jre/
+
+COPY --chown=1724:1724 ./jvm/jvm/jre/ ${SAG_HOME}/jvm/jvm/jre/
+COPY --chown=1724:1724 ./install/products/ ${SAG_HOME}/install/products/
+
+
+COPY --chown=1724:1724 ./common/bin/ ${SAG_HOME}/common/bin/
+COPY --chown=1724:1724 ./common/conf/ ${SAG_HOME}/common/conf/
+COPY --chown=1724:1724 ./common/db/ ${SAG_HOME}/common/db/
+COPY --chown=1724:1724 ./common/lib/ ${SAG_HOME}/common/lib/
+COPY --chown=1724:1724 ./WS-Stack/ ${SAG_HOME}/WS-Stack/
+
+COPY --chown=1724:1724 ./IntegrationServer/bin/ ${SAG_HOME}/IntegrationServer/bin/
+COPY --chown=1724:1724 ./IntegrationServer/lib/ ${SAG_HOME}/IntegrationServer/lib/
+COPY --chown=1724:1724 ./IntegrationServer/updates/ ${SAG_HOME}/IntegrationServer/updates/
+COPY --chown=1724:1724 ./IntegrationServer/web/ ${SAG_HOME}/IntegrationServer/web/
+COPY --chown=1724:1724 ./IntegrationServer/docker/ ${SAG_HOME}/IntegrationServer/docker/
+COPY --chown=1724:1724 ./IntegrationServer/replicate/ ${SAG_HOME}/IntegrationServer/replicate/
+
+COPY --chown=1724:1724 ./IntegrationServer/.tc.dev.log4j.properties ${SAG_HOME}/IntegrationServer/.tc.dev.log4j.properties
+
+COPY --chown=1724:1724 ./IntegrationServer/config/ ${SAG_HOME}/IntegrationServer/config/
+COPY --chown=1724:1724 ./IntegrationServer/log4j.properties ${SAG_HOME}/IntegrationServer/log4j.properties
+
+COPY --chown=1724:1724 ./IntegrationServer/packages/Default/ ${SAG_HOME}/IntegrationServer/packages/Default/
+COPY --chown=1724:1724 ./IntegrationServer/packages/WmRoot/ ${SAG_HOME}/IntegrationServer/packages/WmRoot/
+COPY --chown=1724:1724 ./IntegrationServer/packages/WmPublic/ ${SAG_HOME}/IntegrationServer/packages/WmPublic/
+COPY --chown=1724:1724 ./IntegrationServer/packages/WmCloud/ ${SAG_HOME}/IntegrationServer/packages/WmCloud/
+COPY --chown=1724:1724 ./IntegrationServer/packages/WmAdmin/ ${SAG_HOME}/IntegrationServer/packages/WmAdmin/
+
+ RUN cd /opt/softwareag/IntegrationServer/docker; ./is_container.sh updateDockerConfigFiles -Ddocker.isHomeDir=${SAG_HOME}/IntegrationServer -Ddocker.rootDir=${SAG_HOME};
+EXPOSE 5555
+EXPOSE 9999
+
+ENTRYPOINT ["/opt/softwareag/IntegrationServer/bin/startContainer.sh"]

@@ -12,14 +12,14 @@ logEnv
 logI "Checking docker client availability..."
 docker info >/dev/null 2>&1
 if [ $? -eq 0 ]; then
-    logI "Docker ok, setting up um-realm-server-${WMLAB_PRODUCTS_VERSION}..."
+    logI "Docker ok, setting up um-realm-server-${WMLAB_PRODUCTS_VERSION}:${WMLAB_FIXES_DATE_TAG}..."
     if [ -f "/mnt/scripts/local/${WMLAB_PRODUCTS_VERSION}/Dockerfile" ]; then
         if [ -f ${WMLAB_INSTALL_SCRIPT_FILE} ]; then
             genericProductsSetup "${WMLAB_INSTALL_SCRIPT_FILE}"
             #/mnt/scripts/local/install.wmscript.txt
 
             if [ "${RESULT_genericProductsSetup}" -eq 0 ]; then
-                logI "Building container um-realm-server-${WMLAB_PRODUCTS_VERSION}"
+                logI "Building container um-realm-server-${WMLAB_PRODUCTS_VERSION}:${WMLAB_FIXES_DATE_TAG}"
                 logI "Taking a snapshot of current images"
                 docker images > ${WMLAB_RUN_FOLDER}/docker-images-before-build.out
                 mkdir -p ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME
@@ -37,7 +37,7 @@ if [ $? -eq 0 ]; then
                     ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/UniversalMessaging/tools/runner \
                     ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/UniversalMessaging/tools/InstanceManager
 
-                logI "Building docker image um-realm-server-${WMLAB_PRODUCTS_VERSION}"
+                logI "Building docker image um-realm-server-${WMLAB_PRODUCTS_VERSION}:${WMLAB_FIXES_DATE_TAG}"
 
                 mv ${WMLAB_INSTALL_HOME}/jvm/jvm ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/jvm/
 
@@ -59,7 +59,7 @@ if [ $? -eq 0 ]; then
                 mv ${WMLAB_INSTALL_HOME}/UniversalMessaging/tools/runner ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/UniversalMessaging/tools/
                 mv ${WMLAB_INSTALL_HOME}/UniversalMessaging/tools/InstanceManager/*.sh ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME/UniversalMessaging/tools/InstanceManager/
                 
-                controlledExec "docker build -t um-realm-server-${WMLAB_PRODUCTS_VERSION} ." "buildUmRealmServerContainer"
+                controlledExec "docker build -t um-realm-server-${WMLAB_PRODUCTS_VERSION}:last-build -t um-realm-server-${WMLAB_PRODUCTS_VERSION}:${WMLAB_FIXES_DATE_TAG} ." "buildUmRealmServerContainer"
 
                 logI "Image built, taking a snapshot of current images"
                 docker images > ${WMLAB_RUN_FOLDER}/docker-images-after-build.out

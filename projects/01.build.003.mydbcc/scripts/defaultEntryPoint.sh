@@ -23,7 +23,7 @@ if [ $? -eq 0 ]; then
                 pushd .
                 cd "${WMLAB_INSTALL_HOME}"
                 logI "Building docker image mydbcc-${WMLAB_PRODUCTS_VERSION}"
-                controlledExec "docker build -t mydbcc-${WMLAB_PRODUCTS_VERSION} ." "buildDbccContainer"
+                controlledExec "docker build -t mydbcc-${WMLAB_PRODUCTS_VERSION}:last-build -t mydbcc-${WMLAB_PRODUCTS_VERSION}:${WMLAB_FIXES_DATE_TAG}  ." "buildDbccContainer"
                 logI "Image built, taking a snapshot of current images"
                 docker images > ${WMLAB_RUN_FOLDER}/docker-images-after-build.out
                 logI "Pruning untagged images ..."

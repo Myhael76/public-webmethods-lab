@@ -97,11 +97,11 @@ if [ $? -eq 0 ]; then
 		# This is a log file that changes rarely
 		# common/lib/derby.log
 
-		logI "Building docker image for bpm-isplus-${WMLAB_PRODUCTS_VERSION}"
+		logI "Building docker image for bpm-isplus-${WMLAB_PRODUCTS_VERSION}:${WMLAB_FIXES_DATE_TAG}"
 
 		pushd . 
 		cd "${WMLAB_RUN_FOLDER}/docker-build-context"
-		controlledExec "docker build -t bpm-isplus-${WMLAB_PRODUCTS_VERSION} ." "05.buildIsPlusContainer"
+		controlledExec "docker build -t bpm-isplus-${WMLAB_PRODUCTS_VERSION}:last-build -t bpm-isplus-${WMLAB_PRODUCTS_VERSION}:${WMLAB_FIXES_DATE_TAG} ." "05.buildIsPlusContainer"
 		if [ ${RESULT_controlledExec} -ne 0 ]; then
 			logE "docker build failed! Code: ${RESULT_controlledExec}"
 		fi

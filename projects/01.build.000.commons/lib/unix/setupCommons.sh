@@ -17,6 +17,12 @@ initSetupCommons(){
     export WMLAB_SUM10_BOOTSTRAP_BIN=${WMLAB_SUM10_BOOTSTRAP_BIN:-"Variable not set! Provide file path name for Update Manager v10 boostrap"}
     export WMLAB_SUM11_BOOTSTRAP_BIN=${WMLAB_SUM11_BOOTSTRAP_BIN:-"Variable not set! Provide file path name for Update Manager v11 boostrap"}
 
+    if [ ${WMLAB_SKIP_PATCHING} -ne 0 ]; then
+        export WMLAB_FIXES_DATE_TAG="fixes-none"
+    else
+        export WMLAB_FIXES_DATE_TAG=${WMLAB_FIXES_DATE_TAG:-"fixes-undeclared"}
+    fi
+
 }
 
 initSetupCommons
