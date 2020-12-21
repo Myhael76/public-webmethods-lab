@@ -14,7 +14,7 @@ logI "Preparing script"
 
 cp /mnt/wm-files/patch.wmscript "${WMLAB_RUN_BASE_MOUNT}/"
 
-cat /mnt/wm-files/sum-online-credentials.txt >> "${WMLAB_RUN_BASE_MOUNT}/patch.wmscript"
+cat ${WMLAB_FIXES_ONLINE_CRED_FILE} >> "${WMLAB_RUN_BASE_MOUNT}/patch.wmscript"
 
 logI "Creating fixes image"
 
