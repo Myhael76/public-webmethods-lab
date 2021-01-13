@@ -24,14 +24,14 @@ beforeStartConfig(){
     # todo
     # link all packages in the project folder
     mkdir -p ${WMLAB_RUN_FOLDER}/IS/logs
-    pushd .
+    pushd . > /dev/null
     cd ${WMLAB_INSTALL_HOME}/IntegrationServer/
     if [ -d "./logs" ]; then
         logW "logs directory already exists, this should not happen! Pausing for debug"
         tail -f /dev/null
     fi
     ln -s ${WMLAB_RUN_FOLDER}/IS/logs
-    popd
+    popd > /dev/null
 }
 
 afterStartConfig(){

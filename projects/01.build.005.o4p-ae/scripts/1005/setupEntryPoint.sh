@@ -63,7 +63,7 @@ if [ $? -eq 0 ]; then
 			# This is a log file that changes rarely
 			# common/lib/derby.log
 
-			pushd . 
+			pushd . > /dev/null
 			cd "${WMLAB_RUN_FOLDER}/docker-build-context"
 			controlledExec \
 				"docker build -t o4p-ae-server-${WMLAB_PRODUCTS_VERSION}:last-build -t o4p-ae-server-${WMLAB_PRODUCTS_VERSION}:${WMLAB_FIXES_DATE_TAG} --build-arg BASE_IMAGE=ccs-admin-tool-${WMLAB_PRODUCTS_VERSION}:${WMLAB_FIXES_DATE_TAG} ." \
@@ -71,7 +71,7 @@ if [ $? -eq 0 ]; then
 			if [ ${RESULT_controlledExec} -ne 0 ]; then
 				logE "docker build failed! Code: ${RESULT_controlledExec}"
 			fi
-			popd
+			popd > /dev/null
 		else
 			logE "JDBC driver download failed (code ${RESULT_controlledExec}), cannot continue!"
 		fi

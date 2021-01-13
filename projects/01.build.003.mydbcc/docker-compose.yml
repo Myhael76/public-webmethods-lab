@@ -1,5 +1,8 @@
 version: "3.5"
 
+volumes:
+  runs: {}
+
 services:
   wm-dbcc-builder:
     image: centos-wm-install-helper
@@ -9,7 +12,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       # from 00.commons
       - ../00.commons/lib/unix:${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
-      - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - runs:${H_WMLAB_RUN_BASE_MOUNT_POINT}
       # from 01.build.000
       - ../01.build.000.commons/lib/unix:${H_WMLAB_SETUP_SHELL_LIB_DIR_MOUNT_POINT}
       - ${H_WMLAB_INSTALLER_BIN}:${H_WMLAB_INSTALLER_BIN_MOUNT_POINT}

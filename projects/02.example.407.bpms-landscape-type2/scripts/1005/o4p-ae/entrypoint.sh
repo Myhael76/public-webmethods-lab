@@ -31,10 +31,10 @@ beforeStartConfig(){
     # link logs foler  to run folder
     rm -rf ${WMLAB_INSTALL_HOME}/optimize/analysis/logs
     mkdir -p ${WMLAB_RUN_FOLDER}/optimizeLogs
-    pushd .
+    pushd . > /dev/null
     cd ${WMLAB_INSTALL_HOME}/optimize/analysis/
     ln -s ${WMLAB_RUN_FOLDER}/optimizeLogs logs
-    popd
+    popd > /dev/null
 }
 
 afterStartConfig(){

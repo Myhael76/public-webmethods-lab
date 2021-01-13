@@ -25,7 +25,7 @@ if [ $? -eq 0 ]; then
                     logI "Taking a snapshot of current images"
                     docker images > ${WMLAB_RUN_FOLDER}/04.docker-images-before-build.out
                     mkdir -p /tmp/dockerBuildContext
-                    pushd .
+                    pushd . > /dev/null
                     cd /tmp/dockerBuildContext/
                     cp /mnt/scripts/local/${WMLAB_PRODUCTS_VERSION}/Dockerfile .
                     unzip ${WMLAB_INSTALL_HOME}/MWS/ccs/tools/ccs-admin.zip
@@ -37,7 +37,7 @@ if [ $? -eq 0 ]; then
                     docker images > ${WMLAB_RUN_FOLDER}/docker-images-after-build.out
                     logI "Pruning untagged images ..."
                     docker image prune -f # remove intermediary alpine + jvm image or older untagged mydbcc
-                    popd
+                    popd > /dev/null
                 else
                     logE "ccs-admin tool not installed! check your installation health!"
                 fi

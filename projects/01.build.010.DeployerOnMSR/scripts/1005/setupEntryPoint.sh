@@ -71,13 +71,13 @@ if [ $? -eq 0 ]; then
 
 		logI "Building docker image for msr-deployer-abe-${WMLAB_PRODUCTS_VERSION}:${WMLAB_FIXES_DATE_TAG}"
 
-		pushd . 
+		pushd . > /dev/null
 		cd "${DOCKER_CONTEXT_FOLDER}"/
 		controlledExec "docker build -t msr-deployer-abe-${WMLAB_PRODUCTS_VERSION}:last-build -t msr-deployer-abe-${WMLAB_PRODUCTS_VERSION}:${WMLAB_FIXES_DATE_TAG} ." "05.buildIsPlusContainer"
 		if [ ${RESULT_controlledExec} -ne 0 ]; then
 			logE "docker build failed! Code: ${RESULT_controlledExec}"
 		fi
-		popd
+		popd > /dev/null
 	else
 		logE "MSR Lean setup failed (code ${RESULT_setupLocal}), cannot continue!"
 	fi

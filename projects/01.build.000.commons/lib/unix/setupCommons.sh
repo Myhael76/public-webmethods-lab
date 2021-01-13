@@ -84,7 +84,7 @@ patchInstallation(){
     ###### 03 - Patch installation
     # TODO: render patching optional with a parameter
     logI "Applying fixes ..."
-    pushd .
+    pushd . >/dev/null
     cd "${WMLAB_SUM_HOME}/bin"
 
     echo "installSP=N" >/dev/shm/fixes.wmscript.txt
@@ -107,7 +107,7 @@ patchInstallation(){
     RESULT_patchInstallation=$?
         
     rm -f /dev/shm/fixes.wmscript.txt
-    popd
+    popd >/dev/null
 }
 
 startInstallerInAttendedMode(){

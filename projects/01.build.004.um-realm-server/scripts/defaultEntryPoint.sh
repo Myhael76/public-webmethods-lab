@@ -25,7 +25,7 @@ if [ $? -eq 0 ]; then
                 mkdir -p ${WMLAB_RUN_FOLDER}/docker-build-context/SAG_HOME
 
                 cp /mnt/scripts/local/${WMLAB_PRODUCTS_VERSION}/Dockerfile "${WMLAB_RUN_FOLDER}/docker-build-context"
-                pushd .
+                pushd . > /dev/null
                 cd "${WMLAB_RUN_FOLDER}/docker-build-context"
 
                 mkdir -p \
@@ -65,7 +65,7 @@ if [ $? -eq 0 ]; then
                 docker images > ${WMLAB_RUN_FOLDER}/docker-images-after-build.out
                 logI "Pruning untagged images ..."
                 docker image prune -f # remove intermediary alpine + jvm image or older untagged um-realm-server
-                popd
+                popd > /dev/null
             else
                 logE "Product Installation failed! (Code ${RESULT_genericProductsSetup})"
                 exit 4

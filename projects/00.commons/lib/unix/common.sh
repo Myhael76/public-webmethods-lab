@@ -140,9 +140,9 @@ startDstatResourceMonitor(){
         then
             logI "Spawning new dstat resource monitor."
             d=`date +%y-%m-%dT%H.%M.%S_%3N`
-            pushd .
+            pushd . > /dev/null
             nohup dstat -t -T -l -c -m -s -r -d --fs --disk-tps --disk-util --tcp --dbus -n -N total,lo --net-packets --output "${WMLAB_RUN_FOLDER}/dstat_output_$d.csv" >/dev/null &
-            popd
+            popd > /dev/null
             logI "dstat resource monitor launched, output file is ${WMLAB_RUN_FOLDER}/dstat_output_$d.csv"
         else
             logW "dstat command not found"
