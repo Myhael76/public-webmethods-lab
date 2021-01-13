@@ -6,6 +6,7 @@ ARG WMLAB_SAGADMIN_USER_NAME=sagadmin
 ARG WMLAB_SAGADMIN_USER_PASSWORD=$1$uwFdCgRw$WS2pg1CpnxEjQA6nRFZel1
 ARG WMLAB_SAG_USER_NAME=sag
 ARG WMLAB_SAG_USER_PASSWORD=$1$vs2LiYFT$xj3XdCNHteEpRwsKQby/a0
+ARG WMLAB_GPG_KEYS_FILE_1=/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 
 FROM ${SRC_IMAGE}
 
@@ -18,15 +19,16 @@ ARG WMLAB_SAGADMIN_USER_NAME=sagadmin
 ARG WMLAB_SAGADMIN_USER_PASSWORD=$1$uwFdCgRw$WS2pg1CpnxEjQA6nRFZel1
 ARG WMLAB_SAG_USER_NAME=sag
 ARG WMLAB_SAG_USER_PASSWORD=$1$vs2LiYFT$xj3XdCNHteEpRwsKQby/a0
+ARG WMLAB_GPG_KEYS_FILE_1=/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 
 LABEL maintainer="Myhael76"
 
- RUN rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 &&\
-     yum -y update &&\
-     yum install -y net-tools sudo unzip less telnet dstat &&\
-     yum -y update &&\
-     yum clean all &&\
-     rm -rf /var/cache/yum
+RUN if [ -f "$WMLAB_GPG_KEYS_FILE_1" ] ; then rpmkeys --import "${WMLAB_GPG_KEYS_FILE_1}" ; fi &&\
+    yum -y update &&\
+    yum install -y net-tools sudo unzip less telnet dstat &&\
+    yum -y update &&\
+    yum clean all &&\
+    rm -rf /var/cache/yum
 
 # propagate necessary env variables
 ENV WMLAB_INSTALL_HOME=${WMLAB_INSTALL_HOME} \
