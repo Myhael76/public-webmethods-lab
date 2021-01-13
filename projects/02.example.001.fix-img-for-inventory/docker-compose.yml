@@ -18,9 +18,9 @@ services:
       - ./scripts/:/mnt/scripts/local/
       - ${H_RUNS_FOLDER}/:${H_WMLAB_RUN_BASE_MOUNT_POINT}/
       # Base assets
-      - ./inventory.json:/mnt/wm-files/inventory.json
+      - ./${H_WMLAB_INVENTORY_FILE}:/mnt/wm-files/inventory.json
       - ./patch.wmscript:/mnt/wm-files/patch.wmscript
-      # TODO
+      - ${H_WMLAB_FIXES_IMAGE_DIR}:/mnt/fixesOutDir
     environment:
       ### from 00.commons (take what is needed only)
       - WMLAB_RUN_BASE_MOUNT=${H_WMLAB_RUN_BASE_MOUNT_POINT}
@@ -30,4 +30,7 @@ services:
       - WMLAB_SUM11_BOOTSTRAP_BIN=${H_WMLAB_SUM11_BOOTSTRAP_BIN_MOUNT_POINT}
       - WMLAB_FIXES_ONLINE_CRED_FILE=${H_WMLAB_FIXES_ONLINE_CRED_FILE_MOUNT_POINT}
       - WMLAB_SETUP_SHELL_LIB_DIR_MOUNT_POINT=${H_WMLAB_SETUP_SHELL_LIB_DIR_MOUNT_POINT}
+      - WMLAB_PLATFORM_STRING=${H_WMLAB_PLATFORM_STRING}
+      - WMLAB_FIXES_DATE_TAG=${H_WMLAB_FIXES_DATE_TAG}
+      - WMLAB_PRODUCTS_VERSION=${H_WMLAB_PRODUCTS_VERSION}
     entrypoint: /mnt/scripts/local/entrypoint.sh

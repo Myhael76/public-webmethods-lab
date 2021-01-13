@@ -28,3 +28,8 @@ POPD
 :take_01_000_env
 
 type ..\01.build.000.commons\.env >> .\.env
+
+echo . >>.\.env
+echo ## Local files and folders >>.\.env
+
+Powershell.exe -executionpolicy Bypass -File .\powershell\generateEnvFile.ps1
