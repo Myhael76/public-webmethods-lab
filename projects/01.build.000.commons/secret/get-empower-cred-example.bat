@@ -5,7 +5,6 @@
 :: declare your empwower user here
 SET H_WMLAB_EMPOWER_USER=you@yourcompany.com
 
-
 :: option 1: write credentials in clear text here. This is needed for unattended execution
 :: this files remains local (according to .gitignore) and the credentials are never logged
 
@@ -14,7 +13,8 @@ SET H_WMLAB_EMPOWER_USER=you@yourcompany.com
 :: Alternatively, ask user for credentials
 :: this is the preferred way if you execute the bat files in attended mode
 
-if [%H_WMLAB_EMPOWER_PASS%] == [] goto inputPwd
+setlocal EnableDelayedExpansion
+if "!H_WMLAB_EMPOWER_PASS!" == "" goto inputPwd
 goto end
 
 :inputPwd
@@ -24,7 +24,7 @@ set "psCommand=powershell -Command "$pword = read-host 'Enter Password for empow
 
 for /f "usebackq delims=" %%p in (`%psCommand%`) do set H_WMLAB_EMPOWER_PASS_1=%%p
 
-set "psCommand=powershell -Command "$pword = read-host 'Enter Password for emwpoer user again %H_WMLAB_EMPOWER_USER%' -AsSecureString ; ^
+set "psCommand=powershell -Command "$pword = read-host 'Enter Password for empower user again %H_WMLAB_EMPOWER_USER%' -AsSecureString ; ^
     $BSTR=[System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($pword); ^
         [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)""
 

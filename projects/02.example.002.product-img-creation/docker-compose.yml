@@ -1,0 +1,40 @@
+version: "3.5"
+
+volumes:
+  runs: {}
+  temp:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+
+services:
+  installer-example-1:
+    image: centos-wm-install-helper
+    container_name: installer-example-1
+    hostname: installer-example-1
+    volumes:
+      # example of shallower dependency towards base common projects
+      # from 00.commons
+      - ../00.commons/lib/unix:${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      #local
+      - ${H_WMLAB_INSTALLER_BIN}:/tmp/installer.bin
+      - ./scripts/:/mnt/scripts/local/
+      - runs:${H_WMLAB_RUN_BASE_MOUNT_POINT}/
+      - temp:/tmp/
+      # Base assets
+      - ${H_WMLAB_PRODUCT_IMAGE_DIR}:/mnt/productsOutDir
+      - ${H_WMLAB_WMSCRIPT_FILE}:/mnt/products.wmscript
+    environment:
+      ### from 00.commons (take what is needed only)
+      - WMLAB_RUN_BASE_MOUNT=${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - WMLAB_CTRL_EXEC_STDOUT_ON=${H_WMLAB_CTRL_EXEC_STDOUT_ON}
+      - WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT=${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      ### from 01.build.000 (take what is needed only)
+      - WMLAB_INSTALLER_BIN=/tmp/installer.bin
+      - WMLAB_PLATFORM_STRING=${H_WMLAB_PLATFORM_STRING}
+      - WMLAB_PRODUCTS_VERSION=${H_WMLAB_PRODUCTS_VERSION}
+      - WMLAB_EMPOWER_USER=${H_WMLAB_EMPOWER_USER}
+      - WMLAB_EMPOWER_PASSWORD=${H_WMLAB_EMPOWER_PASS}
+      - WMLAB_WMSCRIPT_FILE=/mnt/products.wmscript
+      - WMLAB_PRODUCT_IMAGE_DIR=/mnt/productsOutDir
+    entrypoint: /mnt/scripts/local/entrypoint.sh

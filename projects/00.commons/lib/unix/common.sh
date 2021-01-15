@@ -70,8 +70,8 @@ logD(){
 
 logEnv(){
     logI "=========Current environment dump begin"
-    env | grep WMLAB | sort
-    env | grep WMLAB | sort >> ${WMLAB_RUN_FOLDER}/script.trace.log
+    env | grep WMLAB | grep -v PASSWORD | sort
+    env | grep WMLAB | grep -v PASSWORD | sort >> ${WMLAB_RUN_FOLDER}/script.trace.log
     logI "=========Current environment dump end"
 }
 
