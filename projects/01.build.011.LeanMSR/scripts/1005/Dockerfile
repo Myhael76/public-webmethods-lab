@@ -9,7 +9,9 @@ ENV SAG_DATA_HOME=/data
 
 RUN mkdir -p ${SAG_HOME} ${SAG_DATA_HOME} &&\
     groupadd -g 1724 sagadmin &&\
-    useradd -u 1724 -m -g 1724 -d ${SAG_HOME} sagadmin
+    useradd -u 1724 -m -g 1724 -d ${SAG_HOME} sagadmin &&\
+    mkdir -p /mnt/runs /mnt/runs &&\
+    chown 1724:1724 /mnt/runs
     
 COPY --chown=1724:1724 ./SAG_HOME/ ${SAG_HOME}/
 

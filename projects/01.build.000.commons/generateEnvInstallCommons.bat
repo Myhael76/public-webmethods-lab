@@ -2,7 +2,7 @@
 
 copy .\.env_base.md .\.env
 
-echo You will now be asked to provide the location of project's required files
+echo You will now be asked to provide the location of project 01.build.000.commons required files
 
 pause
 

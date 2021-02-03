@@ -5,7 +5,7 @@ networks:
       external: false
 services:
   mydbcc:
-    image: mydbcc-${H_WMLAB_PRODUCTS_VERSION}
+    image: mydbcc-${H_WMLAB_PRODUCTS_VERSION}:${H_WMLAB_FIXES_DATE_TAG}
     container_name: ${H_WMLAB_PJ_NAME}-wm-dbcc-initializer
     hostname: wm-dbcc-initializer
     networks:

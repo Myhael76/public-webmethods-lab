@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<IDataXMLCoder version="1.0">
+  <record javaclass="com.wm.data.ISMemDataImpl">
+    <record name="DEFAULTTRANSIENTSTORE" javaclass="com.wm.data.ISMemDataImpl">
+      <value name="PERSISTENCEMODE">persistent</value>
+      <value name="NAME">ISDefaultStore</value>
+      <record name="PROPERTIES" javaclass="com.wm.data.ISMemDataImpl">
+        <value name="fsdata.dbName">ISTransStore</value>
+        <value name="fsdata.dbGroup">DocumentStore</value>
+        <value name="fsdata.logGroup">DocumentStore</value>
+        <value name="fsdata.dbSize">25</value>
+        <value name="fsdata.logSize">1</value>
+        <value name="fsdata.dataMaxExtents">1000</value>
+        <value name="fsdata.indexMaxExtents">1000</value>
+        <value name="fsdata.indexThreshold">75</value>
+        <value name="fsdata.dataThreshold">75</value>
+        <value name="fsdata.avgBlockSize">400</value>
+        <value name="fsdata.blockDevice">RAF</value>
+        <value name="fsdata.fullConsistencyCheck">conditional</value>
+        <value name="failonopen">rename</value>
+        <value name="warnonopen">rename</value>
+      </record>
+      <record name="ENDPOINT" javaclass="com.wm.data.ISMemDataImpl">
+        <value name="NAME">ISDefaultEndPoint</value>
+        <value name="MSGHISTORYTIME">0</value>
+        <record name="PRODUCER" javaclass="com.wm.data.ISMemDataImpl">
+          <value name="NAME">ISDefaultProducer</value>
+          <value name="ACKMODE">client</value>
+          <value name="MSGHISTORYTIME">0</value>
+        </record>
+        <record name="PUBONSUCCESSPRODUCER" javaclass="com.wm.data.ISMemDataImpl">
+          <value name="NAME">ISPublishOnSuccessProducer</value>
+          <value name="ACKMODE">client</value>
+          <value name="MSGHISTORYTIME">0</value>
+        </record>
+        <record name="CONSUMER" javaclass="com.wm.data.ISMemDataImpl">
+          <value name="NAME">ISDefaultConsumer</value>
+          <value name="ACKMODE">client</value>
+          <value name="MSGHISTORYTIME">0</value>
+        </record>
+      </record>
+    </record>
+    <record name="TRIGGERTRANSIENTSTORE" javaclass="com.wm.data.ISMemDataImpl">
+      <value name="PERSISTENCEMODE">persistent</value>
+      <value name="NAME">TriggerStore</value>
+      <record name="PROPERTIES" javaclass="com.wm.data.ISMemDataImpl">
+        <value name="fsdata.dbName">TriggerStore</value>
+        <value name="fsdata.dbGroup">DocumentStore</value>
+        <value name="fsdata.logGroup">DocumentStore</value>
+        <value name="fsdata.dbSize">35</value>
+        <value name="fsdata.logSize">1</value>
+        <value name="fsdata.dataMaxExtents">1000</value>
+        <value name="fsdata.indexMaxExtents">1000</value>
+        <value name="fsdata.indexThreshold">75</value>
+        <value name="fsdata.dataThreshold">75</value>
+        <value name="fsdata.avgBlockSize">400</value>
+        <value name="fsdata.blockDevice">RAF</value>
+        <value name="fsdata.fullConsistencyCheck">conditional</value>
+        <value name="failonopen">rename</value>
+        <value name="warnonopen">rename</value>
+      </record>
+      <record name="ENDPOINT" javaclass="com.wm.data.ISMemDataImpl">
+        <value name="NAME">TriggerEndPoint</value>
+        <value name="MSGHISTORYTIME">0</value>
+        <record name="CONSUMER" javaclass="com.wm.data.ISMemDataImpl">
+          <value name="NAME">TriggerConsumer</value>
+          <value name="ACKMODE">client</value>
+          <value name="MSGHISTORYTIME">0</value>
+        </record>
+      </record>
+    </record>
+    <record name="TRANSPORTPROPERTIES" javaclass="com.wm.data.ISMemDataImpl">
+      <record name="BROKERTRANSPORTFACTORY" javaclass="com.wm.data.ISMemDataImpl">
+        <value name="BROKERCONFIGURATION">false</value>
+        <value name="CLIENTPREFIX">J_jRQtEolDEurgAVIwwwADXaZQs_</value>
+        <record name="ENDPOINTS" javaclass="com.wm.data.ISMemDataImpl">
+          <record name="DEFAULT_ENDPOINT" javaclass="com.wm.data.ISMemDataImpl">
+            <null name="brokerHost"/>
+            <value name="brokerName">Broker #1</value>
+            <value name="applicationName">IntegrationServer</value>
+            <value name="clientGroupName">IntegrationServer</value>
+            <value name="clientGroupLifeCycle">ExplicitDestroy</value>
+            <value name="clientGroupStorage">Guaranteed</value>
+            <value name="isClientPrefixShared">false</value>
+            <value name="clientAuth">none</value>
+            <record name="CLIENTS" javaclass="com.wm.data.ISMemDataImpl">
+              <record name="172.30.0.4_5555_1612391381_AdminClient" javaclass="com.wm.data.ISMemDataImpl">
+                <value name="clientGroupName">admin</value>
+                <value name="clientID">172.30.0.4_5555_1612391381_AdminClient</value>
+                <value name="clientType">3</value>
+              </record>
+              <record name="J_jRQtEolDEurgAVIwwwADXaZQs__DefaultClient" javaclass="com.wm.data.ISMemDataImpl">
+                <value name="clientID">J_jRQtEolDEurgAVIwwwADXaZQs__DefaultClient</value>
+                <value name="clientType">0</value>
+              </record>
+              <record name="172.30.0.4_5555_1612391381_RequestReplyClient" javaclass="com.wm.data.ISMemDataImpl">
+                <value name="clientID">172.30.0.4_5555_1612391381_RequestReplyClient</value>
+                <value name="clientType">0</value>
+              </record>
+              <record name="172.30.0.4_5555_1612391381_SyncClient" javaclass="com.wm.data.ISMemDataImpl">
+                <value name="clientID">172.30.0.4_5555_1612391381_SyncClient</value>
+                <value name="clientType">0</value>
+              </record>
+            </record>
+            <value name="useSSL">false</value>
+            <record name="CANPUBSUB" javaclass="com.wm.data.ISMemDataImpl">
+              <value name="">Adapter::error</value>
+            </record>
+            <value name="HOSTID">172_30_0_4_5555_1612391381</value>
+          </record>
+        </record>
+        <value name="CLASS">com.wm.app.b2b.server.dispatcher.comms.BrokerTransportFactory</value>
+      </record>
+    </record>
+    <record name="PROCESSORPROPERTIES" javaclass="com.wm.data.ISMemDataImpl">
+      <value name="RETRYCOUNT">3</value>
+      <value name="RETRYINTERVAL">10</value>
+      <value name="MSGSPERTRANSACTION">10</value>
+      <value name="TIMEWAITFORGETEVENTS">30</value>
+      <value name="TRIGGERUSER">Administrator</value>
+      <value name="INBOUNDQUEUING">off</value>
+      <value name="MIGRATING_STATE">0</value>
+      <value name="DEFAULTSTOREMIGRATION">true</value>
+    </record>
+    <value name="hostID">172_30_0_4_5555_1612391381</value>
+    <value name="DEFAULTSTOREHIGHMARK">10</value>
+    <value name="DEFAULTSTORELOWMARK">4</value>
+    <value name="MAXTRIGGEREXECUTIONTHREADS">100</value>
+    <value name="MAXINBOUNDREADERTHREADS">100</value>
+    <value name="TRIGGERDOCUMENTSTORETHROTTLE">100</value>
+    <value name="TRIGGEREXECUTIONTHREADSTHROTTLE">100</value>
+    <record name="RESUBMITTRANSIENTSTORE" javaclass="com.wm.data.ISMemDataImpl">
+      <value name="PERSISTENCEMODE">persistent</value>
+      <value name="NAME">ISResubmitStore</value>
+      <record name="PROPERTIES" javaclass="com.wm.data.ISMemDataImpl">
+        <value name="fsdata.dbName">ISResubmitStore</value>
+        <value name="fsdata.dbGroup">DocumentStore</value>
+        <value name="fsdata.logGroup">DocumentStore</value>
+        <value name="fsdata.dbSize">10</value>
+        <value name="fsdata.logSize">1</value>
+        <value name="fsdata.dataMaxExtents">1000</value>
+        <value name="fsdata.indexMaxExtents">1000</value>
+        <value name="fsdata.indexThreshold">75</value>
+        <value name="fsdata.dataThreshold">75</value>
+        <value name="fsdata.avgBlockSize">400</value>
+        <value name="fsdata.blockDevice">RAF</value>
+        <value name="fsdata.fullConsistencyCheck">conditional</value>
+        <value name="failonopen">rename</value>
+        <value name="warnonopen">rename</value>
+      </record>
+      <record name="ENDPOINT" javaclass="com.wm.data.ISMemDataImpl">
+        <value name="NAME">ISResubmitEndPoint</value>
+        <value name="MSGHISTORYTIME">10</value>
+        <record name="PRODUCER" javaclass="com.wm.data.ISMemDataImpl">
+          <value name="NAME">ISResubmitProducer</value>
+          <value name="ACKMODE">client</value>
+          <value name="MSGHISTORYTIME">10</value>
+        </record>
+      </record>
+    </record>
+    <value name="OUTBOUNDBROKERDOCREADER_MAX">25</value>
+    <value name="OUTBOUNDBROKERDOCREADER_STEPSIZE">5</value>
+  </record>
+</IDataXMLCoder>
