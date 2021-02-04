@@ -24,6 +24,7 @@ This project is proposed also as an example of single command start after clonin
 - Ensure the prerequisites are fulfilled
 - Clone the Github project
 - Run 00.quickStartAllOneTime.bat for the first time. It will take about 20 minutes or more depending on the speed of your computer, network link and docker images that are already present (centos:7)
+  - Note: the bat file will open dialogues to ask for the prerequisite files. Look at the windows title!
 - For all subsequent needs:
 
 ```bat
