@@ -5,7 +5,7 @@
 IMPORTANT: cloning this project requires that line feeds in the files are unix stile, therefore set your git client for input autocrlf
 
 ```bat
-git config --global core.autocrlf false
+git config --global core.autocrlf input
 ```
 
 This project is proposed also as an example of single command start after cloning. As for this moment, the product and fix image creation automation is still WIP, therefore, the prereqisites are:
