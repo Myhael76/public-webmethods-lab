@@ -9,7 +9,7 @@ volumes:
 
 services:
   installer-example-1:
-    image: centos-wm-install-helper
+    image: ${H_WMLAB_BASE_OS_IMAGE}
     container_name: installer-example-1
     hostname: installer-example-1
     volumes:

@@ -33,5 +33,7 @@ else
 #    cmd="${cmd} -debugFile ${WMLAB_RUN_FOLDER}/debug.log"
     controlledExec "${cmd}" "02.ImageCreation"
 
+    logI "Image created, result is: ${RESULT_controlledExec}"
+
     rm /dev/shm/products.wmscript
 fi

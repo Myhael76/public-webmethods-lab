@@ -1,8 +1,8 @@
-# Project 02.example.002.product-img-creation
+# 00.prepare.001.product-img-creation
 
 ## Purpose
 
-This project automates the creation of the product image for the current repo.
+This project automates the creation of the product image for the current repo. If you do not have already the image, run this project immediately after cloning.
 
 ## Prerequisites
 
@@ -22,4 +22,4 @@ Images may be produced for other platforms too, observe the "example" bat files.
 
 ## Current status
 
-Works with 1005, but not with 1003.
+Works with 1005, but not with 1003, more work is required for other versions.
