@@ -8,7 +8,7 @@ param ($frmkVersionString, $installerPlatformString)
 $lines = Get-ChildItem -path ".." -Recurse | Select-String -pattern "InstallProducts="
 $productsHash = @{} #using a hash for unique values
 foreach ($line in $lines){
-    if( $line -match ".*1005.*" ){
+    if( $line -match ".*$env:H_WMLAB_PRODUCTS_VERSION.*" ){
         if( $line -match ".*:InstallProducts=(?<products>.*)" ){
             foreach ($productString in $matches['products'].split(',')){
                 $productsHash["$productString"] = "1"

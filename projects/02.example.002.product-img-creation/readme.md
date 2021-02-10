@@ -17,3 +17,9 @@ This project automates the creation of the product image for the current repo.
    1. This part is computing all the products mentioned in this repository for the parametrized version
 3. Run 03.01.default.produceFixesImage.bat
    1. If other products lists are needed, clone this bat.file and provide your own wmscript
+
+Images may be produced for other platforms too, observe the "example" bat files.
+
+## Current status
+
+Works with 1005, but not with 1003.

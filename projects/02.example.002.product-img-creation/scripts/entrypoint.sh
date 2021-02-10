@@ -29,7 +29,8 @@ else
 
     cmd="${WMLAB_INSTALLER_BIN} -readScript /dev/shm/products.wmscript"
     cmd="${cmd} -writeImage ${imageFile}"
-
+#    cmd="${cmd} -debugLvl verbose"
+#    cmd="${cmd} -debugFile ${WMLAB_RUN_FOLDER}/debug.log"
     controlledExec "${cmd}" "02.ImageCreation"
 
     rm /dev/shm/products.wmscript
