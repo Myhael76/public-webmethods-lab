@@ -10,7 +10,7 @@ git config --global core.autocrlf input
 
 This project is proposed also as an example of single command start after cloning. As for this moment, the product and fix image creation automation is still WIP, therefore, the prereqisites are:
 
-- installer binary for linux 
+- installer binary for linux
 - update manager bootstrap for linux version 11
   - Note: due to genericity of the commons, the first command will also ask for the location of v10. Leave it blank (cancel) or provide any file, it will not be used by this project, however the choice is memorized in the commons folder, therefore it is recommneded to provide the v10 bootstrap too
 - appropriate products image produced upfront with another installer (automation WIP)
