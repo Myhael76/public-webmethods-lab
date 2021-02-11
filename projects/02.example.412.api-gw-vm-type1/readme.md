@@ -10,11 +10,16 @@ This docker "machine" will work only if the host increments the kernel parameter
 
 Example for Docker Desktop on WSL2:
 
-Open a power shell and issue command wsl (assuming the default distirbution is docker-desktop)
+Open a power shell and issue command wsl
+
+Ensure assuming the default distirbution is docker-desktop)
 
 ```powershell
 
 wsl -l
+
+# eventually
+wsl --setdefault docker-desktop
 
 Windows Subsystem for Linux Distributions:
 docker-desktop (Default)

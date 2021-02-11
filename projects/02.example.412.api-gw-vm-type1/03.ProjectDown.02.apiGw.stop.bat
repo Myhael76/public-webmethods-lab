@@ -1,2 +1,2 @@
 @echo off
-docker-compose -f .\04.ProjectStructure.init.docker-compose.yml down
+docker-compose -f .\04.ProjectStructure.init.docker-compose.yml down -t 120
