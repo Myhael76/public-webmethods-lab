@@ -1,0 +1,829 @@
+{
+    "installedProducts":  [
+                              {
+                                  "productId":  "WPEcdc",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WPEcdc"
+                              },
+                              {
+                                  "productId":  "NUMspm",
+                                  "version":  "10.5.0",
+                                  "displayName":  "NUMspm"
+                              },
+                              {
+                                  "productId":  "WSTacdl",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WSTacdl"
+                              },
+                              {
+                                  "productId":  "integrationServer",
+                                  "version":  "10.5.0",
+                                  "displayName":  "integrationServer"
+                              },
+                              {
+                                  "productId":  "WMNcdc",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WMNcdc"
+                              },
+                              {
+                                  "productId":  "MATacdl",
+                                  "version":  "10.5.0",
+                                  "displayName":  "MATacdl"
+                              },
+                              {
+                                  "productId":  "ERSharedBundles",
+                                  "version":  "10.5.0",
+                                  "displayName":  "ERSharedBundles"
+                              },
+                              {
+                                  "productId":  "jdbcAdapter",
+                                  "version":  "10.5.0",
+                                  "displayName":  "jdbcAdapter"
+                              },
+                              {
+                                  "productId":  "embeddedDatabaseScripts",
+                                  "version":  "10.5.0",
+                                  "displayName":  "embeddedDatabaseScripts"
+                              },
+                              {
+                                  "productId":  "PIEContainerExternalRDBMS",
+                                  "version":  "10.5.0",
+                                  "displayName":  "PIEContainerExternalRDBMS"
+                              },
+                              {
+                                  "productId":  "GWMCommonLibs",
+                                  "version":  "10.5.0",
+                                  "displayName":  "GWMCommonLibs"
+                              },
+                              {
+                                  "productId":  "CAFRLib",
+                                  "version":  "10.5.0",
+                                  "displayName":  "CAFRLib"
+                              },
+                              {
+                                  "productId":  "tppParsers",
+                                  "version":  "10.5.0",
+                                  "displayName":  "tppParsers"
+                              },
+                              {
+                                  "productId":  "optimizeWSDataCollector",
+                                  "version":  "10.5.0",
+                                  "displayName":  "optimizeWSDataCollector"
+                              },
+                              {
+                                  "productId":  "MATcdc",
+                                  "version":  "10.5.0",
+                                  "displayName":  "MATcdc"
+                              },
+                              {
+                                  "productId":  "MWSacdl",
+                                  "version":  "10.5.0",
+                                  "displayName":  "MWSacdl"
+                              },
+                              {
+                                  "productId":  "CMP",
+                                  "version":  "10.5.0",
+                                  "displayName":  "CMP"
+                              },
+                              {
+                                  "productId":  "YAIacdl",
+                                  "version":  "10.5.0",
+                                  "displayName":  "YAIacdl"
+                              },
+                              {
+                                  "productId":  "TaskClientPackage",
+                                  "version":  "10.5.0",
+                                  "displayName":  "TaskClientPackage"
+                              },
+                              {
+                                  "productId":  "PIECore",
+                                  "version":  "10.5.0",
+                                  "displayName":  "PIECore"
+                              },
+                              {
+                                  "productId":  "tppSpring",
+                                  "version":  "10.5.0",
+                                  "displayName":  "tppSpring"
+                              },
+                              {
+                                  "productId":  "MwsSpmIsTaskEngine",
+                                  "version":  "10.5.0",
+                                  "displayName":  "MwsSpmIsTaskEngine"
+                              },
+                              {
+                                  "productId":  "NUMSharedLibs",
+                                  "version":  "10.5.0",
+                                  "displayName":  "NUMSharedLibs"
+                              },
+                              {
+                                  "productId":  "TNSacdl",
+                                  "version":  "10.5.0",
+                                  "displayName":  "TNSacdl"
+                              },
+                              {
+                                  "productId":  "monitorSharedUI",
+                                  "version":  "10.5.0",
+                                  "displayName":  "monitorSharedUI"
+                              },
+                              {
+                                  "productId":  "NERV",
+                                  "version":  "10.5.0",
+                                  "displayName":  "NERV"
+                              },
+                              {
+                                  "productId":  "brmsui",
+                                  "version":  "10.5.0",
+                                  "displayName":  "brmsui"
+                              },
+                              {
+                                  "productId":  "MWSSharedLib",
+                                  "version":  "10.5.0",
+                                  "displayName":  "MWSSharedLib"
+                              },
+                              {
+                                  "productId":  "MwsSpmTaskEngine",
+                                  "version":  "10.5.0",
+                                  "displayName":  "MwsSpmTaskEngine"
+                              },
+                              {
+                                  "productId":  "brmspackage",
+                                  "version":  "10.5.0",
+                                  "displayName":  "brmspackage"
+                              },
+                              {
+                                  "productId":  "MWSPIETaskEngine",
+                                  "version":  "10.5.0",
+                                  "displayName":  "MWSPIETaskEngine"
+                              },
+                              {
+                                  "productId":  "NUMTemplateApplications",
+                                  "version":  "10.5.0",
+                                  "displayName":  "NUMTemplateApplications"
+                              },
+                              {
+                                  "productId":  "log4j",
+                                  "version":  "10.5.0",
+                                  "displayName":  "log4j"
+                              },
+                              {
+                                  "productId":  "SBPRuntime",
+                                  "version":  "10.5.0",
+                                  "displayName":  "SBPRuntime"
+                              },
+                              {
+                                  "productId":  "ACDLDeployerSharedBundle",
+                                  "version":  "10.5.0",
+                                  "displayName":  "ACDLDeployerSharedBundle"
+                              },
+                              {
+                                  "productId":  "optimizeSharedUI",
+                                  "version":  "10.5.0",
+                                  "displayName":  "optimizeSharedUI"
+                              },
+                              {
+                                  "productId":  "LARSharedBundles",
+                                  "version":  "10.5.0",
+                                  "displayName":  "LARSharedBundles"
+                              },
+                              {
+                                  "productId":  "EDAacdl",
+                                  "version":  "10.5.0",
+                                  "displayName":  "EDAacdl"
+                              },
+                              {
+                                  "productId":  "EDAspm",
+                                  "version":  "10.5.0",
+                                  "displayName":  "EDAspm"
+                              },
+                              {
+                                  "productId":  "PIETDBSupport",
+                                  "version":  "10.5.0",
+                                  "displayName":  "PIETDBSupport"
+                              },
+                              {
+                                  "productId":  "ODEcdc",
+                                  "version":  "10.5.0",
+                                  "displayName":  "ODEcdc"
+                              },
+                              {
+                                  "productId":  "WSTDeployer",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WSTDeployer"
+                              },
+                              {
+                                  "productId":  "DesignerSharedLib",
+                                  "version":  "10.5.0",
+                                  "displayName":  "DesignerSharedLib"
+                              },
+                              {
+                                  "productId":  "WMNspm",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WMNspm"
+                              },
+                              {
+                                  "productId":  "EventTypeCommon",
+                                  "version":  "10.5.0",
+                                  "displayName":  "EventTypeCommon"
+                              },
+                              {
+                                  "productId":  "PIEAssetPublisher",
+                                  "version":  "10.5.0",
+                                  "displayName":  "PIEAssetPublisher"
+                              },
+                              {
+                                  "productId":  "tppSAML2",
+                                  "version":  "10.5.0",
+                                  "displayName":  "tppSAML2"
+                              },
+                              {
+                                  "productId":  "WGLSharedLibs",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WGLSharedLibs"
+                              },
+                              {
+                                  "productId":  "NUMClient",
+                                  "version":  "10.5.0",
+                                  "displayName":  "NUMClient"
+                              },
+                              {
+                                  "productId":  "WOKcdc",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WOKcdc"
+                              },
+                              {
+                                  "productId":  "SPMacdl",
+                                  "version":  "10.5.0",
+                                  "displayName":  "SPMacdl"
+                              },
+                              {
+                                  "productId":  "sjp",
+                                  "version":  "10.5.0",
+                                  "displayName":  "sjp"
+                              },
+                              {
+                                  "productId":  "optimizeAnalysisSPM",
+                                  "version":  "10.5.0",
+                                  "displayName":  "optimizeAnalysisSPM"
+                              },
+                              {
+                                  "productId":  "Monitor",
+                                  "version":  "10.5.0",
+                                  "displayName":  "Monitor"
+                              },
+                              {
+                                  "productId":  "centralConfiguratorUI",
+                                  "version":  "10.5.0",
+                                  "displayName":  "centralConfiguratorUI"
+                              },
+                              {
+                                  "productId":  "PIEacdl",
+                                  "version":  "10.5.0",
+                                  "displayName":  "PIEacdl"
+                              },
+                              {
+                                  "productId":  "PIEMobileCdc",
+                                  "version":  "10.5.0",
+                                  "displayName":  "PIEMobileCdc"
+                              },
+                              {
+                                  "productId":  "tppServlet",
+                                  "version":  "10.5.0",
+                                  "displayName":  "tppServlet"
+                              },
+                              {
+                                  "productId":  "SBPPortal",
+                                  "version":  "10.5.0",
+                                  "displayName":  "SBPPortal"
+                              },
+                              {
+                                  "productId":  "WARspm",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WARspm"
+                              },
+                              {
+                                  "productId":  "LJPacdl",
+                                  "version":  "10.5.0",
+                                  "displayName":  "LJPacdl"
+                              },
+                              {
+                                  "productId":  "tppAnt",
+                                  "version":  "10.5.0",
+                                  "displayName":  "tppAnt"
+                              },
+                              {
+                                  "productId":  "CELSharedBundles",
+                                  "version":  "10.5.0",
+                                  "displayName":  "CELSharedBundles"
+                              },
+                              {
+                                  "productId":  "WPEDesigner",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WPEDesigner"
+                              },
+                              {
+                                  "productId":  "DatabaseScripts",
+                                  "version":  "10.5.0",
+                                  "displayName":  "DatabaseScripts"
+                              },
+                              {
+                                  "productId":  "GWM_IS",
+                                  "version":  "10.5.0",
+                                  "displayName":  "GWM_IS"
+                              },
+                              {
+                                  "productId":  "WSSCore",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WSSCore"
+                              },
+                              {
+                                  "productId":  "(?\u003cproducts\u003e.*)\" ){",
+                                  "version":  "10.5.0",
+                                  "displayName":  "(?\u003cproducts\u003e.*)\" ){"
+                              },
+                              {
+                                  "productId":  "PIEContainerCommonDirectoryService",
+                                  "version":  "10.5.0",
+                                  "displayName":  "PIEContainerCommonDirectoryService"
+                              },
+                              {
+                                  "productId":  "MWSDiagnostics",
+                                  "version":  "10.5.0",
+                                  "displayName":  "MWSDiagnostics"
+                              },
+                              {
+                                  "productId":  "BAMMWSspm",
+                                  "version":  "10.5.0",
+                                  "displayName":  "BAMMWSspm"
+                              },
+                              {
+                                  "productId":  "jsw",
+                                  "version":  "10.5.0",
+                                  "displayName":  "jsw"
+                              },
+                              {
+                                  "productId":  "tppSEC",
+                                  "version":  "10.5.0",
+                                  "displayName":  "tppSEC"
+                              },
+                              {
+                                  "productId":  "EntireXAdapter",
+                                  "version":  "10.5.0",
+                                  "displayName":  "EntireXAdapter"
+                              },
+                              {
+                                  "productId":  "TaskEngineRuntime",
+                                  "version":  "10.5.0",
+                                  "displayName":  "TaskEngineRuntime"
+                              },
+                              {
+                                  "productId":  "MWScdc",
+                                  "version":  "10.5.0",
+                                  "displayName":  "MWScdc"
+                              },
+                              {
+                                  "productId":  "WSSOSGi",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WSSOSGi"
+                              },
+                              {
+                                  "productId":  "WISSharedLibs",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WISSharedLibs"
+                              },
+                              {
+                                  "productId":  "TDBLibrariesEhcache",
+                                  "version":  "10.5.0",
+                                  "displayName":  "TDBLibrariesEhcache"
+                              },
+                              {
+                                  "productId":  "WOKMWSspm",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WOKMWSspm"
+                              },
+                              {
+                                  "productId":  "WOKspm",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WOKspm"
+                              },
+                              {
+                                  "productId":  "LICRepository",
+                                  "version":  "10.5.0",
+                                  "displayName":  "LICRepository"
+                              },
+                              {
+                                  "productId":  "LICSharedLibsJava",
+                                  "version":  "10.5.0",
+                                  "displayName":  "LICSharedLibsJava"
+                              },
+                              {
+                                  "productId":  "OBECentConfCdc",
+                                  "version":  "10.5.0",
+                                  "displayName":  "OBECentConfCdc"
+                              },
+                              {
+                                  "productId":  "integrationServerPortal",
+                                  "version":  "10.5.0",
+                                  "displayName":  "integrationServerPortal"
+                              },
+                              {
+                                  "productId":  "SSX_TLS",
+                                  "version":  "10.5.0",
+                                  "displayName":  "SSX_TLS"
+                              },
+                              {
+                                  "productId":  "INMSharedLibs",
+                                  "version":  "10.5.0",
+                                  "displayName":  "INMSharedLibs"
+                              },
+                              {
+                                  "productId":  "WSTcdc",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WSTcdc"
+                              },
+                              {
+                                  "productId":  "tppCommons",
+                                  "version":  "10.5.0",
+                                  "displayName":  "tppCommons"
+                              },
+                              {
+                                  "productId":  "OBEcdc",
+                                  "version":  "10.5.0",
+                                  "displayName":  "OBEcdc"
+                              },
+                              {
+                                  "productId":  "DEVSharedLibs",
+                                  "version":  "10.5.0",
+                                  "displayName":  "DEVSharedLibs"
+                              },
+                              {
+                                  "productId":  "WOKacdl",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WOKacdl"
+                              },
+                              {
+                                  "productId":  "PLSacdl",
+                                  "version":  "10.5.0",
+                                  "displayName":  "PLSacdl"
+                              },
+                              {
+                                  "productId":  "CAFRBundles",
+                                  "version":  "10.5.0",
+                                  "displayName":  "CAFRBundles"
+                              },
+                              {
+                                  "productId":  "CELspm",
+                                  "version":  "10.5.0",
+                                  "displayName":  "CELspm"
+                              },
+                              {
+                                  "productId":  "NUMacdl",
+                                  "version":  "10.5.0",
+                                  "displayName":  "NUMacdl"
+                              },
+                              {
+                                  "productId":  "tppMisc",
+                                  "version":  "10.5.0",
+                                  "displayName":  "tppMisc"
+                              },
+                              {
+                                  "productId":  "integrationServerMigrationFrameworkLib",
+                                  "version":  "10.5.0",
+                                  "displayName":  "integrationServerMigrationFrameworkLib"
+                              },
+                              {
+                                  "productId":  "tppGfJaxb",
+                                  "version":  "10.5.0",
+                                  "displayName":  "tppGfJaxb"
+                              },
+                              {
+                                  "productId":  "OBEacdl",
+                                  "version":  "10.5.0",
+                                  "displayName":  "OBEacdl"
+                              },
+                              {
+                                  "productId":  "MwsSpmIsTask",
+                                  "version":  "10.5.0",
+                                  "displayName":  "MwsSpmIsTask"
+                              },
+                              {
+                                  "productId":  "TNScdc",
+                                  "version":  "10.5.0",
+                                  "displayName":  "TNScdc"
+                              },
+                              {
+                                  "productId":  "DatabaseComponentConfiguratorCore",
+                                  "version":  "10.5.0",
+                                  "displayName":  "DatabaseComponentConfiguratorCore"
+                              },
+                              {
+                                  "productId":  "SCGCommon",
+                                  "version":  "10.5.0",
+                                  "displayName":  "SCGCommon"
+                              },
+                              {
+                                  "productId":  "optimizeSharedLib",
+                                  "version":  "10.5.0",
+                                  "displayName":  "optimizeSharedLib"
+                              },
+                              {
+                                  "productId":  "WSDCspm",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WSDCspm"
+                              },
+                              {
+                                  "productId":  "tppDB",
+                                  "version":  "10.5.0",
+                                  "displayName":  "tppDB"
+                              },
+                              {
+                                  "productId":  "PIFDeployment",
+                                  "version":  "10.5.0",
+                                  "displayName":  "PIFDeployment"
+                              },
+                              {
+                                  "productId":  "DatabaseComponentConfigurator",
+                                  "version":  "10.5.0",
+                                  "displayName":  "DatabaseComponentConfigurator"
+                              },
+                              {
+                                  "productId":  "DEVacdl",
+                                  "version":  "10.5.0",
+                                  "displayName":  "DEVacdl"
+                              },
+                              {
+                                  "productId":  "tppSwagger",
+                                  "version":  "10.5.0",
+                                  "displayName":  "tppSwagger"
+                              },
+                              {
+                                  "productId":  "wmOptimize",
+                                  "version":  "10.5.0",
+                                  "displayName":  "wmOptimize"
+                              },
+                              {
+                                  "productId":  "YAIcdc",
+                                  "version":  "10.5.0",
+                                  "displayName":  "YAIcdc"
+                              },
+                              {
+                                  "productId":  "WMDacdl",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WMDacdl"
+                              },
+                              {
+                                  "productId":  "SPM",
+                                  "version":  "10.5.0",
+                                  "displayName":  "SPM"
+                              },
+                              {
+                                  "productId":  "MSC",
+                                  "version":  "10.5.0",
+                                  "displayName":  "MSC"
+                              },
+                              {
+                                  "productId":  "SBPPackage",
+                                  "version":  "10.5.0",
+                                  "displayName":  "SBPPackage"
+                              },
+                              {
+                                  "productId":  "PortalSharedComponents",
+                                  "version":  "10.5.0",
+                                  "displayName":  "PortalSharedComponents"
+                              },
+                              {
+                                  "productId":  "monitorUI",
+                                  "version":  "10.5.0",
+                                  "displayName":  "monitorUI"
+                              },
+                              {
+                                  "productId":  "Deployer",
+                                  "version":  "10.5.0",
+                                  "displayName":  "Deployer"
+                              },
+                              {
+                                  "productId":  "optimizeUI",
+                                  "version":  "10.5.0",
+                                  "displayName":  "optimizeUI"
+                              },
+                              {
+                                  "productId":  "PIEcdc",
+                                  "version":  "10.5.0",
+                                  "displayName":  "PIEcdc"
+                              },
+                              {
+                                  "productId":  "TDBCommon",
+                                  "version":  "10.5.0",
+                                  "displayName":  "TDBCommon"
+                              },
+                              {
+                                  "productId":  "tppModelling",
+                                  "version":  "10.5.0",
+                                  "displayName":  "tppModelling"
+                              },
+                              {
+                                  "productId":  "PIFSharedBundles",
+                                  "version":  "10.5.0",
+                                  "displayName":  "PIFSharedBundles"
+                              },
+                              {
+                                  "productId":  "WISSharedBundles",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WISSharedBundles"
+                              },
+                              {
+                                  "productId":  "ZSLSharedBundles",
+                                  "version":  "10.5.0",
+                                  "displayName":  "ZSLSharedBundles"
+                              },
+                              {
+                                  "productId":  "LJPDeployer",
+                                  "version":  "10.5.0",
+                                  "displayName":  "LJPDeployer"
+                              },
+                              {
+                                  "productId":  "DEVRuntime",
+                                  "version":  "10.5.0",
+                                  "displayName":  "DEVRuntime"
+                              },
+                              {
+                                  "productId":  "infraDCUI",
+                                  "version":  "10.5.0",
+                                  "displayName":  "infraDCUI"
+                              },
+                              {
+                                  "productId":  "loggers",
+                                  "version":  "10.5.0",
+                                  "displayName":  "loggers"
+                              },
+                              {
+                                  "productId":  "WSIddj",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WSIddj"
+                              },
+                              {
+                                  "productId":  "TESCommon",
+                                  "version":  "10.5.0",
+                                  "displayName":  "TESCommon"
+                              },
+                              {
+                                  "productId":  "MwsProgramFiles",
+                                  "version":  "10.5.0",
+                                  "displayName":  "MwsProgramFiles"
+                              },
+                              {
+                                  "productId":  "OSGI",
+                                  "version":  "10.5.0",
+                                  "displayName":  "OSGI"
+                              },
+                              {
+                                  "productId":  "MWSspm",
+                                  "version":  "10.5.0",
+                                  "displayName":  "MWSspm"
+                              },
+                              {
+                                  "productId":  "acdl",
+                                  "version":  "10.5.0",
+                                  "displayName":  "acdl"
+                              },
+                              {
+                                  "productId":  "NUMRealmServer",
+                                  "version":  "10.5.0",
+                                  "displayName":  "NUMRealmServer"
+                              },
+                              {
+                                  "productId":  "YAI",
+                                  "version":  "10.5.0",
+                                  "displayName":  "YAI"
+                              },
+                              {
+                                  "productId":  "TPS",
+                                  "version":  "10.5.0",
+                                  "displayName":  "TPS"
+                              },
+                              {
+                                  "productId":  "adk65",
+                                  "version":  "10.5.0",
+                                  "displayName":  "adk65"
+                              },
+                              {
+                                  "productId":  "NUMRepository",
+                                  "version":  "10.5.0",
+                                  "displayName":  "NUMRepository"
+                              },
+                              {
+                                  "productId":  "LICUtil",
+                                  "version":  "10.5.0",
+                                  "displayName":  "LICUtil"
+                              },
+                              {
+                                  "productId":  "TPSddj",
+                                  "version":  "10.5.0",
+                                  "displayName":  "TPSddj"
+                              },
+                              {
+                                  "productId":  "ISSharedBundles",
+                                  "version":  "10.5.0",
+                                  "displayName":  "ISSharedBundles"
+                              },
+                              {
+                                  "productId":  "optimizeAnalysis",
+                                  "version":  "10.5.0",
+                                  "displayName":  "optimizeAnalysis"
+                              },
+                              {
+                                  "productId":  "CEL",
+                                  "version":  "10.5.0",
+                                  "displayName":  "CEL"
+                              },
+                              {
+                                  "productId":  "YAIspm",
+                                  "version":  "10.5.0",
+                                  "displayName":  "YAIspm"
+                              },
+                              {
+                                  "productId":  "TDBLibrariesStore",
+                                  "version":  "10.5.0",
+                                  "displayName":  "TDBLibrariesStore"
+                              },
+                              {
+                                  "productId":  "tppGf",
+                                  "version":  "10.5.0",
+                                  "displayName":  "tppGf"
+                              },
+                              {
+                                  "productId":  "DEVSharedBundles",
+                                  "version":  "10.5.0",
+                                  "displayName":  "DEVSharedBundles"
+                              },
+                              {
+                                  "productId":  "TESOSGi",
+                                  "version":  "10.5.0",
+                                  "displayName":  "TESOSGi"
+                              },
+                              {
+                                  "productId":  "license",
+                                  "version":  "10.5.0",
+                                  "displayName":  "license"
+                              },
+                              {
+                                  "productId":  "CMP_API",
+                                  "version":  "10.5.0",
+                                  "displayName":  "CMP_API"
+                              },
+                              {
+                                  "productId":  "PIEEmbeddedCdc",
+                                  "version":  "10.5.0",
+                                  "displayName":  "PIEEmbeddedCdc"
+                              },
+                              {
+                                  "productId":  "NUMInstanceManager",
+                                  "version":  "10.5.0",
+                                  "displayName":  "NUMInstanceManager"
+                              },
+                              {
+                                  "productId":  "wmprt",
+                                  "version":  "10.5.0",
+                                  "displayName":  "wmprt"
+                              },
+                              {
+                                  "productId":  "NUMDeployer",
+                                  "version":  "10.5.0",
+                                  "displayName":  "NUMDeployer"
+                              },
+                              {
+                                  "productId":  "WGLSharedBundles",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WGLSharedBundles"
+                              },
+                              {
+                                  "productId":  "ISspm",
+                                  "version":  "10.5.0",
+                                  "displayName":  "ISspm"
+                              },
+                              {
+                                  "productId":  "tppWS",
+                                  "version":  "10.5.0",
+                                  "displayName":  "tppWS"
+                              },
+                              {
+                                  "productId":  "BrokerJMSShared",
+                                  "version":  "10.5.0",
+                                  "displayName":  "BrokerJMSShared"
+                              }
+                          ],
+    "installedFixes":  [
+
+                       ],
+    "envVariables":  {
+                         "platform":  "LNXAMD64",
+                         "UpdateManagerVersion":  "11.0.0.0000-0117",
+                         "Hostname":  "localhost",
+                         "platformGroup":  [
+                                               "UNX-ANY",
+                                               "LNX-ANY"
+                                           ]
+                     },
+    "installedSupportPatches":  [
+
+                                ]
+}

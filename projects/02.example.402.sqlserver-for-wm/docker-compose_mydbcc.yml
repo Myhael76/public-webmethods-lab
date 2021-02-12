@@ -5,7 +5,7 @@ networks:
       external: false
 services:
   mydbcc:
-    image: mydbcc-${H_WMLAB_PRODUCTS_VERSION}
+    image: mydbcc-${H_WMLAB_PRODUCTS_VERSION}:${H_WMLAB_FIXES_DATE_TAG}
     container_name: ${H_WMLAB_PJ_NAME}-wm-dbcc-initializer
     hostname: wm-dbcc-initializer
     networks:
@@ -26,6 +26,6 @@ services:
       - WMLAB_SQLSERVER_USER_NAME=${H_WMLAB_SQLSERVER_USER_NAME}
       - WMLAB_SQLSERVER_PASSWORD=${H_WMLAB_SQLSERVER_PASSWORD}
       - WMLAB_SQLSERVER_SA_PASSWORD=${H_WMLAB_SQLSERVER_SA_PASSWORD}
-      - WMLAB_DBCC_INSTALL_HOME=${H_WMLAB_DBCC_INSTALL_HOME}
+      - WMLAB_DBCC_INSTALL_HOME=${H_WMLAB_INSTALL_HOME}
       - WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT=${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
     entrypoint: /mnt/scripts/local/${H_WMLAB_PRODUCTS_VERSION}/initSqlServerDbEntryPoint.sh

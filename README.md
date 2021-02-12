@@ -42,7 +42,7 @@ The following projects must be built upfront as they are a prerequisite for many
 - execute initial project setup
   - run generateEnv.bat in folder 00.commons
   - eventually change the produced .env file in folder 00.commons according to your environment and/or preferences
-  - run generateEnvInstallCommons.bat in folder 01.build.000.commons
+- run generateEnvInstallCommons.bat in folder 01.build.000.commons
   - eventually change the produced .env file in folder 01.build.000.commons according to your environment and/or preferences
 - project 01.build.001.wm-install-helper - centos-wm-install-helper
   - run build.bat in folder 01.build.001.wm-install-helper

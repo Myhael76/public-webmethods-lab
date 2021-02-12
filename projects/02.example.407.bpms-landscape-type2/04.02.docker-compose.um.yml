@@ -7,7 +7,7 @@ networks:
       external: false
 services:
   um-realm-server:
-    image: um-realm-server-1005
+    image: um-realm-server-1005:${H_WMLAB_FIXES_DATE_TAG}
     container_name: ${H_WMLAB_PJ_NAME}-umserver
     hostname: umserver
     volumes:

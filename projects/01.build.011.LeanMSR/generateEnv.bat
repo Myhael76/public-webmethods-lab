@@ -32,7 +32,7 @@ type ..\01.build.000.commons\.env >> .\.env
 type .\.env_base.md  >> .\.env
 
 
-echo You will now be asked to provide the location of project's required files
+echo You will now be asked to provide the location of project 01.build.011.LeanMSR required files
 
 pause
 

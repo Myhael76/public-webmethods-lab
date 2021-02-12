@@ -6,7 +6,7 @@ networks:
 
 services:
   is-plus:
-    image: bpm-isplus-${H_WMLAB_PRODUCTS_VERSION}
+    image: bpm-isplus-${H_WMLAB_PRODUCTS_VERSION}:${H_WMLAB_FIXES_DATE_TAG}
     container_name: ${H_WMLAB_PJ_NAME}-${H_WMLAB_PRODUCTS_VERSION}-is-plus
     hostname: is-plus
     networks:

@@ -1,7 +1,7 @@
 # set this variables according to your environment: home of your local development installation
 # the specified folder must be a valid webmethods installation containing Enterprise Manager
 
-$env:WM_INSTALL_HOME="e:/i/SAG/1005/Dev1"
+$env:WM_INSTALL_HOME="d:\i\SAG\1005\LocalDev"
 
 # change these only if strictly needed
 $env:UM_LIB="$env:WM_INSTALL_HOME/UniversalMessaging/lib"

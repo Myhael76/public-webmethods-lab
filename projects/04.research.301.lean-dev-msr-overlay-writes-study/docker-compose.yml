@@ -1,0 +1,14 @@
+version: "3.8"
+
+volumes:
+  inspect: {}
+
+services:
+  msr-301:
+    image: msr-lean-devel-1005:last-build
+    volumes:
+      - inspect:/mnt/data/
+      - ./scripts/:/mnt/scripts
+    ports:
+      - 30155:5555
+    entrypoint: /mnt/scripts/entrypoint.sh

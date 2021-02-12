@@ -21,23 +21,23 @@ if [ $? -eq 0 ]; then
             genericProductsSetup "/mnt/scripts/local/${WMLAB_PRODUCTS_VERSION}/install.wmscript.txt"
             if [ "${RESULT_genericProductsSetup}" -eq 0 ]; then
                 if [ -f ${WMLAB_INSTALL_HOME}/MWS/ccs/tools/ccs-admin.zip ]; then
-                    logI "Building container ccs-admin-tool-${WMLAB_PRODUCTS_VERSION}"
+                    logI "Building container ccs-admin-tool-${WMLAB_PRODUCTS_VERSION}:${WMLAB_FIXES_DATE_TAG}"
                     logI "Taking a snapshot of current images"
                     docker images > ${WMLAB_RUN_FOLDER}/04.docker-images-before-build.out
                     mkdir -p /tmp/dockerBuildContext
-                    pushd .
+                    pushd . > /dev/null
                     cd /tmp/dockerBuildContext/
                     cp /mnt/scripts/local/${WMLAB_PRODUCTS_VERSION}/Dockerfile .
                     unzip ${WMLAB_INSTALL_HOME}/MWS/ccs/tools/ccs-admin.zip
                     cp ${WMLAB_INSTALL_HOME}/common/lib/ext/log4j/log4j-core.jar ./ccs-admin/libs/
                     cp ${WMLAB_INSTALL_HOME}/common/lib/ext/log4j/log4j-api.jar ./ccs-admin/libs/
 
-                    controlledExec "docker build -t ccs-admin-tool-${WMLAB_PRODUCTS_VERSION} ." "buildCcsAdminToolContainer"
+                    controlledExec "docker build -t ccs-admin-tool-${WMLAB_PRODUCTS_VERSION}:last-build -t ccs-admin-tool-${WMLAB_PRODUCTS_VERSION}:${WMLAB_FIXES_DATE_TAG} ." "buildCcsAdminToolContainer"
                     logI "Image built, taking a snapshot of current images"
                     docker images > ${WMLAB_RUN_FOLDER}/docker-images-after-build.out
                     logI "Pruning untagged images ..."
                     docker image prune -f # remove intermediary alpine + jvm image or older untagged mydbcc
-                    popd
+                    popd > /dev/null
                 else
                     logE "ccs-admin tool not installed! check your installation health!"
                 fi

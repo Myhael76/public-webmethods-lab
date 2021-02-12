@@ -10,6 +10,7 @@ RUN yum -y update &&\
 	groupadd -g 1724 sagadmin &&\
 	useradd -u 1724 -m -g 1724 -d $SAG_HOME -c "SoftwareAG Admin" sagadmin &&\
 	mkdir -p $SAG_HOME && chown 1724:1724 $SAG_HOME &&\
+	mkdir -p /mnt/runs && chown 1724:1724 /mnt/runs &&\
 	chmod 775 $SAG_HOME &&\
 	mkdir -p $SAG_HOME/jvm &&\
 	chown 1724:1724 $SAG_HOME/jvm

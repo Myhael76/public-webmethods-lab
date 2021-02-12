@@ -1,40 +1,55 @@
 ARG SRC_IMAGE=centos:7
+ARG WMLAB_INSTALL_HOME=/opt/sag/products
+ARG WMLAB_SUM_HOME=/opt/sag/sum
+ARG WMLAB_WM_USERS_HOME=/opt/sag
+ARG WMLAB_SAGADMIN_USER_NAME=sagadmin
+ARG WMLAB_SAGADMIN_USER_PASSWORD=$1$uwFdCgRw$WS2pg1CpnxEjQA6nRFZel1
+ARG WMLAB_SAG_USER_NAME=sag
+ARG WMLAB_SAG_USER_PASSWORD=$1$vs2LiYFT$xj3XdCNHteEpRwsKQby/a0
+ARG WMLAB_GPG_KEYS_FILE_1=/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
 FROM ${SRC_IMAGE}
+
+ARG WMLAB_INSTALL_HOME=/opt/sag/products
+ARG WMLAB_SUM_HOME=/opt/sag/sum
+ARG WMLAB_RUN_BASE_MOUNT=/mnt/runs
+ARG WMLAB_DATA_BASE_MOUNT=/mnt/data
+ARG WMLAB_WM_USERS_HOME=/opt/sag
+ARG WMLAB_SAGADMIN_USER_NAME=sagadmin
+ARG WMLAB_SAGADMIN_USER_PASSWORD=$1$uwFdCgRw$WS2pg1CpnxEjQA6nRFZel1
+ARG WMLAB_SAG_USER_NAME=sag
+ARG WMLAB_SAG_USER_PASSWORD=$1$vs2LiYFT$xj3XdCNHteEpRwsKQby/a0
+ARG WMLAB_GPG_KEYS_FILE_1=/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 
 LABEL maintainer="Myhael76"
 
-RUN yum install -y net-tools && \
-    yum install -y unzip && \
-    yum install -y less && \
-    yum install -y telnet && \
-    yum install -y dstat && \
-    yum -y update && \
-    yum clean all && \
+RUN if [ -f "$WMLAB_GPG_KEYS_FILE_1" ] ; then rpmkeys --import "${WMLAB_GPG_KEYS_FILE_1}" ; fi &&\
+    yum -y update &&\
+    yum install -y net-tools sudo unzip less telnet dstat &&\
+    yum -y update &&\
+    yum clean all &&\
     rm -rf /var/cache/yum
 
-ENV SAG_HOME=/opt/sag \
-    SAG_INSTALL_HOME=/opt/sag/products \
-    SAG_SUM_HOME=/opt/sag/sum \
-    SAG_OSGI_ORCHESTRATOR_HOME=/opt/sag/mnt/wm-install-files \
-    SAG_RUN_HOME=/opt/sag/mnt/runs \
-    SAG_SCRIPTS_HOME=/opt/sag/mnt/scripts \
-    SAG_SECRETS_HOME=/opt/sag/mnt/secret \
-    SAG_LICENSE_FOLDER=/opt/sag/mnt/wm-install-files/licenses
+# propagate necessary env variables
+ENV WMLAB_INSTALL_HOME=${WMLAB_INSTALL_HOME} \
+    WMLAB_SUM_HOME=${WMLAB_SUM_HOME} \
+    WMLAB_WM_USERS_HOME=${WMLAB_WM_USERS_HOME} \
+    JAVA_HOME=${WMLAB_INSTALL_HOME}/jvm/jvm/ \
+    JRE_HOME=${WMLAB_INSTALL_HOME}/jvm/jvm/jre/ \
+    WMLAB_RUN_BASE_MOUNT=${WMLAB_RUN_BASE_MOUNT}
 
-RUN groupadd -g 1724 sagadmin; useradd -u 1724 -m -g 1724 -d ${SAG_HOME} sagadmin
+RUN groupadd -g 1724 sag &&\
+    useradd -u 1725 -m -g 1724          -d ${WMLAB_WM_USERS_HOME} ${WMLAB_SAG_USER_NAME}      -p "${WMLAB_SAG_USER_PASSWORD}" &&\
+    useradd -u 1724 -M -g wheel -G 1724 -d ${WMLAB_WM_USERS_HOME} ${WMLAB_SAGADMIN_USER_NAME} -p "${WMLAB_SAGADMIN_USER_PASSWORD}" &&\
+    mkdir -p ${WMLAB_INSTALL_HOME} ${WMLAB_SUM_HOME} ${WMLAB_RUN_BASE_MOUNT} ${WMLAB_DATA_BASE_MOUNT} &&\
+    chown -R sag:sag ${WMLAB_INSTALL_HOME} &&\
+    chown -R sag:sag ${WMLAB_SUM_HOME} &&\
+    chown -R sag:sag ${WMLAB_WM_USERS_HOME} &&\
+    chown -R sag:sag ${WMLAB_RUN_BASE_MOUNT} &&\
+    chown -R sag:sag ${WMLAB_DATA_BASE_MOUNT} &&\
+    chmod g+rwx /opt/sag/
 
-USER 1724
-# need to create these for permissions inheritance (which works in a strange manner now??)
-RUN mkdir -p    ${SAG_HOME} \
-                ${SAG_INSTALL_HOME} \
-                ${SAG_SUM_HOME} \
-                ${SAG_OSGI_ORCHESTRATOR_HOME} \
-                ${SAG_RUN_HOME} \
-                ${SAG_SCRIPTS_HOME} \
-                ${SAG_SECRETS_HOME} \
-                ${SAG_LICENSE_FOLDER}
-
-ENV JAVA_HOME=${SAG_INSTALL_HOME}/jvm/jvm/ JRE_HOME=${SAG_INSTALL_HOME}/jvm/jvm/
+USER 1725
 
 # Expect this to be overwritten
-ENTRYPOINT ["tail -f /dev/null"]
+ENTRYPOINT ["/bin/sh -c tail -f /dev/null"]

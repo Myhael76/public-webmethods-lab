@@ -1,8 +1,0 @@
-# Example for unattended fix image creation from inventory
-scriptConfirm=N
-installSP=N                             
-action=Create or add fixes to fix image
-selectedFixes=spro:all
-installDir=/mnt/wm-files/inventory.json
-imagePlatform=W64 
-createEmpowerImage=C

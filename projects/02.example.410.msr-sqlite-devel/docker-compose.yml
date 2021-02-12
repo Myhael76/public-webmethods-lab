@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   msr-dev-sqlite:
-    image: msr-lean-sqlite-devel-${H_WMLAB_PRODUCTS_VERSION}
+    image: msr-lean-sqlite-devel-${H_WMLAB_PRODUCTS_VERSION}:${H_WMLAB_FIXES_DATE_TAG}
     volumes:
       # from 00.commons
       - ../00.commons/lib/unix:${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}

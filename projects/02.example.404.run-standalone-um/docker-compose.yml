@@ -4,7 +4,7 @@ volumes:
   realm-server: {}
 services:
   builder-um-realm-server:
-    image: um-realm-server-1005
+    image: um-realm-server-1005:${H_WMLAB_FIXES_DATE_TAG}
     container_name: um-realm-server-1005-example1
     hostname: um-realm-server-1005-example1
     volumes:

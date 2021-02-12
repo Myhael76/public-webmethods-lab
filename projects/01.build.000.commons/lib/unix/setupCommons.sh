@@ -17,6 +17,12 @@ initSetupCommons(){
     export WMLAB_SUM10_BOOTSTRAP_BIN=${WMLAB_SUM10_BOOTSTRAP_BIN:-"Variable not set! Provide file path name for Update Manager v10 boostrap"}
     export WMLAB_SUM11_BOOTSTRAP_BIN=${WMLAB_SUM11_BOOTSTRAP_BIN:-"Variable not set! Provide file path name for Update Manager v11 boostrap"}
 
+    if [ ${WMLAB_SKIP_PATCHING} -ne 0 ]; then
+        export WMLAB_FIXES_DATE_TAG="fixes-none"
+    else
+        export WMLAB_FIXES_DATE_TAG=${WMLAB_FIXES_DATE_TAG:-"fixes-undeclared"}
+    fi
+
 }
 
 initSetupCommons
@@ -78,7 +84,7 @@ patchInstallation(){
     ###### 03 - Patch installation
     # TODO: render patching optional with a parameter
     logI "Applying fixes ..."
-    pushd .
+    pushd . >/dev/null
     cd "${WMLAB_SUM_HOME}/bin"
 
     echo "installSP=N" >/dev/shm/fixes.wmscript.txt
@@ -101,7 +107,7 @@ patchInstallation(){
     RESULT_patchInstallation=$?
         
     rm -f /dev/shm/fixes.wmscript.txt
-    popd
+    popd >/dev/null
 }
 
 startInstallerInAttendedMode(){

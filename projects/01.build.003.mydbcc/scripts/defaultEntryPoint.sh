@@ -20,15 +20,15 @@ if [ $? -eq 0 ]; then
                 logI "Taking a snapshot of current images"
                 docker images > ${WMLAB_RUN_FOLDER}/docker-images-before-build.out
                 cp /mnt/scripts/local/${WMLAB_PRODUCTS_VERSION}/Dockerfile "${WMLAB_INSTALL_HOME}"
-                pushd .
+                pushd . > /dev/null
                 cd "${WMLAB_INSTALL_HOME}"
                 logI "Building docker image mydbcc-${WMLAB_PRODUCTS_VERSION}"
-                controlledExec "docker build -t mydbcc-${WMLAB_PRODUCTS_VERSION} ." "buildDbccContainer"
+                controlledExec "docker build -t mydbcc-${WMLAB_PRODUCTS_VERSION}:last-build -t mydbcc-${WMLAB_PRODUCTS_VERSION}:${WMLAB_FIXES_DATE_TAG}  ." "buildDbccContainer"
                 logI "Image built, taking a snapshot of current images"
                 docker images > ${WMLAB_RUN_FOLDER}/docker-images-after-build.out
                 logI "Pruning untagged images ..."
                 docker image prune -f # remove intermediary alpine + jvm image or older untagged mydbcc
-                popd
+                popd > /dev/null
             else
                 logE "Product Installation failed! (Code ${RESULT_genericProductsSetup})"
                 cp "${WMLAB_INSTALL_SCRIPT_FILE}" ${WMLAB_RUN_FOLDER}/install.script.txt

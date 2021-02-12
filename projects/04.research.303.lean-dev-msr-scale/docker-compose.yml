@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  msr-303:
+    image: msr-lean-devel-1005:last-build
+    #hostname: msr-303
+    volumes:
+      - ./scripts/:/mnt/scripts
+    ports:
+      - 5555
+    entrypoint: /mnt/scripts/entrypoint.sh
+  lb:
+    image: dockercloud/haproxy
+    links:
+     - msr-303
+    ports:
+     - '30355:80'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

@@ -6,7 +6,7 @@ networks:
 
 services:
   msr1:
-    image: msr-lean-devel-${H_WMLAB_PRODUCTS_VERSION}
+    image: msr-lean-devel-${H_WMLAB_PRODUCTS_VERSION}:${H_WMLAB_FIXES_DATE_TAG}
     container_name: ${H_WMLAB_PJ_NAME}-${H_WMLAB_PRODUCTS_VERSION}-msr1
     hostname: msr1
     networks:

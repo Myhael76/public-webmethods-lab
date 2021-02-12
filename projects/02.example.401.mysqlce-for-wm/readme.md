@@ -10,10 +10,10 @@ It was tested webMethods versions 10.3 and 10.5, latest fixes as for Sep 2nd 202
 
 TODO: extend instructions
 
-- generate .env file
+- generate .env file (stil old style)
 - optionally alter .env fle as needed
 - start mysql
 - start adminer
-- verify adminer on http://localhost:40101. Check DB "before" and "after"
+- verify adminer on http://localhost:40101 or http://host.docker.internal:40101. Check DB "before" and "after"
 - run init-db
 - variations provided (e.g. for version 10.3)

@@ -29,9 +29,6 @@ shutdown(){
 logI "Staring up up BPMS Type 1 - Single Node"
 logEnv
 
-pushd .
-
-
 trap "shutdown" SIGINT SIGTERM
 
 # UM start

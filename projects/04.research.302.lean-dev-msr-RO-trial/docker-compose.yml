@@ -1,0 +1,20 @@
+version: "3.8"
+
+volumes:
+  inspect: {}
+  temp:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+
+services:
+  msr-302:
+    image: msr-lean-devel-1005:last-build
+    read_only: true
+    volumes:
+      - inspect:/mnt/data/
+      - temp:/tmp/
+      - ./scripts/:/mnt/scripts
+    ports:
+      - 30155:5555
+    entrypoint: /mnt/scripts/entrypoint.sh

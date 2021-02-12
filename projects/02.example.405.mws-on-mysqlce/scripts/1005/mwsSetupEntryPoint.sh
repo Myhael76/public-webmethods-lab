@@ -29,10 +29,10 @@ createMwsDefaultInstance(){
     
     cmd="./mws.sh new ${JAVA_OPTS}"
 
-    pushd .
+    pushd . > /dev/null
     cd /opt/sag/products/MWS/bin
     controlledExec "${cmd}" "02-CreateDefaultInstance"
-    popd
+    popd > /dev/null
     RESULT_createInstance="${RESULT_controlledExec}"
 }
 
@@ -81,7 +81,7 @@ linkDatabase(){
             logD "generating BND file"
             generateBndFile
             logI "Updating instance"
-            pushd .
+            pushd . > /dev/null
             cd "${WMLAB_INSTALL_HOME}/MWS/bin"
             controlledExec "./mws.sh update" "04-UpdateInstance"
             if [ ${RESULT_controlledExec} -eq 0 ]; then
@@ -92,7 +92,7 @@ linkDatabase(){
                 logE "MWS default instance update failed! code ${RESULT_controlledExec}"
                 RESULT_linkDatabase=3
             fi
-            popd
+            popd > /dev/null
         else
             logE "Database driver cannot be downloaded !"
             RESULT_linkDatabase=2
@@ -112,7 +112,7 @@ initializeMwsDefaultInstance(){
     CHK_DB_UP=$?
 
     if [ ${CHK_DB_UP} -eq 0 ] ; then
-        pushd .
+        pushd . > /dev/null
         cd "${WMLAB_INSTALL_HOME}/MWS/bin"
         controlledExec "./mws.sh init" "05-InitInstance"
         if [ "${RESULT_controlledExec}" -eq 0 ]; then
@@ -122,7 +122,7 @@ initializeMwsDefaultInstance(){
             RESULT_initializeMwsDefaultInstance=2
             logE "Init command failed (code ${RESULT_controlledExec})"
         fi
-        popd
+        popd > /dev/null
     else
         logE "Database at ${WMLAB_MYSQL_HOSTNAME}:3306 not reachable!"
         RESULT_initializeMwsDefaultInstance=1

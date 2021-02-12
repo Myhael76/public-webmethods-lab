@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<IDataXMLCoder version="1.0">
+  <record javaclass="com.wm.data.ISMemDataImpl">
+    <array name="Configuration" type="record" depth="1">
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="aliasName">IS_UM_CONNECTION</value>
+        <value name="description">system generated Universal Messaging connection alias</value>
+        <value name="CLIENTPREFIX">msr_Prefix_here</value>
+        <null name="user"/>
+        <value name="enabled">true</value>
+        <value name="csqSize">-1</value>
+        <value name="csqDrainInOrder">true</value>
+        <value name="type">UM</value>
+        <value name="aliasTypeDisplay">Universal Messaging</value>
+        <value name="transactionType">NONE</value>
+        <value name="systemGenerated">false</value>
+        <jboolean name="isClientPrefixShared">false</jboolean>
+        <value name="useCSQ">false</value>
+        <value name="_state">STARTED</value>
+        <value name="um_rname">nsp://um:9000</value>
+        <value name="um_tryAgainMaxAttempts">5</value>
+        <value name="um_publishWaitTime">30000</value>
+        <jboolean name="um_followTheMasterForPublish">true</jboolean>
+        <jboolean name="um_followTheMasterForSubscribe">true</jboolean>
+        <number name="um_loggingOutput" type="java.lang.Integer">0</number>
+        <jboolean name="um_producerMessageTracking">false</jboolean>
+        <jboolean name="um_consumerMessageTracking">false</jboolean>
+        <value name="um_producerIncludedStrings"></value>
+        <value name="um_consumerIncludedStrings"></value>
+        <jboolean name="enableRequestReply">false</jboolean>
+        <value name="clientAuthType">none</value>
+        <value name="trustStoreAlias"></value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="aliasName">IS_DES_CONNECTION</value>
+        <value name="description">system generated Digital Event Services connection alias</value>
+        <value name="CLIENTPREFIX">J_jRQtEolDEurgAVIwwwADXaZQs_</value>
+        <null name="user"/>
+        <value name="enabled">true</value>
+        <value name="csqSize">-1</value>
+        <value name="csqDrainInOrder">false</value>
+        <value name="type">DES</value>
+        <value name="aliasTypeDisplay">Digital Event Services</value>
+        <value name="transactionType">NONE</value>
+        <value name="systemGenerated">true</value>
+        <jboolean name="isClientPrefixShared">false</jboolean>
+        <value name="useCSQ">false</value>
+        <value name="_state">STARTED</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="aliasName">IS_LOCAL_CONNECTION</value>
+        <value name="description">system generated local connection alias</value>
+        <value name="enabled">true</value>
+        <value name="type">LOCAL</value>
+        <value name="aliasTypeDisplay">Local</value>
+        <value name="systemGenerated">true</value>
+      </record>
+    </array>
+    <value name="defaultAlias">IS_UM_CONNECTION</value>
+  </record>
+</IDataXMLCoder>

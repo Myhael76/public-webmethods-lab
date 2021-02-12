@@ -1,5 +1,13 @@
 version: "3.5"
 
+volumes:
+  runs: {}
+  temp:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  sag: {}
+
 services:
   centos-wm-install-helper-base:
     stop_signal: SIGINT
@@ -9,7 +17,9 @@ services:
     volumes:
       # from 00.commons
       - ../00.commons/lib/unix:${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
-      - ${H_RUNS_FOLDER}:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - runs:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - temp:/tmp/
+      - sag:/opt/sag/
       # from 01.build.000.commons
       - ../01.build.000.commons/lib/unix:${H_WMLAB_SETUP_SHELL_LIB_DIR_MOUNT_POINT}
       - ${H_WMLAB_INSTALLER_BIN}:${H_WMLAB_INSTALLER_BIN_MOUNT_POINT}
@@ -37,11 +47,12 @@ services:
       - ${H_WMLAB_LIC_FILE_MFT_ATG}:${H_WMLAB_LIC_FILE_MFT_ATG_MOUNT_POINT}
       # API Management
       - ${H_WMLAB_LIC_FILE_API_GW_S}:${H_WMLAB_LIC_FILE_API_GW_S_MOUNT_POINT}
-      - ${H_WMLAB_LIC_FILE_API_GW_A_MOUNT_POINT}:${H_WMLAB_LIC_FILE_API_GW_A_MOUNT_POINT}
-      - ${H_WMLAB_LIC_FILE_API_PORTAL_MOUNT_POINT}:${H_WMLAB_LIC_FILE_API_PORTAL_MOUNT_POINT}
-      - ${H_WMLAB_LIC_FILE_CENTRASITE_MOUNT_POINT}:${H_WMLAB_LIC_FILE_CENTRASITE_MOUNT_POINT}
-      - ${H_WMLAB_LIC_FILE_MEDIATOR_MOUNT_POINT}:${H_WMLAB_LIC_FILE_MEDIATOR_MOUNT_POINT}
+      - ${H_WMLAB_LIC_FILE_API_GW_A}:${H_WMLAB_LIC_FILE_API_GW_A_MOUNT_POINT}
+      - ${H_WMLAB_LIC_FILE_API_PORTAL}:${H_WMLAB_LIC_FILE_API_PORTAL_MOUNT_POINT}
+      - ${H_WMLAB_LIC_FILE_CENTRASITE}:${H_WMLAB_LIC_FILE_CENTRASITE_MOUNT_POINT}
+      - ${H_WMLAB_LIC_FILE_MEDIATOR}:${H_WMLAB_LIC_FILE_MEDIATOR_MOUNT_POINT}
       # TODO - other licenses according to use case
+      - f:\k\SAG\images\1005\fixes\OptimizeAE\RBI_OBE11704_Lnx.zip:/mnt/fixes/engfix1.zip
     environment:
       ### from 00.commons
       # paths
@@ -66,6 +77,7 @@ services:
       - WMLAB_FIXES_IMAGE_FILE=${H_WMLAB_FIXES_IMAGE_FILE_MOUNT_POINT}
       - WMLAB_FIXES_ONLINE_CRED_FILE=${H_WMLAB_FIXES_ONLINE_CRED_FILE_MOUNT_POINT}
       - WMLAB_SETUP_SHELL_LIB_DIR_MOUNT_POINT=${H_WMLAB_SETUP_SHELL_LIB_DIR_MOUNT_POINT}
+      - WMLAB_FIXES_DATE_TAG=${H_WMLAB_FIXES_DATE_TAG}
       # switches
       - WMLAB_SKIP_PATCHING=${H_WMLAB_SKIP_PATCHING}
       - WMLAB_FIXES_ONLINE=${H_WMLAB_FIXES_ONLINE}

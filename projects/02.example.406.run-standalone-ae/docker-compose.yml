@@ -4,7 +4,7 @@ volumes:
   o4p-ae-instance: {}
 services:
   optimize:
-    image: o4p-ae-server-${H_WMLAB_PRODUCTS_VERSION}
+    image: o4p-ae-server-${H_WMLAB_PRODUCTS_VERSION}:${H_WMLAB_FIXES_DATE_TAG}
     container_name: ${H_WMLAB_PJ_NAME}-${H_WMLAB_PRODUCTS_VERSION}-o4p
     hostname: o4p-ae-server
     volumes:
