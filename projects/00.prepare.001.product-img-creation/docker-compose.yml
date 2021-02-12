@@ -15,20 +15,20 @@ services:
     volumes:
       # example of shallower dependency towards base common projects
       # from 00.commons
-      - ../00.commons/lib/unix:${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      - ../00.commons/lib/unix:/mnt/scripts/common
       #local
       - ${H_WMLAB_INSTALLER_BIN}:/tmp/installer.bin
       - ./scripts/:/mnt/scripts/local/
-      - runs:${H_WMLAB_RUN_BASE_MOUNT_POINT}/
+      - runs:/mnt/runs
       - temp:/tmp/
       # Base assets
       - ${H_WMLAB_PRODUCT_IMAGE_DIR}:/mnt/productsOutDir
       - ${H_WMLAB_WMSCRIPT_FILE}:/mnt/products.wmscript
     environment:
       ### from 00.commons (take what is needed only)
-      - WMLAB_RUN_BASE_MOUNT=${H_WMLAB_RUN_BASE_MOUNT_POINT}
-      - WMLAB_CTRL_EXEC_STDOUT_ON=${H_WMLAB_CTRL_EXEC_STDOUT_ON}
-      - WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT=${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      - WMLAB_RUN_BASE_MOUNT=/mnt/runs
+      - WMLAB_CTRL_EXEC_STDOUT_ON=1
+      - WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT=/mnt/scripts/common
       ### from 01.build.000 (take what is needed only)
       - WMLAB_INSTALLER_BIN=/tmp/installer.bin
       - WMLAB_PLATFORM_STRING=${H_WMLAB_PLATFORM_STRING}
