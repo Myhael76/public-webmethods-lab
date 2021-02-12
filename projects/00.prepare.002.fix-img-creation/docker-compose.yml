@@ -1,0 +1,35 @@
+version: "3.5"
+
+volumes:
+  runs: {}
+
+services:
+  sum-example-1:
+    image: ${H_WMLAB_BASE_OS_IMAGE}
+    container_name: sum-example-1
+    hostname: sum-example-1
+    volumes:
+      # exmaple of shallower dependency towards base common projects
+      # from 00.commons
+      - ../00.commons/lib/unix:/mnt/scripts/lib/common
+      #local
+      - ./scripts/:/mnt/scripts/local/
+      - ${H_WMLAB_SUM11_BOOTSTRAP_BIN}:/mnt/sum_bootstrap_v11
+      - ${H_WMLAB_FIXES_ONLINE_CRED_FILE}:/mnt/secret/empower-credentials-fixes.txt
+      - runs:/runs/
+      # Base assets
+      - ./${H_WMLAB_INVENTORY_FILE}:/mnt/wm-files/inventory.json
+      - ./patch.wmscript:/mnt/wm-files/patch.wmscript
+      - ${H_WMLAB_FIXES_IMAGE_DIR}:/mnt/fixesOutDir
+    environment:
+      ### from 00.commons (take what is needed only)
+      - WMLAB_RUN_BASE_MOUNT=/runs
+      - WMLAB_SUM_HOME=/opt/sag/sum
+      - WMLAB_CTRL_EXEC_STDOUT_ON=1
+      ### from 01.build.000 (take what is needed only)
+      - WMLAB_SUM11_BOOTSTRAP_BIN=/mnt/sum_bootstrap_v11
+      - WMLAB_FIXES_ONLINE_CRED_FILE=/mnt/secret/empower-credentials-fixes.txt
+      - WMLAB_PLATFORM_STRING=${H_WMLAB_PLATFORM_STRING}
+      - WMLAB_FIXES_DATE_TAG=${H_WMLAB_FIXES_DATE_TAG}
+      - WMLAB_PRODUCTS_VERSION=${H_WMLAB_PRODUCTS_VERSION}
+    entrypoint: /mnt/scripts/local/entrypoint.sh

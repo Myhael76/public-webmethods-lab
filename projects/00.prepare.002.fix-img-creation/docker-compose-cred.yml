@@ -1,0 +1,22 @@
+version: "3.5"
+
+services:
+  sum-example-2:
+    image: ${H_WMLAB_BASE_OS_IMAGE}
+    container_name: sum-example-2
+    hostname: sum-example-2
+    volumes:
+      # exmaple of shallower dependency towards base common projects
+      # from 00.commons
+      - ../00.commons/lib/unix:/mnt/scripts/lib/common
+      #local
+      - ./scripts/:/mnt/scripts/local/
+      - ${H_WMLAB_SUM11_BOOTSTRAP_BIN}:/mnt/sum_bootstrap_v11
+    environment:
+      ### from 00.commons (take what is needed only)
+      - WMLAB_RUN_BASE_MOUNT=/tmp
+      - WMLAB_SUM_HOME=/opt/sag/sum11
+      - WMLAB_CTRL_EXEC_STDOUT_ON=1
+      ### from 01.build.000 (take what is needed only)
+      - WMLAB_SUM11_BOOTSTRAP_BIN=/mnt/sum_bootstrap_v11
+    entrypoint: /mnt/scripts/local/entrypointCreateCred.sh

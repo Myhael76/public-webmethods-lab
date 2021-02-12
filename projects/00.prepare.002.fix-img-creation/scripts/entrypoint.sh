@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# import setup & framework functions
-. ${WMLAB_SETUP_SHELL_LIB_DIR_MOUNT_POINT}/setupCommons.sh
+# import framework functions
+. /mnt/scripts/lib/common/common.sh
 
 logD "Environment Dump"
 logEnv
@@ -10,9 +10,9 @@ logI "Boostrapping SUM"
 bootstrapSum
 
 logI "Preparing script"
-# mkdir -p "${WMLAB_RUN_FOLDER}"
 
 cp /mnt/wm-files/patch.wmscript "${WMLAB_RUN_FOLDER}/"
+cat /mnt/wm-files/sum-online-credentials.txt >> "${WMLAB_RUN_BASE_MOUNT}/patch.wmscript"
 
 WMLAB_PLATFORM_STRING=${WMLAB_PLATFORM_STRING:-"LNXAMD64"}
 
