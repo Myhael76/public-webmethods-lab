@@ -20,7 +20,7 @@ SET H_WMLAB_INVENTORY_FILE=inventory_10.5.0_LNXAMD64.json
 SET H_WMLAB_PRODUCTS_VERSION=1005
 SET H_WMLAB_PLATFORM_STRING=LNXAMD64
 
-set /P H_WMLAB_FIXES_DATE_TAG="Enter current fix image tag: "
+::set /P H_WMLAB_FIXES_DATE_TAG="Enter current fix image tag: "
 
 docker-compose up
 docker-compose down

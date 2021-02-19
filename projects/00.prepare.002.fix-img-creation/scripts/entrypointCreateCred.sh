@@ -10,7 +10,7 @@ bootstrapSum
 logI "Launching SUM. Please follow procedure to create credentials"
 
 logI "Open a new shell and execute the following commands:"
-logI "cd /opt/sag/sum/bin"
+logI "cd ${WMLAB_SUM_HOME}/bin"
 logI "./UpdateManagerCMD.sh"
 
 logI "Suspending execution ..."
