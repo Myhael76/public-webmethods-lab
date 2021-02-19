@@ -26,11 +26,6 @@
                                   "displayName":  "WMNcdc"
                               },
                               {
-                                  "productId":  "MATacdl",
-                                  "version":  "10.5.0",
-                                  "displayName":  "MATacdl"
-                              },
-                              {
                                   "productId":  "ERSharedBundles",
                                   "version":  "10.5.0",
                                   "displayName":  "ERSharedBundles"
@@ -161,9 +156,9 @@
                                   "displayName":  "NUMTemplateApplications"
                               },
                               {
-                                  "productId":  "log4j",
+                                  "productId":  "TaskEngineRuntime",
                                   "version":  "10.5.0",
-                                  "displayName":  "log4j"
+                                  "displayName":  "TaskEngineRuntime"
                               },
                               {
                                   "productId":  "SBPRuntime",
@@ -191,9 +186,14 @@
                                   "displayName":  "EDAacdl"
                               },
                               {
-                                  "productId":  "EDAspm",
+                                  "productId":  "MATacdl",
                                   "version":  "10.5.0",
-                                  "displayName":  "EDAspm"
+                                  "displayName":  "MATacdl"
+                              },
+                              {
+                                  "productId":  "log4j",
+                                  "version":  "10.5.0",
+                                  "displayName":  "log4j"
                               },
                               {
                                   "productId":  "PIETDBSupport",
@@ -371,11 +371,6 @@
                                   "displayName":  "EntireXAdapter"
                               },
                               {
-                                  "productId":  "TaskEngineRuntime",
-                                  "version":  "10.5.0",
-                                  "displayName":  "TaskEngineRuntime"
-                              },
-                              {
                                   "productId":  "MWScdc",
                                   "version":  "10.5.0",
                                   "displayName":  "MWScdc"
@@ -426,9 +421,9 @@
                                   "displayName":  "integrationServerPortal"
                               },
                               {
-                                  "productId":  "SSX_TLS",
+                                  "productId":  "PIFSharedBundles",
                                   "version":  "10.5.0",
-                                  "displayName":  "SSX_TLS"
+                                  "displayName":  "PIFSharedBundles"
                               },
                               {
                                   "productId":  "INMSharedLibs",
@@ -459,6 +454,11 @@
                                   "productId":  "WOKacdl",
                                   "version":  "10.5.0",
                                   "displayName":  "WOKacdl"
+                              },
+                              {
+                                  "productId":  "LICUtil",
+                                  "version":  "10.5.0",
+                                  "displayName":  "LICUtil"
                               },
                               {
                                   "productId":  "PLSacdl",
@@ -621,11 +621,6 @@
                                   "displayName":  "tppModelling"
                               },
                               {
-                                  "productId":  "PIFSharedBundles",
-                                  "version":  "10.5.0",
-                                  "displayName":  "PIFSharedBundles"
-                              },
-                              {
                                   "productId":  "WISSharedBundles",
                                   "version":  "10.5.0",
                                   "displayName":  "WISSharedBundles"
@@ -711,9 +706,9 @@
                                   "displayName":  "NUMRepository"
                               },
                               {
-                                  "productId":  "LICUtil",
+                                  "productId":  "EDAspm",
                                   "version":  "10.5.0",
-                                  "displayName":  "LICUtil"
+                                  "displayName":  "EDAspm"
                               },
                               {
                                   "productId":  "TPSddj",
@@ -799,6 +794,11 @@
                                   "productId":  "ISspm",
                                   "version":  "10.5.0",
                                   "displayName":  "ISspm"
+                              },
+                              {
+                                  "productId":  "SSX_TLS",
+                                  "version":  "10.5.0",
+                                  "displayName":  "SSX_TLS"
                               },
                               {
                                   "productId":  "tppWS",
