@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  msr-mock-451-dev:
+    image: ${WMLAB_MSR_IMAGE}
+    cpuset: "1"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 512M
+    volumes:
+      - ./code/isPackages/WxLabMock1:${WMLAB_PRODUCTS_HOME}/IntegrationServer/packages/WxLabMock1
+      - ${H_WMLAB_LIC_FILE_MSR}:/tmp/MSR_LICENSE.xml
+      - ./config/application.properties:/tmp/application.properties
+    environment: 
+      - SAG_IS_LICENSE_FILE=/tmp/MSR_LICENSE.xml
+      - SAG_IS_CONFIG_PROPERTIES=/tmp/application.properties
+      - JAVA_MIN_MEM=256M
+      - JAVA_MAX_MEM=256M
+    ports:
+      - ${WMLAB_PJ_NO}55:5555
+    entrypoint: ${WMLAB_PRODUCTS_HOME}/IntegrationServer/bin/startContainer.sh

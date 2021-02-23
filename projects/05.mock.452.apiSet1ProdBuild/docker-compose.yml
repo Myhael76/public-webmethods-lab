@@ -1,0 +1,37 @@
+version: "3.8"
+
+volumes:
+  runs: {}
+  temp:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+
+services:
+  builder-pj451-prod:
+    image: centos-wm-install-helper
+    container_name: builder-pj451-prod
+    hostname: builder-pj451-prod
+    volumes:
+      - temp:/tmp/
+      - /var/run/docker.sock:/var/run/docker.sock
+      # from 00.commons
+      - ../00.commons/lib/unix:${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      - runs:${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      # locals
+      - ./scripts/:/mnt/scripts/local/
+      - ../05.mock.451.apiSet1/code/isPackages/:/mnt/srcPackages/
+    environment:
+      ### from 00.commons
+      # paths
+      - WMLAB_RUN_BASE_MOUNT=${H_WMLAB_RUN_BASE_MOUNT_POINT}
+      - WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT=${H_WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}
+      - WMLAB_INSTALL_HOME=${H_WMLAB_INSTALL_HOME}
+      # switches
+      - WMLAB_DEBUG_ON=${H_WMLAB_DEBUG_ON}
+      - WMLAB_CTRL_EXEC_STDOUT_ON=${H_WMLAB_CTRL_EXEC_STDOUT_ON}
+      # other parameters
+      - WMLAB_PRODUCTS_VERSION=${H_WMLAB_PRODUCTS_VERSION}
+      - WMLAB_DOCKERFILE=/mnt/scripts/local/Dockerfile
+      - WMLAB_SOURCE_PACKAGES_FOLDER=/mnt/srcPackages
+    entrypoint: /mnt/scripts/local/entrypoint.sh

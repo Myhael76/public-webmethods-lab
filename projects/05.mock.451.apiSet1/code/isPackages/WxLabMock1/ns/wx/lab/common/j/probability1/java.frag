@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Values version="2.0">
+  <value name="name">probability1</value>
+  <value name="encodeutf8">true</value>
+  <value name="body">Ly8gcGlwZWxpbmUNCklEYXRhQ3Vyc29yIHBpcGVsaW5lQ3Vyc29yID0gcGlwZWxpbmUuZ2V0Q3Vy
+c29yKCk7DQoJU3RyaW5nCXByb2JhYmlsaXR5ID0gSURhdGFVdGlsLmdldFN0cmluZyggcGlwZWxp
+bmVDdXJzb3IsICJwcm9iYWJpbGl0eSIgKTsNCnBpcGVsaW5lQ3Vyc29yLmRlc3Ryb3koKTsNCg0K
+ZmxvYXQgcD1GbG9hdC5wYXJzZUZsb2F0KHByb2JhYmlsaXR5KTsNCg0KYm9vbGVhbiBiUHJvYmFi
+aWxpdHlNZXQgPSAoTWF0aC5yYW5kb20oKSA8PSBwKTsNCg0KLy8gcGlwZWxpbmUNCklEYXRhQ3Vy
+c29yIHBpcGVsaW5lQ3Vyc29yXzEgPSBwaXBlbGluZS5nZXRDdXJzb3IoKTsNCklEYXRhVXRpbC5w
+dXQoIHBpcGVsaW5lQ3Vyc29yXzEsICJib29sIiwgIiIrYlByb2JhYmlsaXR5TWV0ICk7DQpwaXBl
+bGluZUN1cnNvcl8xLmRlc3Ryb3koKTsNCgk=</value>
+</Values>
