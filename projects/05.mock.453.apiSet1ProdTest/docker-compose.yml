@@ -1,5 +1,8 @@
 version: "3.8"
 
+volumes: 
+  logs: {}
+
 services:
   msr-mock-453-prod:
     image: ${H_WMLAB_MOCK_IMAGE}
@@ -13,6 +16,7 @@ services:
     volumes:
       - ${H_WMLAB_LIC_FILE_MSR}:/tmp/MSR_LICENSE.xml
       - ./config/application.properties:/tmp/application.properties
+      - logs:/data/is/logs/
     environment: 
       - SAG_IS_LICENSE_FILE=/tmp/MSR_LICENSE.xml
       - SAG_IS_CONFIG_PROPERTIES=/tmp/application.properties
