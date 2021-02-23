@@ -2,4 +2,4 @@
 
 ## Purpose
 
-This is a test for the image build with proejct 452.
+This is a test for the image built with project 452.
