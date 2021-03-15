@@ -26,6 +26,11 @@
                                   "displayName":  "WMNcdc"
                               },
                               {
+                                  "productId":  "(?\u003cproducts\u003e.*)\" ){",
+                                  "version":  "10.5.0",
+                                  "displayName":  "(?\u003cproducts\u003e.*)\" ){"
+                              },
+                              {
                                   "productId":  "ERSharedBundles",
                                   "version":  "10.5.0",
                                   "displayName":  "ERSharedBundles"
@@ -39,6 +44,11 @@
                                   "productId":  "embeddedDatabaseScripts",
                                   "version":  "10.5.0",
                                   "displayName":  "embeddedDatabaseScripts"
+                              },
+                              {
+                                  "productId":  "TES",
+                                  "version":  "10.5.0",
+                                  "displayName":  "TES"
                               },
                               {
                                   "productId":  "PIEContainerExternalRDBMS",
@@ -156,9 +166,9 @@
                                   "displayName":  "NUMTemplateApplications"
                               },
                               {
-                                  "productId":  "TaskEngineRuntime",
+                                  "productId":  "log4j",
                                   "version":  "10.5.0",
-                                  "displayName":  "TaskEngineRuntime"
+                                  "displayName":  "log4j"
                               },
                               {
                                   "productId":  "SBPRuntime",
@@ -189,11 +199,6 @@
                                   "productId":  "MATacdl",
                                   "version":  "10.5.0",
                                   "displayName":  "MATacdl"
-                              },
-                              {
-                                  "productId":  "log4j",
-                                  "version":  "10.5.0",
-                                  "displayName":  "log4j"
                               },
                               {
                                   "productId":  "PIETDBSupport",
@@ -261,6 +266,11 @@
                                   "displayName":  "sjp"
                               },
                               {
+                                  "productId":  "WGLSharedBundles",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WGLSharedBundles"
+                              },
+                              {
                                   "productId":  "optimizeAnalysisSPM",
                                   "version":  "10.5.0",
                                   "displayName":  "optimizeAnalysisSPM"
@@ -289,11 +299,6 @@
                                   "productId":  "tppServlet",
                                   "version":  "10.5.0",
                                   "displayName":  "tppServlet"
-                              },
-                              {
-                                  "productId":  "SBPPortal",
-                                  "version":  "10.5.0",
-                                  "displayName":  "SBPPortal"
                               },
                               {
                                   "productId":  "WARspm",
@@ -336,9 +341,9 @@
                                   "displayName":  "WSSCore"
                               },
                               {
-                                  "productId":  "(?\u003cproducts\u003e.*)\" ){",
+                                  "productId":  "TDBConsole",
                                   "version":  "10.5.0",
-                                  "displayName":  "(?\u003cproducts\u003e.*)\" ){"
+                                  "displayName":  "TDBConsole"
                               },
                               {
                                   "productId":  "PIEContainerCommonDirectoryService",
@@ -369,6 +374,16 @@
                                   "productId":  "EntireXAdapter",
                                   "version":  "10.5.0",
                                   "displayName":  "EntireXAdapter"
+                              },
+                              {
+                                  "productId":  "TaskEngineRuntime",
+                                  "version":  "10.5.0",
+                                  "displayName":  "TaskEngineRuntime"
+                              },
+                              {
+                                  "productId":  "monitorUI",
+                                  "version":  "10.5.0",
+                                  "displayName":  "monitorUI"
                               },
                               {
                                   "productId":  "MWScdc",
@@ -591,9 +606,14 @@
                                   "displayName":  "PortalSharedComponents"
                               },
                               {
-                                  "productId":  "monitorUI",
+                                  "productId":  "SBPPortal",
                                   "version":  "10.5.0",
-                                  "displayName":  "monitorUI"
+                                  "displayName":  "SBPPortal"
+                              },
+                              {
+                                  "productId":  "TDBCluster",
+                                  "version":  "10.5.0",
+                                  "displayName":  "TDBCluster"
                               },
                               {
                                   "productId":  "Deployer",
@@ -786,9 +806,9 @@
                                   "displayName":  "NUMDeployer"
                               },
                               {
-                                  "productId":  "WGLSharedBundles",
+                                  "productId":  "TESspm",
                                   "version":  "10.5.0",
-                                  "displayName":  "WGLSharedBundles"
+                                  "displayName":  "TESspm"
                               },
                               {
                                   "productId":  "ISspm",

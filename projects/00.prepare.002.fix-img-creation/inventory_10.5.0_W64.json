@@ -26,19 +26,29 @@
                                   "displayName":  "WMNcdc"
                               },
                               {
+                                  "productId":  "(?\u003cproducts\u003e.*)\" ){",
+                                  "version":  "10.5.0",
+                                  "displayName":  "(?\u003cproducts\u003e.*)\" ){"
+                              },
+                              {
                                   "productId":  "ERSharedBundles",
                                   "version":  "10.5.0",
                                   "displayName":  "ERSharedBundles"
                               },
                               {
-                                  "productId":  "WGLSharedLibs",
+                                  "productId":  "jdbcAdapter",
                                   "version":  "10.5.0",
-                                  "displayName":  "WGLSharedLibs"
+                                  "displayName":  "jdbcAdapter"
                               },
                               {
                                   "productId":  "embeddedDatabaseScripts",
                                   "version":  "10.5.0",
                                   "displayName":  "embeddedDatabaseScripts"
+                              },
+                              {
+                                  "productId":  "TES",
+                                  "version":  "10.5.0",
+                                  "displayName":  "TES"
                               },
                               {
                                   "productId":  "PIEContainerExternalRDBMS",
@@ -126,11 +136,6 @@
                                   "displayName":  "NERV"
                               },
                               {
-                                  "productId":  "optimizeUI",
-                                  "version":  "10.5.0",
-                                  "displayName":  "optimizeUI"
-                              },
-                              {
                                   "productId":  "brmsui",
                                   "version":  "10.5.0",
                                   "displayName":  "brmsui"
@@ -151,9 +156,9 @@
                                   "displayName":  "brmspackage"
                               },
                               {
-                                  "productId":  "WGLSharedBundles",
+                                  "productId":  "MWSPIETaskEngine",
                                   "version":  "10.5.0",
-                                  "displayName":  "WGLSharedBundles"
+                                  "displayName":  "MWSPIETaskEngine"
                               },
                               {
                                   "productId":  "NUMTemplateApplications",
@@ -221,11 +226,6 @@
                                   "displayName":  "WMNspm"
                               },
                               {
-                                  "productId":  "YAIspm",
-                                  "version":  "10.5.0",
-                                  "displayName":  "YAIspm"
-                              },
-                              {
                                   "productId":  "EventTypeCommon",
                                   "version":  "10.5.0",
                                   "displayName":  "EventTypeCommon"
@@ -236,9 +236,14 @@
                                   "displayName":  "PIEAssetPublisher"
                               },
                               {
-                                  "productId":  "LJPDeployer",
+                                  "productId":  "tppSAML2",
                                   "version":  "10.5.0",
-                                  "displayName":  "LJPDeployer"
+                                  "displayName":  "tppSAML2"
+                              },
+                              {
+                                  "productId":  "WGLSharedLibs",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WGLSharedLibs"
                               },
                               {
                                   "productId":  "NUMClient",
@@ -261,6 +266,11 @@
                                   "displayName":  "sjp"
                               },
                               {
+                                  "productId":  "WGLSharedBundles",
+                                  "version":  "10.5.0",
+                                  "displayName":  "WGLSharedBundles"
+                              },
+                              {
                                   "productId":  "optimizeAnalysisSPM",
                                   "version":  "10.5.0",
                                   "displayName":  "optimizeAnalysisSPM"
@@ -269,6 +279,11 @@
                                   "productId":  "Monitor",
                                   "version":  "10.5.0",
                                   "displayName":  "Monitor"
+                              },
+                              {
+                                  "productId":  "centralConfiguratorUI",
+                                  "version":  "10.5.0",
+                                  "displayName":  "centralConfiguratorUI"
                               },
                               {
                                   "productId":  "PIEacdl",
@@ -326,14 +341,9 @@
                                   "displayName":  "WSSCore"
                               },
                               {
-                                  "productId":  "MWSPIETaskEngine",
+                                  "productId":  "TDBConsole",
                                   "version":  "10.5.0",
-                                  "displayName":  "MWSPIETaskEngine"
-                              },
-                              {
-                                  "productId":  "(?\u003cproducts\u003e.*)\" ){",
-                                  "version":  "10.5.0",
-                                  "displayName":  "(?\u003cproducts\u003e.*)\" ){"
+                                  "displayName":  "TDBConsole"
                               },
                               {
                                   "productId":  "PIEContainerCommonDirectoryService",
@@ -396,9 +406,9 @@
                                   "displayName":  "TDBLibrariesEhcache"
                               },
                               {
-                                  "productId":  "WSIddj",
+                                  "productId":  "WOKMWSspm",
                                   "version":  "10.5.0",
-                                  "displayName":  "WSIddj"
+                                  "displayName":  "WOKMWSspm"
                               },
                               {
                                   "productId":  "WOKspm",
@@ -431,9 +441,9 @@
                                   "displayName":  "PIFSharedBundles"
                               },
                               {
-                                  "productId":  "EDAspm",
+                                  "productId":  "INMSharedLibs",
                                   "version":  "10.5.0",
-                                  "displayName":  "EDAspm"
+                                  "displayName":  "INMSharedLibs"
                               },
                               {
                                   "productId":  "WSTcdc",
@@ -461,6 +471,11 @@
                                   "displayName":  "WOKacdl"
                               },
                               {
+                                  "productId":  "LICUtil",
+                                  "version":  "10.5.0",
+                                  "displayName":  "LICUtil"
+                              },
+                              {
                                   "productId":  "PLSacdl",
                                   "version":  "10.5.0",
                                   "displayName":  "PLSacdl"
@@ -481,9 +496,9 @@
                                   "displayName":  "NUMacdl"
                               },
                               {
-                                  "productId":  "centralConfiguratorUI",
+                                  "productId":  "tppMisc",
                                   "version":  "10.5.0",
-                                  "displayName":  "centralConfiguratorUI"
+                                  "displayName":  "tppMisc"
                               },
                               {
                                   "productId":  "integrationServerMigrationFrameworkLib",
@@ -521,9 +536,9 @@
                                   "displayName":  "SCGCommon"
                               },
                               {
-                                  "productId":  "tppMisc",
+                                  "productId":  "optimizeSharedLib",
                                   "version":  "10.5.0",
-                                  "displayName":  "tppMisc"
+                                  "displayName":  "optimizeSharedLib"
                               },
                               {
                                   "productId":  "WSDCspm",
@@ -581,11 +596,6 @@
                                   "displayName":  "MSC"
                               },
                               {
-                                  "productId":  "jdbcAdapter",
-                                  "version":  "10.5.0",
-                                  "displayName":  "jdbcAdapter"
-                              },
-                              {
                                   "productId":  "SBPPackage",
                                   "version":  "10.5.0",
                                   "displayName":  "SBPPackage"
@@ -601,24 +611,24 @@
                                   "displayName":  "SBPPortal"
                               },
                               {
+                                  "productId":  "TDBCluster",
+                                  "version":  "10.5.0",
+                                  "displayName":  "TDBCluster"
+                              },
+                              {
                                   "productId":  "Deployer",
                                   "version":  "10.5.0",
                                   "displayName":  "Deployer"
                               },
                               {
+                                  "productId":  "optimizeUI",
+                                  "version":  "10.5.0",
+                                  "displayName":  "optimizeUI"
+                              },
+                              {
                                   "productId":  "PIEcdc",
                                   "version":  "10.5.0",
                                   "displayName":  "PIEcdc"
-                              },
-                              {
-                                  "productId":  "NUMDeployer",
-                                  "version":  "10.5.0",
-                                  "displayName":  "NUMDeployer"
-                              },
-                              {
-                                  "productId":  "INMSharedLibs",
-                                  "version":  "10.5.0",
-                                  "displayName":  "INMSharedLibs"
                               },
                               {
                                   "productId":  "TDBCommon",
@@ -641,6 +651,11 @@
                                   "displayName":  "ZSLSharedBundles"
                               },
                               {
+                                  "productId":  "LJPDeployer",
+                                  "version":  "10.5.0",
+                                  "displayName":  "LJPDeployer"
+                              },
+                              {
                                   "productId":  "DEVRuntime",
                                   "version":  "10.5.0",
                                   "displayName":  "DEVRuntime"
@@ -656,19 +671,14 @@
                                   "displayName":  "loggers"
                               },
                               {
-                                  "productId":  "optimizeAnalysis",
+                                  "productId":  "WSIddj",
                                   "version":  "10.5.0",
-                                  "displayName":  "optimizeAnalysis"
+                                  "displayName":  "WSIddj"
                               },
                               {
                                   "productId":  "TESCommon",
                                   "version":  "10.5.0",
                                   "displayName":  "TESCommon"
-                              },
-                              {
-                                  "productId":  "WOKMWSspm",
-                                  "version":  "10.5.0",
-                                  "displayName":  "WOKMWSspm"
                               },
                               {
                                   "productId":  "MwsProgramFiles",
@@ -716,9 +726,9 @@
                                   "displayName":  "NUMRepository"
                               },
                               {
-                                  "productId":  "LICUtil",
+                                  "productId":  "EDAspm",
                                   "version":  "10.5.0",
-                                  "displayName":  "LICUtil"
+                                  "displayName":  "EDAspm"
                               },
                               {
                                   "productId":  "TPSddj",
@@ -731,19 +741,19 @@
                                   "displayName":  "ISSharedBundles"
                               },
                               {
+                                  "productId":  "optimizeAnalysis",
+                                  "version":  "10.5.0",
+                                  "displayName":  "optimizeAnalysis"
+                              },
+                              {
                                   "productId":  "CEL",
                                   "version":  "10.5.0",
                                   "displayName":  "CEL"
                               },
                               {
-                                  "productId":  "optimizeSharedLib",
+                                  "productId":  "YAIspm",
                                   "version":  "10.5.0",
-                                  "displayName":  "optimizeSharedLib"
-                              },
-                              {
-                                  "productId":  "tppSAML2",
-                                  "version":  "10.5.0",
-                                  "displayName":  "tppSAML2"
+                                  "displayName":  "YAIspm"
                               },
                               {
                                   "productId":  "TDBLibrariesStore",
@@ -789,6 +799,16 @@
                                   "productId":  "wmprt",
                                   "version":  "10.5.0",
                                   "displayName":  "wmprt"
+                              },
+                              {
+                                  "productId":  "NUMDeployer",
+                                  "version":  "10.5.0",
+                                  "displayName":  "NUMDeployer"
+                              },
+                              {
+                                  "productId":  "TESspm",
+                                  "version":  "10.5.0",
+                                  "displayName":  "TESspm"
                               },
                               {
                                   "productId":  "ISspm",
