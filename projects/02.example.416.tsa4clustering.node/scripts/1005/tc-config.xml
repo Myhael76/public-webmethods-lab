@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<con:tc-config xmlns:con="http://www.terracotta.org/config">
+    <tc-properties>
+        <property name="ehcache.storageStrategy.dcv2.perElementTTITTL.enabled" value="true"/>
+    </tc-properties>
+    <servers>
+        <server host="localhost" name="%h" bind="0.0.0.0" jmx-enabled="false">
+            <logs>/mnt/data/tc/logs</logs>
+            <tsa-port bind="0.0.0.0">9510</tsa-port>
+            <!--tsa-group-port bind="0.0.0.0">__TSA_GROUP_PORT_HERE__</tsa-group-port-->
+            <data>/mnt/data/tc/data</data>
+            <offheap>
+                <enabled>true</enabled>
+                <maxDataSize>2048m</maxDataSize>
+            </offheap>
+        </server>
+        <restartable enabled="true"/>
+    </servers>
+    <clients>
+        <logs>%(com.softwareag.tc.client.logs.directory)</logs>
+    </clients>
+</con:tc-config>
