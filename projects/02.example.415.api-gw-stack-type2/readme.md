@@ -6,7 +6,13 @@ This project is an example on how to setup API Gateway on a VM and as a helper f
 
 ## IMPORTANT
 
-This docker "machine" will work only if the host increments the kernel parameters as per API Gateway requirements
+This docker "machine" will work only if the host increments the kernel parameters as per API Gateway requirements.
+
+The simplest way to do this is to run [this project](https://github.com/Myhael76/sag-unattented-installations/tree/main/04.support/alpine-set-elk-prerequisites).
+
+Alternatively, if Docker Desktop is used, the following procedure may be considered.
+
+Note: change of fs.file-max to 200000 is documented, but it does not seem to be necessary for simple deployments.
 
 Example for Docker Desktop on WSL2:
 
@@ -53,16 +59,8 @@ vm.max_map_count=262144
 fs.file-max=200000
 ```
 
-Modify ulimits permanently as required in the documentation:
-
-```bash
-mkdir /etc/security
-echo "sagadmin soft nofile 65536" >> /etc/security/limits.conf
-echo "sagadmin hard nofile 65536" >> /etc/security/limits.conf
-echo "sagadmin soft nproc 4096" >> /etc/security/limits.conf
-echo "sagadmin hard nproc 4096" >> /etc/security/limits.conf
-```
 
 Obviously, if the file already exists for other reasons, edit and change the values accordingly.
 
 Restart Docker Desktop
+

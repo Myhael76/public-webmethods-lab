@@ -3,6 +3,21 @@
 # import framework functions
 . ${WMLAB_COMMON_SHELL_LIB_DIR_MOUNT_POINT}/common.sh
 
+# Prerequisites
+
+checkPrerequisites(){
+    local c1=262144 # p1 -> vm.max_map_count
+    local p1=$(sysctl "vm.max_map_count" | cut -d " " -f 3)
+    if [[ ! $p1 -lt $c1 ]]; then
+        logI "vm.max_map_count is adequate ($p1)"
+    else
+        logE "vm.max_map_count is NOT adequate ($p1), container will exit now"
+		return 1
+    fi
+}
+
+checkPrerequisites || exit 1
+
 onInterrupt(){
 	logI "Interrupted! Shutting down API Gateway Advanced"
 	controlledExec "/opt/sag/products/profiles/IS_default/bin/shutdown.sh" "Shutdown IS"
@@ -27,7 +42,7 @@ controlledExec "/opt/sag/products/profiles/SPM/bin//startup.sh"     "Startup SPM
 
 cd /opt/sag/products/profiles/IS_default/bin/
 
-controlledExec "./console.sh" "Ron API Gw" & wait
+controlledExec "./console.sh" "Run API Gw" & wait
 
 if [ "${WMLAB_DEBUG_ON}" -eq 1 ]; then
     logD "Stopping execution for debug"

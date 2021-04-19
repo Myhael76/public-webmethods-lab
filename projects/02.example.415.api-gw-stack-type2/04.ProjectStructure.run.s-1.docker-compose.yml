@@ -14,6 +14,9 @@ services:
     image: wm-generic-host
     container_name: ${H_WMLAB_PJ_NAME}-${H_WMLAB_APIGW_HOSTNAME}
     hostname: ${H_WMLAB_APIGW_HOSTNAME}
+    ulimits:
+      nproc: 4096
+      nofile: 65536
     volumes:
       - s-1-temp:/tmp/
       - s-1-install-home:${H_WMLAB_INSTALL_HOME}
